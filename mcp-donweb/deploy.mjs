@@ -28,7 +28,7 @@ const CONFIG = {
   password: "AuraFTP2025@aura",
   secure: true,
   secureOptions: { rejectUnauthorized: false },
-  remoteRoot: "public_html/aura-adamo",
+  remoteRoot: "/public_html/aura-adamo",
 };
 
 const LANDING_FILES = [
@@ -57,7 +57,6 @@ function getAllProductionFiles(dirPath, arrayOfFiles = []) {
     if (fs.statSync(fullPath).isDirectory()) {
       arrayOfFiles = getAllProductionFiles(fullPath, arrayOfFiles);
     } else {
-      // Filtrar archivos temporales o mapas
       if (!file.startsWith("__next.") && !file.endsWith(".map") && !file.endsWith(".txt")) {
         arrayOfFiles.push(fullPath);
       }
@@ -145,7 +144,7 @@ async function deploySpinaz() {
     return;
   }
 
-  // 1. Subir frontend estático Next.js
+  // 1. Subir frontend estático Next.js (con chunks y assets completos)
   await uploadDirectoryFiles(spinazOut, `${CONFIG.remoteRoot}/spinaz`);
 
   // 2. Subir endpoints PHP backend
