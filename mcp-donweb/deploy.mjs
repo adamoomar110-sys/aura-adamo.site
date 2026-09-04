@@ -163,16 +163,39 @@ async function deploySpinaz() {
   }
 }
 
+async function deployApi() {
+  console.log("\n⚡ [1.5/3] DEPLOY BACKEND API AURA (public_html/aura-adamo/aura-api/)");
+  console.log("─".repeat(50));
+  const apiDir = path.join(ROOT, "aura-api");
+  if (!fs.existsSync(apiDir)) return;
+  const client = await connectFTP();
+  try {
+    const remoteApi = `${CONFIG.remoteRoot}/aura-api`;
+    await client.ensureDir(remoteApi);
+    const files = fs.readdirSync(apiDir).filter(f => f.endsWith(".php"));
+    for (const file of files) {
+      const local = path.join(apiDir, file);
+      await client.uploadFrom(local, file);
+      const size = (fs.statSync(local).size / 1024).toFixed(1);
+      console.log(`  ✅ aura-api/${file} (${size} KB)`);
+    }
+  } finally {
+    client.close();
+  }
+}
+
 async function deploy() {
   try {
     console.log("🚀 DEPLOY COMPLETO ECOSISTEMA AURA ADAMO → aura-adamo.site\n");
     await deployLanding();
+    await deployApi();
     await deployOdonto();
     await deploySpinaz();
     console.log("\n🎉 DESPLIEGUE COMPLETADO CON ÉXITO");
     console.log("─".repeat(50));
     console.log("  🌐 Landing Principal:  https://aura-adamo.site");
-    console.log("  🦷 Odonto Merlo:      https://aura-adamo.site/odonto/");
+    console.log("  ⚡ API Backend:        https://aura-adamo.site/api/status.php");
+    console.log("  🦷 Odonto Merlo:       https://aura-adamo.site/odonto/");
     console.log("  🚗 Spinaz Garage:      https://aura-adamo.site/spinaz/");
   } catch (err) {
     console.error("\n❌ ERROR:", err.message);
@@ -181,3 +204,4 @@ async function deploy() {
 }
 
 deploy();
+

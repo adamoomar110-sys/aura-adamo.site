@@ -185,17 +185,131 @@
         </div>
     </section>
 
-    <!-- Footer / Contacto -->
-    <footer class="footer" id="contacto">
+    <!-- Contacto / Cotizador -->
+    <section class="contact-section" id="contacto">
+        <div class="container">
+            <div class="section-header text-center fade-in-up">
+                <div class="badge">Iniciemos tu Proyecto</div>
+                <h2>Hablemos de tus Ideas</h2>
+                <div class="divider center"></div>
+                <p>Completá el formulario para coordinar una reunión o solicitar una cotización personalizada con nuestro equipo.</p>
+            </div>
+
+            <div class="contact-wrapper fade-in-up delay-1">
+                <!-- Info Lateral -->
+                <div class="contact-info-card">
+                    <h3>¿Por qué elegir <span>Aura</span>?</h3>
+                    <p class="contact-info-desc">Desarrollamos soluciones digitales robustas, modernas y escalables orientadas a resultados comerciales tangibles.</p>
+                    
+                    <div class="contact-features">
+                        <div class="contact-feature-item">
+                            <i class='bx bx-check-shield'></i>
+                            <div>
+                                <h4>Código Propio y Seguro</h4>
+                                <p>Arquitectura escalable en la nube con altos estándares.</p>
+                            </div>
+                        </div>
+                        <div class="contact-feature-item">
+                            <i class='bx bx-rocket'></i>
+                            <div>
+                                <h4>Despliegue Rápido</h4>
+                                <p>De la concepción al lanzamiento en tiempos récord.</p>
+                            </div>
+                        </div>
+                        <div class="contact-feature-item">
+                            <i class='bx bx-support'></i>
+                            <div>
+                                <h4>Soporte Continuo</h4>
+                                <p>Acompañamiento en cada etapa de crecimiento.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="direct-contact-box">
+                        <div class="direct-item">
+                            <i class='bx bx-envelope'></i>
+                            <span>contacto@aura-adamo.site</span>
+                        </div>
+                        <div class="direct-item">
+                            <i class='bx bx-map-pin'></i>
+                            <span>Buenos Aires, Argentina</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Formulario Interactivo -->
+                <div class="contact-form-card">
+                    <form id="aura-contact-form" novalidate>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="contact-name">Nombre y Apellido *</label>
+                                <div class="input-icon-wrap">
+                                    <i class='bx bx-user'></i>
+                                    <input type="text" id="contact-name" name="nombre" placeholder="Ej: Juan Pérez" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="contact-email">Email Corporativo / Personal *</label>
+                                <div class="input-icon-wrap">
+                                    <i class='bx bx-envelope'></i>
+                                    <input type="email" id="contact-email" name="email" placeholder="juan@ejemplo.com" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="contact-phone">Teléfono / WhatsApp</label>
+                                <div class="input-icon-wrap">
+                                    <i class='bx bxl-whatsapp'></i>
+                                    <input type="tel" id="contact-phone" name="telefono" placeholder="+54 9 11 ...">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="contact-service">Tipo de Solución</label>
+                                <div class="input-icon-wrap">
+                                    <i class='bx bx-layer'></i>
+                                    <select id="contact-service" name="servicio">
+                                        <option value="Aplicación Web / PWA">Aplicación Web / PWA</option>
+                                        <option value="Landing Page Corporativa">Landing Page Corporativa</option>
+                                        <option value="Sistema de Gestión a Medida">Sistema de Gestión a Medida</option>
+                                        <option value="Backend Cloud & APIs">Backend Cloud &amp; APIs</option>
+                                        <option value="Otro">Otro proyecto</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="contact-message">Contanos sobre tu proyecto o necesidad *</label>
+                            <textarea id="contact-message" name="mensaje" rows="4" placeholder="¿Qué características te gustaría que tenga tu plataforma?" required></textarea>
+                        </div>
+
+                        <div class="form-action">
+                            <button type="submit" id="btn-submit-contact" class="btn btn-primary btn-block">
+                                <span class="btn-text">Enviar Consulta <i class='bx bx-send'></i></span>
+                                <span class="btn-spinner" style="display:none;"><i class='bx bx-loader-alt bx-spin'></i> Enviando...</span>
+                            </button>
+                        </div>
+
+                        <!-- Feedback Alerts -->
+                        <div id="contact-alert" class="contact-alert" style="display:none;"></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
         <div class="container footer-content">
             <div class="footer-info">
                 <h3>Aura <span>Adamo</span></h3>
                 <p>Transformando ideas en ecosistemas digitales.</p>
             </div>
             <div class="footer-contact">
-                <h4>Contacto</h4>
+                <h4>Contacto Directo</h4>
                 <a href="mailto:contacto@aura-adamo.site"><i class='bx bx-envelope'></i> contacto@aura-adamo.site</a>
-
             </div>
         </div>
         <div class="footer-bottom">
