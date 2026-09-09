@@ -184,6 +184,17 @@ async function deployApi() {
   }
 }
 
+async function deployChofer() {
+  console.log("\n🚚 [4/4] DEPLOY CHOFER ONLINE (public_html/aura-adamo/chofer/)");
+  console.log("─".repeat(50));
+  const choferDist = path.join(REPOS_ROOT, "chofer_online", "dist");
+  if (!fs.existsSync(choferDist)) {
+    console.log("  ⚠️ Carpeta dist de chofer_online no encontrada.");
+    return;
+  }
+  await uploadDirectoryFiles(choferDist, `${CONFIG.remoteRoot}/chofer`);
+}
+
 async function deploy() {
   try {
     console.log("🚀 DEPLOY COMPLETO ECOSISTEMA AURA ADAMO → aura-adamo.site\n");
@@ -191,12 +202,14 @@ async function deploy() {
     await deployApi();
     await deployOdonto();
     await deploySpinaz();
+    await deployChofer();
     console.log("\n🎉 DESPLIEGUE COMPLETADO CON ÉXITO");
     console.log("─".repeat(50));
     console.log("  🌐 Landing Principal:  https://aura-adamo.site");
     console.log("  ⚡ API Backend:        https://aura-adamo.site/api/status.php");
     console.log("  🦷 Odonto Merlo:       https://aura-adamo.site/odonto/");
     console.log("  🚗 Spinaz Garage:      https://aura-adamo.site/spinaz/");
+    console.log("  🚚 Chofer Online:      https://aura-adamo.site/chofer/");
   } catch (err) {
     console.error("\n❌ ERROR:", err.message);
     process.exit(1);
