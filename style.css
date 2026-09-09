@@ -437,7 +437,7 @@ p { margin-bottom: 16px; color: var(--text-muted); }
 
 .portfolio-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 32px;
     margin-top: 60px;
 }
@@ -473,6 +473,8 @@ p { margin-bottom: 16px; color: var(--text-muted); }
 .banner-l1deres i { color: #facc15; }
 .banner-odonto { background: linear-gradient(135deg, #0A58CA, #00d2ff); }
 .banner-spinaz { background: linear-gradient(135deg, #dc3545, #ff6b6b); }
+.banner-chofer { background: linear-gradient(135deg, #1e3a8a, #7c3aed); }
+.banner-chofer i { color: #60a5fa; }
 
 .portfolio-content {
     padding: 32px;

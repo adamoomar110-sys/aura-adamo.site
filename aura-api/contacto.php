@@ -87,6 +87,24 @@ if ($method === 'POST') {
 
         $newId = $pdo->lastInsertId();
 
+        // Enviar notificación por correo a contacto@aura-adamo.site
+        $to = "contacto@aura-adamo.site";
+        $subject = "Nueva consulta en Aura Adamo: " . $nombre;
+        $body = "Has recibido una nueva consulta desde el formulario web de aura-adamo.site:\n\n"
+              . "• Nombre: " . $nombre . "\n"
+              . "• Email: " . $email . "\n"
+              . "• Teléfono: " . ($telefono ?: 'No informado') . "\n"
+              . "• Servicio de interés: " . $servicio . "\n\n"
+              . "• Mensaje:\n" . $mensaje . "\n\n"
+              . "----------------------------------------\n"
+              . "Aura Startup - https://aura-adamo.site\n"
+              . "Fecha: " . date('d/m/Y H:i');
+        $headers = "From: contacto@aura-adamo.site\r\n"
+                 . "Reply-To: " . $email . "\r\n"
+                 . "Content-Type: text/plain; charset=UTF-8\r\n"
+                 . "X-Mailer: PHP/" . phpversion();
+        @mail($to, $subject, $body, $headers);
+
         sendResponse([
             'success' => true,
             'id' => $newId,
