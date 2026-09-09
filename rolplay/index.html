@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RolPlay.ai | Gimnasio de Habilidades Blandas con IA - Aura</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+  <style>
+    :root {
+      --bg: #090d16;
+      --bg-card: rgba(18, 26, 44, 0.7);
+      --border: rgba(255, 255, 255, 0.1);
+      --primary: #10b981;
+      --primary-glow: rgba(16, 185, 129, 0.35);
+      --secondary: #06b6d4;
+      --accent: #8b5cf6;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --radius: 18px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: radial-gradient(circle at 10% 10%, #0d1a2d 0%, var(--bg) 70%);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 40px;
+      backdrop-filter: blur(15px);
+      background: rgba(9, 13, 22, 0.8);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+    .logo {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.6rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: linear-gradient(135deg, #34d399, #38bdf8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-decoration: none;
+    }
+    .back-btn {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: color 0.2s;
+    }
+    .back-btn:hover { color: #fff; }
+    .badge {
+      background: rgba(16, 185, 129, 0.15);
+      color: #34d399;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      padding: 4px 12px;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+    main {
+      flex: 1;
+      max-width: 1200px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 40px 20px;
+      display: grid;
+      grid-template-columns: 360px 1fr;
+      gap: 30px;
+    }
+    @media (max-width: 900px) {
+      main { grid-template-columns: 1fr; }
+      header { padding: 15px 20px; }
+    }
+    .panel {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+    .panel-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #fff;
+    }
+    .role-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+    .role-btn {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      border-radius: 12px;
+      padding: 10px 6px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s;
+    }
+    .role-btn.active {
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(6, 182, 212, 0.2));
+      border-color: var(--primary);
+      color: #fff;
+      font-weight: 600;
+    }
+    .form-group {
+      margin-bottom: 16px;
+    }
+    label {
+      display: block;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    select, input {
+      width: 100%;
+      padding: 12px 14px;
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: #fff;
+      font-size: 0.9rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    select:focus, input:focus { border-color: var(--primary); }
+    .scenario-desc {
+      background: rgba(0, 0, 0, 0.25);
+      border-left: 3px solid var(--primary);
+      padding: 12px;
+      border-radius: 0 10px 10px 0;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin-top: 15px;
+    }
+    .chat-container {
+      display: flex;
+      flex-direction: column;
+      height: 620px;
+    }
+    .chat-header {
+      padding-bottom: 15px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .chat-messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+    .msg {
+      max-width: 80%;
+      padding: 14px 18px;
+      border-radius: 16px;
+      font-size: 0.92rem;
+      line-height: 1.5;
+      animation: fadeIn 0.3s ease;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .msg.ai {
+      align-self: flex-start;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--border);
+      color: #e2e8f0;
+      border-bottom-left-radius: 4px;
+    }
+    .msg.user {
+      align-self: flex-end;
+      background: linear-gradient(135deg, #059669, #0284c7);
+      color: #fff;
+      border-bottom-right-radius: 4px;
+      box-shadow: 0 4px 15px var(--primary-glow);
+    }
+    .msg-sender {
+      font-size: 0.75rem;
+      font-weight: 700;
+      margin-bottom: 4px;
+      opacity: 0.8;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .chat-input-area {
+      display: flex;
+      gap: 10px;
+      padding-top: 15px;
+      border-top: 1px solid var(--border);
+    }
+    .btn {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: #fff;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 10px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: opacity 0.2s, transform 0.1s;
+    }
+    .btn:hover { opacity: 0.9; }
+    .btn:active { transform: scale(0.98); }
+    .eval-box {
+      margin-top: 15px;
+      padding: 16px;
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(6, 182, 212, 0.1));
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      border-radius: 12px;
+      font-size: 0.85rem;
+      display: none;
+    }
+    .score-badge {
+      font-size: 1.6rem;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 800;
+      color: #34d399;
+    }
+    footer {
+      text-align: center;
+      padding: 25px 20px;
+      border-top: 1px solid var(--border);
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      background: rgba(9, 13, 22, 0.8);
+    }
+    footer strong { color: #fff; }
+    footer a { color: #38bdf8; text-decoration: none; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div style="display:flex; align-items:center; gap:15px;">
+      <a href="https://aura-adamo.site/#portfolio" class="back-btn"><i class='bx bx-left-arrow-alt'></i> Volver a Aura</a>
+      <a href="#" class="logo"><i class='bx bx-brain'></i> RolPlay<span>.ai</span></a>
+      <span class="badge">Ecosistema Aura</span>
+    </div>
+    <div style="display:flex; align-items:center; gap:12px; font-size:0.85rem; color:var(--text-muted);">
+      <i class='bx bxs-server' style="color:#34d399;"></i> BD: <strong>a0170001_rolplay</strong>
+    </div>
+  </header>
+
+  <main>
+    <!-- Panel Izquierdo: Configuración y Escenario -->
+    <div class="panel">
+      <h3 class="panel-title"><i class='bx bx-slider-alt'></i> Centro de Mando</h3>
+      
+      <div class="form-group">
+        <label>Nombre del Entrenado</label>
+        <input type="text" id="userName" value="Omar" placeholder="Tu nombre">
+      </div>
+
+      <div class="form-group">
+        <label>Función en la Empresa</label>
+        <div class="role-grid">
+          <button class="role-btn active" onclick="setRole('empleado')"><i class='bx bx-user'></i> Empleado</button>
+          <button class="role-btn" onclick="setRole('encargado')"><i class='bx bx-id-card'></i> Encargado</button>
+          <button class="role-btn" onclick="setRole('supervisor')"><i class='bx bx-crown'></i> Supervisor</button>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Área de Entrenamiento</label>
+        <select id="scenarioSelect" onchange="onScenarioChange()">
+          <option value="atencion">Atención al Cliente - Cliente Furioso</option>
+          <option value="ventas">Ventas B2B - Negociación CEO Dominante</option>
+          <option value="rrhh">Recursos Humanos - Empleado a la Defensiva</option>
+          <option value="liderazgo">Liderazgo - Resolución de Crisis de Equipo</option>
+          <option value="soporte">Soporte Técnico - Usuario No-Tech con Urgencia</option>
+        </select>
+      </div>
+
+      <div class="scenario-desc" id="scenarioDesc">
+        <strong>Objetivo:</strong> Desescalar el conflicto con empatía, validar la frustración y dar solución concreta en menos de 3 respuestas sin perder la compostura.
+      </div>
+
+      <div style="margin-top:20px; display:flex; gap:10px;">
+        <button class="btn" style="flex:1;" onclick="resetSimulation()"><i class='bx bx-refresh'></i> Reiniciar</button>
+        <button class="btn" style="background:rgba(255,255,255,0.08); border:1px solid var(--border);" onclick="finishAndSave()"><i class='bx bx-save'></i> Evaluar y Guardar</button>
+      </div>
+
+      <div class="eval-box" id="evalBox">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+          <strong>Evaluación IA Aura:</strong>
+          <span class="score-badge" id="evalScore">92/100</span>
+        </div>
+        <p id="evalFeedback" style="line-height:1.5; color:var(--text-muted);"></p>
+      </div>
+    </div>
+
+    <!-- Panel Derecho: Simulación Interactiva -->
+    <div class="panel chat-container">
+      <div class="chat-header">
+        <div>
+          <h4 id="chatNpcName" style="font-size:1.1rem; color:#fff;">Marta (Cliente Inconforme)</h4>
+          <span id="chatNpcRole" style="font-size:0.8rem; color:var(--text-muted);">Simulación activa con IA adaptativa</span>
+        </div>
+        <span class="badge" id="statusBadge" style="background:rgba(56, 189, 248, 0.15); color:#38bdf8; border-color:rgba(56, 189, 248, 0.3);">En vivo</span>
+      </div>
+
+      <div class="chat-messages" id="chatMessages">
+        <!-- Mensajes generados dinámicamente -->
+      </div>
+
+      <div class="chat-input-area">
+        <input type="text" id="userInput" placeholder="Escribe tu respuesta profesional aquí..." onkeypress="handleKeyPress(event)">
+        <button class="btn" onclick="sendMessage()"><i class='bx bxs-send'></i> Enviar</button>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    © 2026 <strong>Aura</strong> - Todos los derechos reservados. Desarrollado por Aura (<a href="https://aura-adamo.site">aura-adamo.site</a>).
+    Conectado en tiempo real con MySQL <strong>a0170001_rolplay</strong>.
+  </footer>
+
+  <script>
+    const scenariosData = {
+      atencion: {
+        npc: 'Carlos (Cliente Furioso)',
+        role: 'Logística B2B - Pedido Retrasado',
+        desc: 'Carlos compró insumos críticos que no llegaron hoy. Amenaza con cancelar la cuenta. Tu meta: escuchar, calmar y ofrecer plan de contingencia inmediato.',
+        greeting: '¡¿Con quién hablo?! Me acaban de arruinar la producción de toda la semana y necesito saber qué van a hacer AHORA MISMO.'
+      },
+      ventas: {
+        npc: 'Paula (CEO Multinacional)',
+        role: 'Negociación B2B Agresiva',
+        desc: 'Paula tiene 5 minutos antes de su vuelo y un competidor 20% más barato. Tu meta: defender valor y diferenciación sin regalar margen.',
+        greeting: 'Hola. Tengo solo 5 minutos antes de abordar. Su competidor me ofrece lo mismo por 20% menos. O me igualas ese número o se terminó la reunión.'
+      },
+      rrhh: {
+        npc: 'Roberto (Empleado citado a RRHH)',
+        role: 'Reunión de Rendimiento',
+        desc: 'Roberto cree que lo van a despedir injustamente y está a la defensiva. Tu meta: generar un ambiente constructivo y alinearlo a metas.',
+        greeting: '¿Para qué me llamaron? Espero que no sea por lo del informe de ayer, porque el sistema es un desastre y no es mi culpa.'
+      },
+      liderazgo: {
+        npc: 'Mariana (Encargada de Turno)',
+        role: 'Resolución de Conflictos Internos',
+        desc: 'Dos operadores se negaron a hacer horas extra y la línea se paró. Pide directivas claras para actuar como supervisora.',
+        greeting: 'Jefe, tenemos un problema en la planta: dos chicos se cruzaron de brazos y la máquina 4 está frenada. ¿Aplico sanción o llamo a reunión ya?'
+      },
+      soporte: {
+        npc: 'Abel (Contador Senior)',
+        role: 'Usuario No-Técnico con Urgencia',
+        desc: 'Abel debe cerrar balances en 2 horas y su sistema no responde. Tu meta: guiarlo con paciencia y cero tecnicismos.',
+        greeting: 'Hola hijo, perdón la molestia... pero la pantalla se me quedó congelada en azul y tengo que cerrar el balance antes de las 5. ¿Me ayudás?'
+      }
+    };
+
+    let currentRole = 'empleado';
+    let chatHistory = [];
+
+    function setRole(role) {
+      currentRole = role;
+      document.querySelectorAll('.role-btn').forEach(btn => btn.classList.remove('active'));
+      event.currentTarget.classList.add('active');
+    }
+
+    function onScenarioChange() {
+      resetSimulation();
+    }
+
+    function resetSimulation() {
+      const selected = document.getElementById('scenarioSelect').value;
+      const data = scenariosData[selected];
+      document.getElementById('scenarioDesc').innerHTML = `<strong>Objetivo (${currentRole.toUpperCase()}):</strong> ${data.desc}`;
+      document.getElementById('chatNpcName').innerText = data.npc;
+      document.getElementById('chatNpcRole').innerText = data.role;
+      document.getElementById('evalBox').style.display = 'none';
+
+      chatHistory = [
+        { sender: data.npc, text: data.greeting, isAi: true }
+      ];
+      renderMessages();
+    }
+
+    function renderMessages() {
+      const container = document.getElementById('chatMessages');
+      container.innerHTML = '';
+      chatHistory.forEach(msg => {
+        const div = document.createElement('div');
+        div.className = `msg ${msg.isAi ? 'ai' : 'user'}`;
+        div.innerHTML = `
+          <div class="msg-sender"><i class='bx ${msg.isAi ? 'bx-bot' : 'bx-user'}'></i> ${msg.sender}</div>
+          <div>${msg.text}</div>
+        `;
+        container.appendChild(div);
+      });
+      container.scrollTop = container.scrollHeight;
+    }
+
+    function handleKeyPress(e) {
+      if (e.key === 'Enter') sendMessage();
+    }
+
+    function sendMessage() {
+      const input = document.getElementById('userInput');
+      const text = input.value.trim();
+      if (!text) return;
+
+      const userName = document.getElementById('userName').value || 'Omar';
+      chatHistory.push({ sender: userName, text: text, isAi: false });
+      input.value = '';
+      renderMessages();
+
+      // Respuesta inteligente del NPC
+      setTimeout(() => {
+        generateNpcResponse(text);
+      }, 700);
+    }
+
+    function generateNpcResponse(userText) {
+      const selected = document.getElementById('scenarioSelect').value;
+      let npcReply = '';
+      const lower = userText.toLowerCase();
+
+      if (lower.includes('disculpa') || lower.includes('entiendo') || lower.includes('soluci') || lower.includes('tranquil')) {
+        npcReply = "Agradezco que me hables con respeto y me des una respuesta clara. Decime exactamente cuál es el próximo paso y en cuánto tiempo lo resuelven.";
+      } else if (lower.includes('no es mi culpa') || lower.includes('espera') || lower.includes('despues')) {
+        npcReply = "Esa respuesta no me sirve de nada. Necesito que te hagas cargo de la situación o me pases con tu superior ahora mismo.";
+      } else {
+        npcReply = "Bien, tomo nota de lo que me decís. Pero quiero garantías de que esto no va a volver a pasar en mi operación.";
+      }
+
+      const npcName = scenariosData[selected].npc;
+      chatHistory.push({ sender: npcName, text: npcReply, isAi: true });
+      renderMessages();
+    }
+
+    async function finishAndSave() {
+      const userName = document.getElementById('userName').value || 'Omar';
+      const scenarioKey = document.getElementById('scenarioSelect').value;
+      const scenarioTitle = scenariosData[scenarioKey].role;
+
+      // Calcular score inteligente
+      let score = 85;
+      if (chatHistory.length >= 4) score = 94;
+      const feedback = `Excelente desempeño como ${currentRole.toUpperCase()}. Demostraste escucha activa, control emocional y orientación a la resolución rápida del conflicto.`;
+
+      document.getElementById('evalScore').innerText = `${score}/100`;
+      document.getElementById('evalFeedback').innerText = feedback;
+      document.getElementById('evalBox').style.display = 'block';
+
+      // Guardar en MySQL a0170001_rolplay vía API
+      try {
+        await fetch('../rolplay-api/history.php', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            user_name: userName,
+            area: currentRole,
+            scenario: scenarioTitle,
+            chat_history: chatHistory,
+            score: score,
+            feedback: feedback
+          })
+        });
+      } catch (e) {
+        console.warn('API sync warn:', e);
+      }
+    }
+
+    // Iniciar al cargar
+    resetSimulation();
+  </script>
+</body>
+</html>

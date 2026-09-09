@@ -195,6 +195,48 @@ async function deployChofer() {
   await uploadDirectoryFiles(choferDist, `${CONFIG.remoteRoot}/chofer`);
 }
 
+async function deployRolplayApi() {
+  console.log("\n⚡ [5/6] DEPLOY ROLPLAY API (public_html/aura-adamo/rolplay-api/)");
+  console.log("─".repeat(50));
+  const apiDir = path.join(ROOT, "rolplay-api");
+  if (!fs.existsSync(apiDir)) return;
+  const client = await connectFTP();
+  try {
+    const remoteApi = `${CONFIG.remoteRoot}/rolplay-api`;
+    await client.ensureDir(remoteApi);
+    const files = fs.readdirSync(apiDir).filter(f => f.endsWith(".php"));
+    for (const file of files) {
+      const local = path.join(apiDir, file);
+      await client.uploadFrom(local, file);
+      const size = (fs.statSync(local).size / 1024).toFixed(1);
+      console.log(`  ✅ rolplay-api/${file} (${size} KB)`);
+    }
+  } finally {
+    client.close();
+  }
+}
+
+async function deployRolplayWeb() {
+  console.log("\n🧠 [6/6] DEPLOY ROLPLAY WEB (public_html/aura-adamo/rolplay/)");
+  console.log("─".repeat(50));
+  const rolplayDir = path.join(ROOT, "rolplay");
+  if (!fs.existsSync(rolplayDir)) return;
+  const client = await connectFTP();
+  try {
+    const remoteDir = `${CONFIG.remoteRoot}/rolplay`;
+    await client.ensureDir(remoteDir);
+    const files = fs.readdirSync(rolplayDir).filter(f => f.endsWith(".html") || f.endsWith(".css") || f.endsWith(".js"));
+    for (const file of files) {
+      const local = path.join(rolplayDir, file);
+      await client.uploadFrom(local, file);
+      const size = (fs.statSync(local).size / 1024).toFixed(1);
+      console.log(`  ✅ rolplay/${file} (${size} KB)`);
+    }
+  } finally {
+    client.close();
+  }
+}
+
 async function deploy() {
   try {
     console.log("🚀 DEPLOY COMPLETO ECOSISTEMA AURA ADAMO → aura-adamo.site\n");
@@ -203,6 +245,8 @@ async function deploy() {
     await deployOdonto();
     await deploySpinaz();
     await deployChofer();
+    await deployRolplayApi();
+    await deployRolplayWeb();
     console.log("\n🎉 DESPLIEGUE COMPLETADO CON ÉXITO");
     console.log("─".repeat(50));
     console.log("  🌐 Landing Principal:  https://aura-adamo.site");
@@ -210,6 +254,8 @@ async function deploy() {
     console.log("  🦷 Odonto Merlo:       https://aura-adamo.site/odonto/");
     console.log("  🚗 Spinaz Garage:      https://aura-adamo.site/spinaz/");
     console.log("  🚚 Chofer Online:      https://aura-adamo.site/chofer/");
+    console.log("  🧠 RolPlay.ai Web:     https://aura-adamo.site/rolplay/");
+    console.log("  ⚡ RolPlay.ai API:     https://aura-adamo.site/rolplay-api/status.php");
   } catch (err) {
     console.error("\n❌ ERROR:", err.message);
     process.exit(1);
