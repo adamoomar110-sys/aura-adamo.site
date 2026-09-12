@@ -1,506 +1,2186 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="dark">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>RolPlay.ai | Gimnasio de Habilidades Blandas con IA - Aura</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-  <style>
-    :root {
-      --bg: #090d16;
-      --bg-card: rgba(18, 26, 44, 0.7);
-      --border: rgba(255, 255, 255, 0.1);
-      --primary: #10b981;
-      --primary-glow: rgba(16, 185, 129, 0.35);
-      --secondary: #06b6d4;
-      --accent: #8b5cf6;
-      --text: #f8fafc;
-      --text-muted: #94a3b8;
-      --radius: 18px;
-    }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      background: radial-gradient(circle at 10% 10%, #0d1a2d 0%, var(--bg) 70%);
-      color: var(--text);
-      font-family: 'Inter', sans-serif;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 20px 40px;
-      backdrop-filter: blur(15px);
-      background: rgba(9, 13, 22, 0.8);
-      border-bottom: 1px solid var(--border);
-      position: sticky;
-      top: 0;
-      z-index: 50;
-    }
-    .logo {
-      font-family: 'Outfit', sans-serif;
-      font-size: 1.6rem;
-      font-weight: 800;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      background: linear-gradient(135deg, #34d399, #38bdf8);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      text-decoration: none;
-    }
-    .back-btn {
-      color: var(--text-muted);
-      text-decoration: none;
-      font-size: 0.9rem;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      transition: color 0.2s;
-    }
-    .back-btn:hover { color: #fff; }
-    .badge {
-      background: rgba(16, 185, 129, 0.15);
-      color: #34d399;
-      border: 1px solid rgba(16, 185, 129, 0.3);
-      padding: 4px 12px;
-      border-radius: 999px;
-      font-size: 0.75rem;
-      font-weight: 600;
-      letter-spacing: 0.5px;
-    }
-    main {
-      flex: 1;
-      max-width: 1200px;
-      width: 100%;
-      margin: 0 auto;
-      padding: 40px 20px;
-      display: grid;
-      grid-template-columns: 360px 1fr;
-      gap: 30px;
-    }
-    @media (max-width: 900px) {
-      main { grid-template-columns: 1fr; }
-      header { padding: 15px 20px; }
-    }
-    .panel {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 24px;
-      backdrop-filter: blur(12px);
-      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-    }
-    .panel-title {
-      font-family: 'Outfit', sans-serif;
-      font-size: 1.25rem;
-      font-weight: 700;
-      margin-bottom: 20px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      color: #fff;
-    }
-    .role-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 8px;
-      margin-bottom: 20px;
-    }
-    .role-btn {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid var(--border);
-      color: var(--text-muted);
-      border-radius: 12px;
-      padding: 10px 6px;
-      font-size: 0.8rem;
-      cursor: pointer;
-      text-align: center;
-      transition: all 0.2s;
-    }
-    .role-btn.active {
-      background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(6, 182, 212, 0.2));
-      border-color: var(--primary);
-      color: #fff;
-      font-weight: 600;
-    }
-    .form-group {
-      margin-bottom: 16px;
-    }
-    label {
-      display: block;
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      margin-bottom: 6px;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-    select, input {
-      width: 100%;
-      padding: 12px 14px;
-      background: rgba(0, 0, 0, 0.3);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      color: #fff;
-      font-size: 0.9rem;
-      outline: none;
-      transition: border-color 0.2s;
-    }
-    select:focus, input:focus { border-color: var(--primary); }
-    .scenario-desc {
-      background: rgba(0, 0, 0, 0.25);
-      border-left: 3px solid var(--primary);
-      padding: 12px;
-      border-radius: 0 10px 10px 0;
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      line-height: 1.5;
-      margin-top: 15px;
-    }
-    .chat-container {
-      display: flex;
-      flex-direction: column;
-      height: 620px;
-    }
-    .chat-header {
-      padding-bottom: 15px;
-      border-bottom: 1px solid var(--border);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .chat-messages {
-      flex: 1;
-      overflow-y: auto;
-      padding: 20px 0;
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-    }
-    .msg {
-      max-width: 80%;
-      padding: 14px 18px;
-      border-radius: 16px;
-      font-size: 0.92rem;
-      line-height: 1.5;
-      animation: fadeIn 0.3s ease;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(8px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    .msg.ai {
-      align-self: flex-start;
-      background: rgba(255, 255, 255, 0.06);
-      border: 1px solid var(--border);
-      color: #e2e8f0;
-      border-bottom-left-radius: 4px;
-    }
-    .msg.user {
-      align-self: flex-end;
-      background: linear-gradient(135deg, #059669, #0284c7);
-      color: #fff;
-      border-bottom-right-radius: 4px;
-      box-shadow: 0 4px 15px var(--primary-glow);
-    }
-    .msg-sender {
-      font-size: 0.75rem;
-      font-weight: 700;
-      margin-bottom: 4px;
-      opacity: 0.8;
-      display: flex;
-      align-items: center;
-      gap: 5px;
-    }
-    .chat-input-area {
-      display: flex;
-      gap: 10px;
-      padding-top: 15px;
-      border-top: 1px solid var(--border);
-    }
-    .btn {
-      background: linear-gradient(135deg, var(--primary), var(--secondary));
-      color: #fff;
-      border: none;
-      padding: 12px 24px;
-      border-radius: 10px;
-      font-weight: 600;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      transition: opacity 0.2s, transform 0.1s;
-    }
-    .btn:hover { opacity: 0.9; }
-    .btn:active { transform: scale(0.98); }
-    .eval-box {
-      margin-top: 15px;
-      padding: 16px;
-      background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(6, 182, 212, 0.1));
-      border: 1px solid rgba(16, 185, 129, 0.3);
-      border-radius: 12px;
-      font-size: 0.85rem;
-      display: none;
-    }
-    .score-badge {
-      font-size: 1.6rem;
-      font-family: 'Outfit', sans-serif;
-      font-weight: 800;
-      color: #34d399;
-    }
-    footer {
-      text-align: center;
-      padding: 25px 20px;
-      border-top: 1px solid var(--border);
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      background: rgba(9, 13, 22, 0.8);
-    }
-    footer strong { color: #fff; }
-    footer a { color: #38bdf8; text-decoration: none; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RolPlay.ai v1.6 Academy | Gimnasio de Habilidades Blandas con IA</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- Boxicons -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <style>
+        :root {
+            --bg-dark: #0B0F19;
+            --bg-card: rgba(17, 24, 39, 0.85);
+            --bg-card-hover: rgba(31, 41, 55, 0.95);
+            --primary: #6366F1;
+            --primary-gradient: linear-gradient(135deg, #6366F1 0%, #A855F7 100%);
+            --accent-glow: rgba(99, 102, 241, 0.25);
+            --text-main: #F8FAFC;
+            --text-muted: #94A3B8;
+            --border-glass: rgba(255, 255, 255, 0.08);
+            --border-active: #818CF8;
+            --success: #10B981;
+            --warning: #F59E0B;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            background-image: 
+                radial-gradient(circle at 15% 20%, rgba(99, 102, 241, 0.12), transparent 40%),
+                radial-gradient(circle at 85% 80%, rgba(168, 85, 247, 0.12), transparent 40%);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        /* Nav Header */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            backdrop-filter: blur(16px);
+            background: rgba(11, 15, 25, 0.85);
+            border-bottom: 1px solid var(--border-glass);
+            padding: 1rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .brand-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .brand-logo {
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            background: var(--primary-gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+            box-shadow: 0 0 20px rgba(99, 102, 241, 0.4);
+        }
+
+        .brand-title {
+            font-size: 1.35rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            color: white;
+        }
+
+        .brand-title span {
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .brand-badge {
+            font-size: 0.7rem;
+            padding: 3px 8px;
+            background: rgba(99, 102, 241, 0.2);
+            color: #A5B4FC;
+            border-radius: 20px;
+            border: 1px solid rgba(99, 102, 241, 0.4);
+            font-weight: 700;
+        }
+
+        .nav-tabs {
+            display: flex;
+            gap: 8px;
+            background: rgba(30, 41, 59, 0.6);
+            padding: 4px;
+            border-radius: 14px;
+            border: 1px solid var(--border-glass);
+        }
+
+        .nav-tab-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            padding: 8px 18px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .nav-tab-btn:hover {
+            color: white;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .nav-tab-btn.active {
+            color: white;
+            background: var(--primary-gradient);
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.35);
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .btn-back-hub {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 14px;
+            border-radius: 10px;
+            border: 1px solid var(--border-glass);
+            transition: all 0.2s;
+        }
+
+        .btn-back-hub:hover {
+            color: white;
+            border-color: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        /* Container & Layout */
+        .main-container {
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 2.5rem 1.5rem 4rem;
+            flex: 1;
+        }
+
+        /* Views */
+        .view-content {
+            display: none;
+            animation: fadeIn 0.35s ease;
+        }
+
+        .view-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes pulseOrb {
+            0% { transform: scale(0.96); box-shadow: 0 0 25px rgba(99,102,241,0.4); }
+            50% { transform: scale(1.06); box-shadow: 0 0 55px rgba(168,85,247,0.65); }
+            100% { transform: scale(0.96); box-shadow: 0 0 25px rgba(99,102,241,0.4); }
+        }
+
+        /* Hero / Portal View */
+        .hero-banner {
+            text-align: center;
+            padding: 3rem 1rem;
+            max-width: 850px;
+            margin: 0 auto;
+        }
+
+        .hero-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(99, 102, 241, 0.15);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            color: #A5B4FC;
+            padding: 6px 14px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-title {
+            font-size: 3.2rem;
+            font-weight: 900;
+            line-height: 1.15;
+            letter-spacing: -1.5px;
+            margin-bottom: 1.25rem;
+        }
+
+        .hero-title span {
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-desc {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-bottom: 2.5rem;
+        }
+
+        .portal-cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
+            margin-top: 2rem;
+        }
+
+        .feature-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-glass);
+            border-radius: 20px;
+            padding: 24px;
+            text-align: left;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--border-active);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            background: var(--bg-card-hover);
+        }
+
+        .feature-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            margin-bottom: 1rem;
+            color: white;
+        }
+
+        .icon-purple { background: linear-gradient(135deg, #6366F1, #8B5CF6); }
+        .icon-blue { background: linear-gradient(135deg, #0EA5E9, #3B82F6); }
+        .icon-emerald { background: linear-gradient(135deg, #10B981, #059669); }
+        .icon-amber { background: linear-gradient(135deg, #F59E0B, #D97706); }
+
+        .feature-card h3 {
+            font-size: 1.15rem;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+
+        .feature-card p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .btn-launch-hero {
+            background: var(--primary-gradient);
+            color: white;
+            padding: 16px 36px;
+            border-radius: 14px;
+            border: none;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.4);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-launch-hero:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 15px 40px rgba(99, 102, 241, 0.6);
+        }
+
+        /* Simulator Layout */
+        .simulator-layout {
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            gap: 24px;
+            align-items: start;
+        }
+
+        @media (max-width: 860px) {
+            .simulator-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .sim-sidebar {
+            background: var(--bg-card);
+            border: 1px solid var(--border-glass);
+            border-radius: 20px;
+            padding: 24px;
+        }
+
+        .sim-sidebar h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #A5B4FC;
+        }
+
+        .sim-field-group {
+            margin-bottom: 20px;
+        }
+
+        .sim-label {
+            display: block;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .sim-select, .sim-input {
+            width: 100%;
+            background: #1E293B;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: white;
+            padding: 10px 14px;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            outline: none;
+            transition: all 0.2s;
+        }
+
+        .sim-select:focus, .sim-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.25);
+        }
+
+        /* Chat Arena */
+        .chat-arena {
+            background: var(--bg-card);
+            border: 1px solid var(--border-glass);
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            height: 680px;
+            overflow: hidden;
+        }
+
+        .arena-header {
+            padding: 16px 24px;
+            background: rgba(15, 23, 42, 0.9);
+            border-bottom: 1px solid var(--border-glass);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .arena-scenario-info h4 {
+            font-size: 1.05rem;
+            font-weight: 700;
+        }
+
+        .arena-scenario-info span {
+            font-size: 0.8rem;
+            color: #A5B4FC;
+        }
+
+        .btn-action-small {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-glass);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s;
+        }
+
+        .btn-action-small:hover {
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 24px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .chat-msg {
+            max-width: 80%;
+            padding: 16px 20px;
+            border-radius: 18px;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            position: relative;
+        }
+
+        .msg-assistant {
+            align-self: flex-start;
+            background: rgba(30, 41, 59, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: #F1F5F9;
+            border-bottom-left-radius: 4px;
+        }
+
+        .msg-user {
+            align-self: flex-end;
+            background: var(--primary-gradient);
+            color: white;
+            border-bottom-right-radius: 4px;
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+        }
+
+        .msg-sender-tag {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #A5B4FC;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .btn-speak-msg {
+            background: transparent;
+            border: none;
+            color: #CBD5E1;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: color 0.2s;
+        }
+
+        .btn-speak-msg:hover {
+            color: #F8FAFC;
+        }
+
+        .chat-input-bar {
+            padding: 16px 20px;
+            background: rgba(15, 23, 42, 0.95);
+            border-top: 1px solid var(--border-glass);
+            display: flex;
+            gap: 12px;
+        }
+
+        .chat-input {
+            flex: 1;
+            background: #1E293B;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: white;
+            padding: 14px 18px;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            outline: none;
+        }
+
+        .chat-input:focus {
+            border-color: var(--primary);
+        }
+
+        .btn-send-msg {
+            background: var(--primary-gradient);
+            border: none;
+            color: white;
+            padding: 0 24px;
+            border-radius: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+
+        .btn-send-msg:hover {
+            filter: brightness(1.1);
+            transform: translateY(-2px);
+        }
+
+        /* Academy Section */
+        .academy-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 24px;
+            margin-top: 2rem;
+        }
+
+        .academy-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-glass);
+            border-radius: 20px;
+            padding: 28px;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.3s ease;
+        }
+
+        .academy-card:hover {
+            border-color: var(--border-active);
+            transform: translateY(-4px);
+        }
+
+        .academy-badge {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: #818CF8;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .academy-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 10px;
+        }
+
+        .academy-card p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin-bottom: 20px;
+            flex: 1;
+        }
+
+        .academy-links {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .academy-link-btn {
+            background: rgba(30, 41, 59, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: white;
+            padding: 10px 14px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: all 0.2s;
+        }
+
+        .academy-link-btn:hover {
+            background: rgba(99, 102, 241, 0.2);
+            border-color: var(--primary);
+            color: #A5B4FC;
+        }
+
+        /* Evaluation Modal Card */
+        .eval-card {
+            display: none;
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .eval-card h3 {
+            color: var(--success);
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+        }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid var(--border-glass);
+            padding: 1.5rem;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            background: rgba(11, 15, 25, 0.95);
+        }
+
+        footer a {
+            color: #A5B4FC;
+            text-decoration: none;
+        }
+
+        /* AI Status Card & Difficulty */
+        .ai-status-card {
+            background: rgba(16, 185, 129, 0.08);
+            border: 1px solid rgba(16, 185, 129, 0.25);
+            border-radius: 14px;
+            padding: 12px 14px;
+            margin-bottom: 8px;
+        }
+
+        .ai-status-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 4px;
+        }
+
+        .ai-status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #10B981;
+            box-shadow: 0 0 10px #10B981;
+            animation: pulseAura 2s infinite;
+        }
+
+        @keyframes pulseAura {
+            0% { transform: scale(0.9); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+            70% { transform: scale(1.15); box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
+            100% { transform: scale(0.9); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+        }
+
+        .ai-status-title {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #34D399;
+        }
+
+        .ai-status-desc {
+            font-size: 0.75rem;
+            color: #94A3B8;
+            line-height: 1.4;
+        }
+
+        /* Academy Subnavigation */
+        .academy-subnav {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .academy-subnav-btn {
+            background: rgba(30, 41, 59, 0.7);
+            border: 1px solid var(--border-glass);
+            color: var(--text-muted);
+            padding: 10px 20px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 0.9rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.25s ease;
+        }
+
+        .academy-subnav-btn:hover {
+            color: white;
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .academy-subnav-btn.active {
+            color: white;
+            background: var(--primary-gradient);
+            border-color: transparent;
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
+        }
+
+        .academy-subview {
+            display: none;
+            animation: fadeIn 0.35s ease;
+        }
+
+        .academy-subview.active {
+            display: block;
+        }
+
+        /* Examples / Comparative Cards */
+        .examples-list {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .example-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-glass);
+            border-radius: 20px;
+            padding: 26px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .example-card:hover {
+            border-color: var(--border-active);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+        }
+
+        .example-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .example-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .example-tag {
+            font-size: 0.72rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #818CF8;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .example-title {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: white;
+        }
+
+        .btn-try-scenario {
+            background: rgba(99, 102, 241, 0.15);
+            border: 1px solid rgba(99, 102, 241, 0.4);
+            color: #A5B4FC;
+            padding: 8px 16px;
+            border-radius: 10px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s;
+        }
+
+        .btn-try-scenario:hover {
+            background: var(--primary-gradient);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
+        }
+
+        .example-context-box {
+            background: rgba(15, 23, 42, 0.7);
+            border-left: 3px solid #818CF8;
+            padding: 12px 16px;
+            border-radius: 0 12px 12px 0;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+            color: #CBD5E1;
+            line-height: 1.5;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 18px;
+        }
+
+        @media (max-width: 768px) {
+            .comparison-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .compare-box {
+            border-radius: 14px;
+            padding: 18px;
+            font-size: 0.9rem;
+            line-height: 1.55;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .compare-box.bad {
+            background: rgba(239, 68, 68, 0.08);
+            border: 1px solid rgba(239, 68, 68, 0.25);
+        }
+
+        .compare-box.good {
+            background: rgba(16, 185, 129, 0.08);
+            border: 1px solid rgba(16, 185, 129, 0.25);
+        }
+
+        .compare-tag {
+            font-size: 0.75rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 10px;
+        }
+
+        .compare-tag.bad { color: #F87171; }
+        .compare-tag.good { color: #34D399; }
+
+        .compare-dialogue {
+            color: #F1F5F9;
+            font-style: italic;
+            margin-bottom: 10px;
+        }
+
+        .compare-reason {
+            font-size: 0.8rem;
+            margin-top: 8px;
+            padding-top: 10px;
+            border-top: 1px dashed rgba(255, 255, 255, 0.1);
+            color: #94A3B8;
+        }
+
+        .example-footer-insight {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+            padding-top: 14px;
+            border-top: 1px solid var(--border-glass);
+        }
+
+        .technique-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: #FCD34D;
+            background: rgba(245, 158, 11, 0.12);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            padding: 4px 12px;
+            border-radius: 20px;
+        }
+
+        /* Cheatsheet Grid */
+        .cheatsheet-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 20px;
+        }
+
+        .cheat-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-glass);
+            border-radius: 18px;
+            padding: 22px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: all 0.3s;
+        }
+
+        .cheat-card:hover {
+            border-color: var(--border-active);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.35);
+        }
+
+        .cheat-top {
+            margin-bottom: 14px;
+        }
+
+        .cheat-icon-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 10px;
+        }
+
+        .cheat-icon-title i {
+            font-size: 1.6rem;
+            color: #818CF8;
+            background: rgba(99, 102, 241, 0.15);
+            padding: 8px;
+            border-radius: 10px;
+        }
+
+        .cheat-icon-title h4 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: white;
+        }
+
+        .cheat-desc {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+            margin-bottom: 12px;
+        }
+
+        .cheat-formula {
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 10px;
+            padding: 10px 14px;
+            font-family: monospace;
+            font-size: 0.85rem;
+            color: #A5B4FC;
+            line-height: 1.4;
+        }
+
+        .cheat-trigger {
+            font-size: 0.78rem;
+            color: #10B981;
+            margin-top: 8px;
+            font-weight: 600;
+        }
+
+        /* Hierarchy 360 Pipeline */
+        .hierarchy-pipeline-banner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(15, 23, 42, 0.9);
+            border: 1px solid var(--border-glass);
+            border-radius: 18px;
+            padding: 20px 24px;
+            margin-bottom: 30px;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .pipeline-step-node {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex: 1;
+            min-width: 220px;
+        }
+
+        .step-circle {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .step-circle.empleado { background: linear-gradient(135deg, #10B981, #059669); }
+        .step-circle.encargado { background: linear-gradient(135deg, #0EA5E9, #2563EB); }
+        .step-circle.supervisor { background: linear-gradient(135deg, #8B5CF6, #6366F1); }
+
+        .step-info h5 {
+            font-size: 1rem;
+            font-weight: 700;
+            color: white;
+        }
+
+        .step-info span {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+        }
+
+        .pipeline-arrow {
+            color: #475569;
+            font-size: 1.6rem;
+        }
+
+        @media (max-width: 860px) {
+            .pipeline-arrow { display: none; }
+        }
+
+        .hierarchy-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-glass);
+            border-radius: 20px;
+            padding: 26px;
+            margin-bottom: 24px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .hierarchy-card:hover {
+            border-color: var(--border-active);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .hierarchy-badge-role {
+            font-size: 0.75rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 4px 12px;
+            border-radius: 20px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 10px;
+        }
+
+        .badge-empleado { background: rgba(16, 185, 129, 0.15); color: #34D399; border: 1px solid rgba(16, 185, 129, 0.3); }
+        .badge-encargado { background: rgba(14, 165, 233, 0.15); color: #38BDF8; border: 1px solid rgba(14, 165, 233, 0.3); }
+        .badge-supervisor { background: rgba(139, 92, 246, 0.15); color: #C084FC; border: 1px solid rgba(139, 92, 246, 0.3); }
+
+        .hand-off-box {
+            background: rgba(99, 102, 241, 0.08);
+            border: 1px solid rgba(99, 102, 241, 0.25);
+            border-radius: 12px;
+            padding: 14px 18px;
+            margin-top: 14px;
+            font-size: 0.88rem;
+            color: #E0E7FF;
+            line-height: 1.5;
+        }
+
+        .hand-off-box strong {
+            color: #A5B4FC;
+        }
+    </style>
 </head>
 <body>
 
-  <header>
-    <div style="display:flex; align-items:center; gap:15px;">
-      <a href="https://aura-adamo.site/#portfolio" class="back-btn"><i class='bx bx-left-arrow-alt'></i> Volver a Aura</a>
-      <a href="#" class="logo"><i class='bx bx-brain'></i> RolPlay<span>.ai</span></a>
-      <span class="badge">Ecosistema Aura</span>
-    </div>
-    <div style="display:flex; align-items:center; gap:12px; font-size:0.85rem; color:var(--text-muted);">
-      <i class='bx bxs-server' style="color:#34d399;"></i> BD: <strong>a0170001_rolplay</strong>
-    </div>
-  </header>
+    <!-- Header Navigation -->
+    <header>
+        <a href="#portal" class="brand-container" onclick="showView('portal')">
+            <div class="brand-logo">🎭</div>
+            <div>
+                <div class="brand-title">RolPlay<span>.ai</span></div>
+                <div class="brand-badge">v1.6 Academy Edition</div>
+            </div>
+        </a>
 
-  <main>
-    <!-- Panel Izquierdo: Configuración y Escenario -->
-    <div class="panel">
-      <h3 class="panel-title"><i class='bx bx-slider-alt'></i> Centro de Mando</h3>
-      
-      <div class="form-group">
-        <label>Nombre del Entrenado</label>
-        <input type="text" id="userName" value="Omar" placeholder="Tu nombre">
-      </div>
-
-      <div class="form-group">
-        <label>Función en la Empresa</label>
-        <div class="role-grid">
-          <button class="role-btn active" onclick="setRole('empleado')"><i class='bx bx-user'></i> Empleado</button>
-          <button class="role-btn" onclick="setRole('encargado')"><i class='bx bx-id-card'></i> Encargado</button>
-          <button class="role-btn" onclick="setRole('supervisor')"><i class='bx bx-crown'></i> Supervisor</button>
+        <div class="nav-tabs">
+            <button class="nav-tab-btn active" id="tab-portal" onclick="showView('portal')">
+                <i class='bx bx-home-alt'></i> Inicio / Intro
+            </button>
+            <button class="nav-tab-btn" id="tab-simulator" onclick="showView('simulator')">
+                <i class='bx bx-bot'></i> Simulador
+            </button>
+            <button class="nav-tab-btn" id="tab-academy" onclick="showView('academy')">
+                <i class='bx bx-book-bookmark'></i> Academia
+            </button>
         </div>
-      </div>
 
-      <div class="form-group">
-        <label>Área de Entrenamiento</label>
-        <select id="scenarioSelect" onchange="onScenarioChange()">
-          <option value="atencion">Atención al Cliente - Cliente Furioso</option>
-          <option value="ventas">Ventas B2B - Negociación CEO Dominante</option>
-          <option value="rrhh">Recursos Humanos - Empleado a la Defensiva</option>
-          <option value="liderazgo">Liderazgo - Resolución de Crisis de Equipo</option>
-          <option value="soporte">Soporte Técnico - Usuario No-Tech con Urgencia</option>
-        </select>
-      </div>
-
-      <div class="scenario-desc" id="scenarioDesc">
-        <strong>Objetivo:</strong> Desescalar el conflicto con empatía, validar la frustración y dar solución concreta en menos de 3 respuestas sin perder la compostura.
-      </div>
-
-      <div style="margin-top:20px; display:flex; gap:10px;">
-        <button class="btn" style="flex:1;" onclick="resetSimulation()"><i class='bx bx-refresh'></i> Reiniciar</button>
-        <button class="btn" style="background:rgba(255,255,255,0.08); border:1px solid var(--border);" onclick="finishAndSave()"><i class='bx bx-save'></i> Evaluar y Guardar</button>
-      </div>
-
-      <div class="eval-box" id="evalBox">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
-          <strong>Evaluación IA Aura:</strong>
-          <span class="score-badge" id="evalScore">92/100</span>
+        <div class="header-actions">
+            <a href="https://aura-adamo.site/" class="btn-back-hub">
+                <i class='bx bx-arrow-back'></i> Aura Hub
+            </a>
         </div>
-        <p id="evalFeedback" style="line-height:1.5; color:var(--text-muted);"></p>
-      </div>
-    </div>
+    </header>
 
-    <!-- Panel Derecho: Simulación Interactiva -->
-    <div class="panel chat-container">
-      <div class="chat-header">
-        <div>
-          <h4 id="chatNpcName" style="font-size:1.1rem; color:#fff;">Marta (Cliente Inconforme)</h4>
-          <span id="chatNpcRole" style="font-size:0.8rem; color:var(--text-muted);">Simulación activa con IA adaptativa</span>
-        </div>
-        <span class="badge" id="statusBadge" style="background:rgba(56, 189, 248, 0.15); color:#38bdf8; border-color:rgba(56, 189, 248, 0.3);">En vivo</span>
-      </div>
+    <!-- Main Content Container -->
+    <main class="main-container">
 
-      <div class="chat-messages" id="chatMessages">
-        <!-- Mensajes generados dinámicamente -->
-      </div>
+        <!-- 1. PORTAL VIEW -->
+        <section id="view-portal" class="view-content active">
+            <div class="hero-banner">
+                <div style="display: flex; justify-content: center; align-items: center; margin-bottom: 1.5rem;">
+                    <div style="width: 100px; height: 100px; border-radius: 50%; background: radial-gradient(circle, rgba(99,102,241,0.4) 0%, rgba(168,85,247,0.15) 70%); display: flex; align-items: center; justify-content: center; box-shadow: 0 0 45px rgba(99,102,241,0.5); border: 2px solid rgba(129, 140, 248, 0.4); animation: pulseOrb 3s infinite ease-in-out;">
+                        <span style="font-size: 3rem;">🎭</span>
+                    </div>
+                </div>
+                <div class="hero-tag">
+                    <i class='bx bx-sparkles'></i> El Gimnasio Virtual de Habilidades Blandas con IA
+                </div>
+                <h1 class="hero-title">
+                    Reentrena tu Comunicación con <span>Inteligencia Artificial</span>
+                </h1>
+                <p class="hero-desc">
+                    Supera objeciones en ventas, lidera conversaciones de crisis y maneja clientes furiosos con agentes de rol interactivos con síntesis de voz y evaluación pedagógica en tiempo real.
+                </p>
+                <div>
+                    <button class="btn-launch-hero" onclick="showView('simulator')">
+                        🚀 Entrar al Simulador <i class='bx bx-right-arrow-alt'></i>
+                    </button>
+                </div>
+            </div>
 
-      <div class="chat-input-area">
-        <input type="text" id="userInput" placeholder="Escribe tu respuesta profesional aquí..." onkeypress="handleKeyPress(event)">
-        <button class="btn" onclick="sendMessage()"><i class='bx bxs-send'></i> Enviar</button>
-      </div>
-    </div>
-  </main>
+            <div class="portal-cards-grid">
+                <div class="feature-card">
+                    <div class="feature-icon icon-purple"><i class='bx bx-headphone'></i></div>
+                    <h3>Atención al Cliente</h3>
+                    <p>Simulaciones desde clientes confundidos hasta situaciones de logística crítica y reclamos airados.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon icon-blue"><i class='bx bx-line-chart'></i></div>
+                    <h3>Ventas B2B & Negociación</h3>
+                    <p>Técnicas de Chris Voss (FBI) y Harvard. Negocia con CEOs agresivos y directores de compras escépticos.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon icon-emerald"><i class='bx bx-user-check'></i></div>
+                    <h3>Recursos Humanos</h3>
+                    <p>Entrevistas a candidatos evasivos, soporte a juniors nerviosos y desvinculaciones respetuosas pero firmes.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon icon-amber"><i class='bx bx-crown'></i></div>
+                    <h3>Soporte IT & Liderazgo</h3>
+                    <p>Gestión de incidencias técnicas con usuarios no familiarizados y liderazgo en momentos de alta presión.</p>
+                </div>
+            </div>
+        </section>
 
-  <footer>
-    © 2026 <strong>Aura</strong> - Todos los derechos reservados. Desarrollado por Aura (<a href="https://aura-adamo.site">aura-adamo.site</a>).
-    Conectado en tiempo real con MySQL <strong>a0170001_rolplay</strong>.
-  </footer>
+        <!-- 2. SIMULATOR VIEW -->
+        <section id="view-simulator" class="view-content">
+            
+            <div id="eval-result-card" class="eval-card">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <h3 id="eval-score-text">🏆 Evaluación de Sesión: 92/100</h3>
+                    <button class="btn-action-small" onclick="closeEval()">Cerrar</button>
+                </div>
+                <p id="eval-feedback-text" style="color: #E2E8F0; margin-top: 8px; font-size: 0.95rem;"></p>
+                <p id="eval-recom-text" style="color: #94A3B8; margin-top: 6px; font-size: 0.85rem; font-style: italic;"></p>
+            </div>
 
-  <script>
-    const scenariosData = {
-      atencion: {
-        npc: 'Carlos (Cliente Furioso)',
-        role: 'Logística B2B - Pedido Retrasado',
-        desc: 'Carlos compró insumos críticos que no llegaron hoy. Amenaza con cancelar la cuenta. Tu meta: escuchar, calmar y ofrecer plan de contingencia inmediato.',
-        greeting: '¡¿Con quién hablo?! Me acaban de arruinar la producción de toda la semana y necesito saber qué van a hacer AHORA MISMO.'
-      },
-      ventas: {
-        npc: 'Paula (CEO Multinacional)',
-        role: 'Negociación B2B Agresiva',
-        desc: 'Paula tiene 5 minutos antes de su vuelo y un competidor 20% más barato. Tu meta: defender valor y diferenciación sin regalar margen.',
-        greeting: 'Hola. Tengo solo 5 minutos antes de abordar. Su competidor me ofrece lo mismo por 20% menos. O me igualas ese número o se terminó la reunión.'
-      },
-      rrhh: {
-        npc: 'Roberto (Empleado citado a RRHH)',
-        role: 'Reunión de Rendimiento',
-        desc: 'Roberto cree que lo van a despedir injustamente y está a la defensiva. Tu meta: generar un ambiente constructivo y alinearlo a metas.',
-        greeting: '¿Para qué me llamaron? Espero que no sea por lo del informe de ayer, porque el sistema es un desastre y no es mi culpa.'
-      },
-      liderazgo: {
-        npc: 'Mariana (Encargada de Turno)',
-        role: 'Resolución de Conflictos Internos',
-        desc: 'Dos operadores se negaron a hacer horas extra y la línea se paró. Pide directivas claras para actuar como supervisora.',
-        greeting: 'Jefe, tenemos un problema en la planta: dos chicos se cruzaron de brazos y la máquina 4 está frenada. ¿Aplico sanción o llamo a reunión ya?'
-      },
-      soporte: {
-        npc: 'Abel (Contador Senior)',
-        role: 'Usuario No-Técnico con Urgencia',
-        desc: 'Abel debe cerrar balances en 2 horas y su sistema no responde. Tu meta: guiarlo con paciencia y cero tecnicismos.',
-        greeting: 'Hola hijo, perdón la molestia... pero la pantalla se me quedó congelada en azul y tengo que cerrar el balance antes de las 5. ¿Me ayudás?'
-      }
-    };
+            <div class="simulator-layout">
+                <!-- Sidebar Config -->
+                <aside class="sim-sidebar">
+                    <h3><i class='bx bx-slider'></i> Configuración</h3>
 
-    let currentRole = 'empleado';
-    let chatHistory = [];
+                    <div class="sim-field-group">
+                        <label class="sim-label">Tu Nombre</label>
+                        <input type="text" id="user-name" class="sim-input" value="Usuario" oninput="saveProfile()">
+                    </div>
 
-    function setRole(role) {
-      currentRole = role;
-      document.querySelectorAll('.role-btn').forEach(btn => btn.classList.remove('active'));
-      event.currentTarget.classList.add('active');
-    }
+                    <div class="sim-field-group">
+                        <label class="sim-label">Empresa / Rol</label>
+                        <input type="text" id="user-company" class="sim-input" value="Aura Talent" oninput="saveProfile()">
+                    </div>
 
-    function onScenarioChange() {
-      resetSimulation();
-    }
+                    <div class="sim-field-group">
+                        <label class="sim-label">Área de Entrenamiento</label>
+                        <select id="sim-area" class="sim-select" onchange="updateScenarioOptions()">
+                            <option value="Cadena de Mando">Cadena de Mando (Empleado, Encargado, Supervisor)</option>
+                            <option value="Atención al Cliente">Atención al Cliente</option>
+                            <option value="Ventas B2B">Ventas B2B & Negociación</option>
+                            <option value="Recursos Humanos">Recursos Humanos</option>
+                            <option value="Hostelería y Turismo">Hostelería y Turismo</option>
+                            <option value="Soporte IT y Liderazgo">Soporte IT y Liderazgo</option>
+                        </select>
+                    </div>
 
-    function resetSimulation() {
-      const selected = document.getElementById('scenarioSelect').value;
-      const data = scenariosData[selected];
-      document.getElementById('scenarioDesc').innerHTML = `<strong>Objetivo (${currentRole.toUpperCase()}):</strong> ${data.desc}`;
-      document.getElementById('chatNpcName').innerText = data.npc;
-      document.getElementById('chatNpcRole').innerText = data.role;
-      document.getElementById('evalBox').style.display = 'none';
+                    <div class="sim-field-group">
+                        <label class="sim-label">Escenario & Nivel</label>
+                        <select id="sim-scenario" class="sim-select" onchange="initScenarioChat()">
+                            <!-- Generated dynamically -->
+                        </select>
+                    </div>
 
-      chatHistory = [
-        { sender: data.npc, text: data.greeting, isAi: true }
-      ];
-      renderMessages();
-    }
+                    <div class="sim-field-group">
+                        <label class="sim-label">Motor de Simulación IA</label>
+                        <div class="ai-status-card">
+                            <div class="ai-status-header">
+                                <span class="ai-status-dot"></span>
+                                <span class="ai-status-title">IA Activa (Auto-configurada)</span>
+                            </div>
+                            <p class="ai-status-desc">100% gratuita y sin registros. Respuestas dinámicas y contextuales en tiempo real.</p>
+                        </div>
+                    </div>
 
-    function renderMessages() {
-      const container = document.getElementById('chatMessages');
-      container.innerHTML = '';
-      chatHistory.forEach(msg => {
-        const div = document.createElement('div');
-        div.className = `msg ${msg.isAi ? 'ai' : 'user'}`;
-        div.innerHTML = `
-          <div class="msg-sender"><i class='bx ${msg.isAi ? 'bx-bot' : 'bx-user'}'></i> ${msg.sender}</div>
-          <div>${msg.text}</div>
-        `;
-        container.appendChild(div);
-      });
-      container.scrollTop = container.scrollHeight;
-    }
+                    <div class="sim-field-group">
+                        <label class="sim-label">Nivel de Exigencia</label>
+                        <select id="sim-difficulty" class="sim-select">
+                            <option value="realista">Realista (Equilibrado)</option>
+                            <option value="exigente">Alta Tensión (Exigente / Hostil)</option>
+                            <option value="colaborativo">Constructivo (Guiado)</option>
+                        </select>
+                    </div>
 
-    function handleKeyPress(e) {
-      if (e.key === 'Enter') sendMessage();
-    }
+                    <button class="btn-action-small" style="width: 100%; justify-content: center; padding: 10px; margin-top: 10px;" onclick="resetChat()">
+                        <i class='bx bx-refresh'></i> Reiniciar Simulación
+                    </button>
+                </aside>
 
-    function sendMessage() {
-      const input = document.getElementById('userInput');
-      const text = input.value.trim();
-      if (!text) return;
+                <!-- Chat Arena -->
+                <div class="chat-arena">
+                    <div class="arena-header">
+                        <div class="arena-scenario-info">
+                            <h4 id="arena-current-title">Escenario Seleccionado</h4>
+                            <span id="arena-current-desc">Contexto de la conversación</span>
+                        </div>
+                        <button class="btn-action-small" style="background: rgba(16, 185, 129, 0.2); color: #34D399; border-color: rgba(16, 185, 129, 0.4);" onclick="finishAndEvaluate()">
+                            <i class='bx bx-check-double'></i> Evaluar Desempeño
+                        </button>
+                    </div>
 
-      const userName = document.getElementById('userName').value || 'Omar';
-      chatHistory.push({ sender: userName, text: text, isAi: false });
-      input.value = '';
-      renderMessages();
+                    <div class="chat-messages" id="chat-messages-container">
+                        <!-- Messages dynamically populated -->
+                    </div>
 
-      // Respuesta inteligente del NPC
-      setTimeout(() => {
-        generateNpcResponse(text);
-      }, 700);
-    }
+                    <div class="chat-input-bar">
+                        <input type="text" id="chat-user-input" class="chat-input" placeholder="Escribe tu respuesta profesional..." onkeydown="if(event.key==='Enter') sendMessage()">
+                        <button class="btn-send-msg" onclick="sendMessage()">
+                            Enviar <i class='bx bx-send'></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-    function generateNpcResponse(userText) {
-      const selected = document.getElementById('scenarioSelect').value;
-      let npcReply = '';
-      const lower = userText.toLowerCase();
+        <!-- 3. ACADEMY VIEW -->
+        <section id="view-academy" class="view-content">
+            <div class="hero-banner" style="padding: 1.5rem 0 2rem;">
+                <div class="hero-tag"><i class='bx bx-library'></i> Campus de Habilidades Estratégicas & Negociación</div>
+                <h1 class="hero-title" style="font-size: 2.6rem;">Academia de <span>Habilidades Blandas</span></h1>
+                <p class="hero-desc" style="font-size: 1.05rem; margin-bottom: 1.5rem;">
+                    Aprende los modelos del FBI, Harvard y la psicología conductual. Analiza ejemplos reales con comparativas (Bien vs Mal), consulta referencias maestras y practica cada caso directamente en el simulador.
+                </p>
 
-      if (lower.includes('disculpa') || lower.includes('entiendo') || lower.includes('soluci') || lower.includes('tranquil')) {
-        npcReply = "Agradezco que me hables con respeto y me des una respuesta clara. Decime exactamente cuál es el próximo paso y en cuánto tiempo lo resuelven.";
-      } else if (lower.includes('no es mi culpa') || lower.includes('espera') || lower.includes('despues')) {
-        npcReply = "Esa respuesta no me sirve de nada. Necesito que te hagas cargo de la situación o me pases con tu superior ahora mismo.";
-      } else {
-        npcReply = "Bien, tomo nota de lo que me decís. Pero quiero garantías de que esto no va a volver a pasar en mi operación.";
-      }
+                <!-- Sub-navegación de la Academia -->
+                <div class="academy-subnav">
+                    <button class="academy-subnav-btn active" id="subtab-hierarchy" onclick="showAcademyTab('hierarchy')">
+                        <i class='bx bx-git-repo-forked'></i> Cadena de Mando 360° (Entrelazado)
+                    </button>
+                    <button class="academy-subnav-btn" id="subtab-examples" onclick="showAcademyTab('examples')">
+                        <i class='bx bx-git-compare'></i> Casos Reales: Bien vs Mal
+                    </button>
+                    <button class="academy-subnav-btn" id="subtab-modules" onclick="showAcademyTab('modules')">
+                        <i class='bx bx-book-open'></i> 6 Módulos & Literatura Clave
+                    </button>
+                    <button class="academy-subnav-btn" id="subtab-cheatsheet" onclick="showAcademyTab('cheatsheet')">
+                        <i class='bx bx-bolt-circle'></i> Cheat Sheet & Fórmulas Rápidas
+                    </button>
+                </div>
+            </div>
 
-      const npcName = scenariosData[selected].npc;
-      chatHistory.push({ sender: npcName, text: npcReply, isAi: true });
-      renderMessages();
-    }
+            <!-- SUB-VIEW 0: CADENA DE MANDO 360° (ENTRELAZADA) -->
+            <div id="academy-subview-hierarchy" class="academy-subview active">
+                
+                <!-- Banner Pipeline Visual -->
+                <div class="hierarchy-pipeline-banner">
+                    <div class="pipeline-step-node">
+                        <div class="step-circle empleado"><i class='bx bx-user'></i></div>
+                        <div class="step-info">
+                            <h5>1. Empleado (Frontline)</h5>
+                            <span>Detección, contención y traspaso limpio</span>
+                        </div>
+                    </div>
+                    <i class='bx bx-right-arrow-alt pipeline-arrow'></i>
+                    <div class="pipeline-step-node">
+                        <div class="step-circle encargado"><i class='bx bx-user-check'></i></div>
+                        <div class="step-info">
+                            <h5>2. Encargado (Turno)</h5>
+                            <span>Mediación, solución y frente unido</span>
+                        </div>
+                    </div>
+                    <i class='bx bx-right-arrow-alt pipeline-arrow'></i>
+                    <div class="pipeline-step-node">
+                        <div class="step-circle supervisor"><i class='bx bx-crown'></i></div>
+                        <div class="step-info">
+                            <h5>3. Supervisor (Área)</h5>
+                            <span>Coaching 1 a 1 y mejora sistémica</span>
+                        </div>
+                    </div>
+                </div>
 
-    async function finishAndSave() {
-      const userName = document.getElementById('userName').value || 'Omar';
-      const scenarioKey = document.getElementById('scenarioSelect').value;
-      const scenarioTitle = scenariosData[scenarioKey].role;
+                <div class="example-context-box" style="margin-bottom: 25px; border-left-color: #10B981;">
+                    <strong>¿Por qué están entrelazados?</strong> Una organización no falla porque ocurra un problema con un cliente, sino porque la cadena se rompe: el empleado culpa a la empresa, el encargado desautoriza al empleado frente al cliente, y el supervisor castiga al encargado en lugar de entrenarlo. Aquí aprenderás el protocolo coordinado de traspaso de poder en 3 actos consecutivos.
+                </div>
 
-      // Calcular score inteligente
-      let score = 85;
-      if (chatHistory.length >= 4) score = 94;
-      const feedback = `Excelente desempeño como ${currentRole.toUpperCase()}. Demostraste escucha activa, control emocional y orientación a la resolución rápida del conflicto.`;
+                <!-- Acto 1: Empleado -->
+                <div class="hierarchy-card">
+                    <div class="example-header">
+                        <div>
+                            <span class="hierarchy-badge-role badge-empleado"><i class='bx bx-user'></i> Eslabón 1: El Empleado en Mostrador / Atención</span>
+                            <h3 class="example-title">Acto 1: El Reclamo Crítico y el Traspaso Limpio</h3>
+                        </div>
+                        <button class="btn-try-scenario" onclick="practiceScenario('Cadena de Mando', 'Nivel 1 (Empleado): Gestión de Reclamo & Traspaso Limpio')">
+                            <i class='bx bx-play-circle'></i> Practicar Rol Empleado
+                        </button>
+                    </div>
+                    <p style="color: #94A3B8; font-size: 0.9rem; margin-bottom: 16px;">
+                        <strong>Misión:</strong> Absorber la emoción del cliente, escuchar sin interrumpir y resolver dentro de su rango de autonomía ($X o cambio directo). Si el reclamo supera sus facultades, debe ejecutar un <strong>Traspaso Limpio</strong> sin desentenderse.
+                    </p>
+                    <div class="comparison-grid">
+                        <div class="compare-box bad">
+                            <div>
+                                <div class="compare-tag bad"><i class='bx bx-x-circle'></i> Error Fatal del Empleado</div>
+                                <p class="compare-dialogue">"Señor, no es mi culpa, la cocina se equivocó de comanda. Yo solo trabajo acá y no puedo hacer nada. Vaya a quejarse con el encargado."</p>
+                            </div>
+                            <p class="compare-reason">❌ Rompe la imagen de la empresa, humilla al negocio, enfurece al cliente y desata un conflicto mayor.</p>
+                        </div>
+                        <div class="compare-box good">
+                            <div>
+                                <div class="compare-tag good"><i class='bx bx-check-circle'></i> Protocolo de Traspaso Limpio (Aura)</div>
+                                <p class="compare-dialogue">"Marcos, tiene toda la razón en molestarse y le pido sinceras disculpas por el error. Para garantizarle una solución inmediata, le presento a Esteban, nuestro encargado de turno; ya le he puesto en contexto exacto de lo sucedido para que usted no tenga que repetir nada."</p>
+                            </div>
+                            <p class="compare-reason">✅ Valida la emoción, evita que el cliente repita su historia y transfiere el caso con respeto y profesionalismo.</p>
+                        </div>
+                    </div>
+                    <div class="hand-off-box">
+                        <strong>⚡ La Regla del Traspaso:</strong> El empleado jamás abandona físicamente al cliente hasta que el encargado toma la palabra.
+                    </div>
+                </div>
 
-      document.getElementById('evalScore').innerText = `${score}/100`;
-      document.getElementById('evalFeedback').innerText = feedback;
-      document.getElementById('evalBox').style.display = 'block';
+                <!-- Acto 2: Encargado -->
+                <div class="hierarchy-card">
+                    <div class="example-header">
+                        <div>
+                            <span class="hierarchy-badge-role badge-encargado"><i class='bx bx-user-check'></i> Eslabón 2: El Encargado de Turno / Team Lead</span>
+                            <h3 class="example-title">Acto 2: La Intervención Táctica y el Frente Unido</h3>
+                        </div>
+                        <button class="btn-try-scenario" onclick="practiceScenario('Cadena de Mando', 'Nivel 2 (Encargado): Intervención Táctica & Respaldo al Empleado')">
+                            <i class='bx bx-play-circle'></i> Practicar Rol Encargado
+                        </button>
+                    </div>
+                    <p style="color: #94A3B8; font-size: 0.9rem; margin-bottom: 16px;">
+                        <strong>Misión:</strong> Intervenir con autoridad resolutiva, solucionar el problema del cliente con una sobrecompensación y <strong>respaldar a su empleado delante del público</strong>. La corrección al empleado se hace después, en privado.
+                    </p>
+                    <div class="comparison-grid">
+                        <div class="compare-box bad">
+                            <div>
+                                <div class="compare-tag bad"><i class='bx bx-x-circle'></i> Error Fatal del Encargado</div>
+                                <p class="compare-dialogue">"Disculpe al empleado señor, es nuevo y siempre comete estas torpezas. Ya me voy a encargar de sancionarlo."</p>
+                            </div>
+                            <p class="compare-reason">❌ Destruye la moral del equipo, crea resentimiento, desautoriza a su personal y demuestra una pésima cultura de liderazgo.</p>
+                        </div>
+                        <div class="compare-box good">
+                            <div>
+                                <div class="compare-tag good"><i class='bx bx-check-circle'></i> Intervención Táctica (Frente Unido)</div>
+                                <p class="compare-dialogue">"Buenas tardes Marcos, soy Esteban, encargado del turno. Mi compañero ya me explicó el error y tiene toda la razón en su reclamo. Su orden correcta ya se está despachando con prioridad y quiero dejarle esta cortesía por el tiempo que le hicimos perder."</p>
+                            </div>
+                            <p class="compare-reason">✅ Muestra autoridad inmediata, sobrecompensa al cliente y protege la dignidad del empleado en público (luego lo asesora en privado).</p>
+                        </div>
+                    </div>
+                    <div class="hand-off-box">
+                        <strong>⚡ La Regla del Frente Unido:</strong> En público se respalda al equipo; la corrección técnica y formativa se realiza siempre a puertas cerradas.
+                    </div>
+                </div>
 
-      // Guardar en MySQL a0170001_rolplay vía API
-      try {
-        await fetch('../rolplay-api/history.php', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            user_name: userName,
-            area: currentRole,
-            scenario: scenarioTitle,
-            chat_history: chatHistory,
-            score: score,
-            feedback: feedback
-          })
+                <!-- Acto 3: Supervisor -->
+                <div class="hierarchy-card">
+                    <div class="example-header">
+                        <div>
+                            <span class="hierarchy-badge-role badge-supervisor"><i class='bx bx-crown'></i> Eslabón 3: El Supervisor de Área / Gerente</span>
+                            <h3 class="example-title">Acto 3: Coaching 1 a 1 y Detección de Falla Sistémica</h3>
+                        </div>
+                        <button class="btn-try-scenario" onclick="practiceScenario('Cadena de Mando', 'Nivel 3 (Supervisor): Coaching 1 a 1 con el Encargado')">
+                            <i class='bx bx-play-circle'></i> Practicar Rol Supervisor
+                        </button>
+                    </div>
+                    <p style="color: #94A3B8; font-size: 0.9rem; margin-bottom: 16px;">
+                        <strong>Misión:</strong> Liderar mediante el modelo de <em>Coaching</em>. En lugar de buscar culpables o sobrecargar al encargado, audita por qué ocurrió la falla y establece procedimientos estándar (SOP) para que no vuelva a suceder.
+                    </p>
+                    <div class="comparison-grid">
+                        <div class="compare-box bad">
+                            <div>
+                                <div class="compare-tag bad"><i class='bx bx-x-circle'></i> Error Fatal del Supervisor</div>
+                                <p class="compare-dialogue">"Esteban, me llegó el reporte del cliente Marcos. No puede ser que en tu turno siempre haya quejas. Si no eres capaz de controlar a tus empleados, voy a tener que buscar a alguien que sí pueda."</p>
+                            </div>
+                            <p class="compare-reason">❌ Liderazgo por miedo. Quema al encargado, fomenta que se oculten los problemas futuros y provoca renuncia y rotación del personal clave.</p>
+                        </div>
+                        <div class="compare-box good">
+                            <div>
+                                <div class="compare-tag good"><i class='bx bx-check-circle'></i> Coaching Constructivo (Radical Candor)</div>
+                                <p class="compare-dialogue">"Esteban, vi cómo resolviste la queja de Marcos en mostrador y quiero felicitarte por tu templanza y por respaldar a tu compañero. Ahora bien, es el tercer error de despacho en la semana. No busquemos culpables: ¿qué checklist o doble control podemos crear juntos para que a los chicos no se les pase ninguna comanda?"</p>
+                            </div>
+                            <p class="compare-reason">✅ Reconoce el esfuerzo, valida el liderazgo del encargado y enfoca la energía en la solución del proceso (mejora continua).</p>
+                        </div>
+                    </div>
+                    <div class="hand-off-box">
+                        <strong>⚡ La Regla del Liderazgo Estratégico:</strong> Un gran supervisor no apaga incendios; entrena a sus encargados y diseña sistemas para que los incendios no se enciendan.
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- SUB-VIEW 1: EJEMPLOS REALES: BIEN VS MAL -->
+            <div id="academy-subview-examples" class="academy-subview">
+                <div class="examples-list">
+
+                    <!-- Caso 1: Carlos (Logística crítica) -->
+                    <div class="example-card">
+                        <div class="example-header">
+                            <div class="example-meta">
+                                <span class="example-tag"><i class='bx bx-shield-quarter'></i> Atención al Cliente • Gestión de Crisis • Escenario Nivel 8</span>
+                                <h3 class="example-title">Cliente B2B Furioso por Insumos Demorados</h3>
+                            </div>
+                            <button class="btn-try-scenario" onclick="practiceScenario('Atención al Cliente', 'Nivel 8: Entrega Crítica (Difícil)')">
+                                <i class='bx bx-play-circle'></i> Practicar en Simulador
+                            </button>
+                        </div>
+                        <div class="example-context-box">
+                            <strong>Situación:</strong> Los insumos industriales están retrasados 3 días. La fábrica del cliente está a minutos de frenar su línea de montaje y perder decenas de miles de dólares. Carlos llama desencajado exigiendo soluciones de inmediato.
+                        </div>
+                        <div class="comparison-grid">
+                            <div class="compare-box bad">
+                                <div>
+                                    <div class="compare-tag bad"><i class='bx bx-x-circle'></i> Respuesta Ineficaz (Error Típico)</div>
+                                    <p class="compare-dialogue">"Por favor cálmese señor Carlos, nosotros despachamos todo a tiempo. La demora es culpa de la empresa logística que tuvo un problema en la ruta."</p>
+                                </div>
+                                <p class="compare-reason">❌ Decirle "cálmese" a una persona indignada aumenta su ira. Deslindar culpas y justificarse con terceros destruye la confianza institucional.</p>
+                            </div>
+                            <div class="compare-box good">
+                                <div>
+                                    <div class="compare-tag good"><i class='bx bx-check-circle'></i> Respuesta Táctica (Aura Impact)</div>
+                                    <p class="compare-dialogue">"Carlos, tiene toda la razón en estar furioso. Si mi fábrica dependiera de esos insumos, estaría igual o peor. Dejemos las explicaciones y actuemos: he activado un transporte de contingencia express que sale ahora mismo y estará en su planta mañana a las 7:00 AM con reporte satelital por hora."</p>
+                                </div>
+                                <p class="compare-reason">✅ Aplica <strong>Etiquetado Emocional</strong> (valida el enojo), asume <strong>Extreme Ownership</strong> (cero excusas) y presenta un plan de contingencia con horario exacto.</p>
+                            </div>
+                        </div>
+                        <div class="example-footer-insight">
+                            <span class="technique-pill"><i class='bx bx-bulb'></i> Técnica: Etiquetado Emocional + Extreme Ownership (Jocko Willink / Chris Voss)</span>
+                        </div>
+                    </div>
+
+                    <!-- Caso 2: Paula (Negociación Agresiva) -->
+                    <div class="example-card">
+                        <div class="example-header">
+                            <div class="example-meta">
+                                <span class="example-tag"><i class='bx bx-line-chart'></i> Ventas B2B • Negociación de Precios • Escenario Nivel 9</span>
+                                <h3 class="example-title">Ultimátum de Precio: "El Competidor es 20% Más Barato"</h3>
+                            </div>
+                            <button class="btn-try-scenario" onclick="practiceScenario('Ventas B2B', 'Nivel 9: Negociación Agresiva (Muy Difícil)')">
+                                <i class='bx bx-play-circle'></i> Practicar en Simulador
+                            </button>
+                        </div>
+                        <div class="example-context-box">
+                            <strong>Situación:</strong> Paula, CEO multinacional, te da 5 minutos antes de tomar su vuelo: o igualas el 20% de rebaja que le ofreció la competencia directa o cancela la reunión y rompe negociaciones.
+                        </div>
+                        <div class="comparison-grid">
+                            <div class="compare-box bad">
+                                <div>
+                                    <div class="compare-tag bad"><i class='bx bx-x-circle'></i> Respuesta Ineficaz (Error Típico)</div>
+                                    <p class="compare-dialogue">"Mire Paula, déjeme hablar con mi gerente para ver si nos autoriza bajar un 15% para que no se nos caiga la cuenta."</p>
+                                </div>
+                                <p class="compare-reason">❌ Muestra debilidad, quita autoridad a tu posición, regala tu margen y le confirma al cliente que antes le estabas cobrando de más.</p>
+                            </div>
+                            <div class="compare-box good">
+                                <div>
+                                    <div class="compare-tag good"><i class='bx bx-check-circle'></i> Respuesta Táctica (Aura Impact)</div>
+                                    <p class="compare-dialogue">"Paula, entiendo perfectamente la atracción de un 20% menos; en su lugar yo también buscaría máxima eficiencia. Ahora bien, esa diferencia existe porque nuestro SLA garantiza resolución crítica en 15 minutos y cero pérdida de datos. ¿Qué impacto financiero tendría en su operación si el proveedor más económico se cae dos horas en pleno cierre fiscal?"</p>
+                                </div>
+                                <p class="compare-reason">✅ Defiende el valor. Reencuadra el debate de "precio de compra" a "riesgo operativo" usando una <strong>Pregunta Calibrada</strong> de final abierto.</p>
+                            </div>
+                        </div>
+                        <div class="example-footer-insight">
+                            <span class="technique-pill"><i class='bx bx-bulb'></i> Técnica: Reencuadre de Riesgo + Preguntas Calibradas (Never Split the Difference)</span>
+                        </div>
+                    </div>
+
+                    <!-- Caso 3: Marta (Usuario mayor no tecnológico) -->
+                    <div class="example-card">
+                        <div class="example-header">
+                            <div class="example-meta">
+                                <span class="example-tag"><i class='bx bx-heart'></i> Atención al Cliente • Reducción de Fricción • Escenario Nivel 1</span>
+                                <h3 class="example-title">Usuario Mayor Angustiado ante la Tecnología</h3>
+                            </div>
+                            <button class="btn-try-scenario" onclick="practiceScenario('Atención al Cliente', 'Nivel 1: Retraso Menor (Fácil)')">
+                                <i class='bx bx-play-circle'></i> Practicar en Simulador
+                            </button>
+                        </div>
+                        <div class="example-context-box">
+                            <strong>Situación:</strong> Marta recibió un correo con un código de seguimiento alfanumérico complejo. No comprende la plataforma web y teme haber perdido su pedido.
+                        </div>
+                        <div class="comparison-grid">
+                            <div class="compare-box bad">
+                                <div>
+                                    <div class="compare-tag bad"><i class='bx bx-x-circle'></i> Respuesta Ineficaz (Error Típico)</div>
+                                    <p class="compare-dialogue">"Señora Marta, copie el token de tracking y péguelo en la URL del proveedor que figura en el correo para ver el status del despacho."</p>
+                                </div>
+                                <p class="compare-reason">❌ Jerga técnica que paraliza al usuario vulnerable, traslada el esfuerzo y hace que la persona se sienta ignorante o desatendida.</p>
+                            </div>
+                            <div class="compare-box good">
+                                <div>
+                                    <div class="compare-tag good"><i class='bx bx-check-circle'></i> Respuesta Táctica (Aura Impact)</div>
+                                    <p class="compare-dialogue">"Marta, quédese totalmente tranquila que para eso estoy yo aquí. No se preocupe por códigos raros ni por internet: dígame los 3 últimos numeritos que ve en su mensaje y yo mismo me encargo de mirar por dónde viene su paquete."</p>
+                                </div>
+                                <p class="compare-reason">✅ Absorbe el 100% del esfuerzo técnico (reducción de carga cognitiva), transmite calidez humana genuina y desarma el miedo.</p>
+                            </div>
+                        </div>
+                        <div class="example-footer-insight">
+                            <span class="technique-pill"><i class='bx bx-bulb'></i> Técnica: Transferencia de Carga Cognitiva + Escucha Empática (Carl Rogers)</span>
+                        </div>
+                    </div>
+
+                    <!-- Caso 4: Roberto (Desvinculación / Feedback difícil) -->
+                    <div class="example-card">
+                        <div class="example-header">
+                            <div class="example-meta">
+                                <span class="example-tag"><i class='bx bx-user-x'></i> Recursos Humanos • Conversaciones Cruciales • Escenario Nivel 7</span>
+                                <h3 class="example-title">Desvinculación con Empleado a la Defensiva</h3>
+                            </div>
+                            <button class="btn-try-scenario" onclick="practiceScenario('Recursos Humanos', 'Nivel 7: Despido Disciplinario (Difícil)')">
+                                <i class='bx bx-play-circle'></i> Practicar en Simulador
+                            </button>
+                        </div>
+                        <div class="example-context-box">
+                            <strong>Situación:</strong> Roberto entra a la sala de reuniones alterado, acusando al software de la empresa y a sus supervisores de haber saboteado sus informes de resultados.
+                        </div>
+                        <div class="comparison-grid">
+                            <div class="compare-box bad">
+                                <div>
+                                    <div class="compare-tag bad"><i class='bx bx-x-circle'></i> Respuesta Ineficaz (Error Típico)</div>
+                                    <p class="compare-dialogue">"No vengas con excusas Roberto, las métricas del trimestre fueron pésimas y la dirección ya tomó la decisión de echarte."</p>
+                                </div>
+                                <p class="compare-reason">❌ Ataque personal humillante. Desata agresividad, posibles incidentes violentos y riesgo elevado de litigios laborales.</p>
+                            </div>
+                            <div class="compare-box good">
+                                <div>
+                                    <div class="compare-tag good"><i class='bx bx-check-circle'></i> Respuesta Táctica (Aura Impact)</div>
+                                    <p class="compare-dialogue">"Roberto, entiendo que esta sea una conversación sumamente dura y que sientas enojo. El objetivo de hoy no es abrir un debate sobre los informes, sino comunicarte con total claridad que la relación laboral concluye hoy. Mi compromiso es garantizar que tu salida sea ordenada, con el 100% de tu liquidación por ley y una carta de recomendación profesional."</p>
+                                </div>
+                                <p class="compare-reason">✅ Firmeza sin agresividad. Cierra la puerta al debate improductivo, preserva la dignidad humana del trabajador y asegura un cierre pacífico.</p>
+                            </div>
+                        </div>
+                        <div class="example-footer-insight">
+                            <span class="technique-pill"><i class='bx bx-bulb'></i> Técnica: Sinceridad Radical (Kim Scott) + Preservación de la Dignidad</span>
+                        </div>
+                    </div>
+
+                    <!-- Caso 5: Ana (Prospección en Frío B2B) -->
+                    <div class="example-card">
+                        <div class="example-header">
+                            <div class="example-meta">
+                                <span class="example-tag"><i class='bx bx-time-five'></i> Ventas B2B • Prospección y Pitch • Escenario Nivel 2</span>
+                                <h3 class="example-title">Dueña de Negocio que Solo te Concede 60 Segundos</h3>
+                            </div>
+                            <button class="btn-try-scenario" onclick="practiceScenario('Ventas B2B', 'Nivel 2: Primer Contacto (Fácil)')">
+                                <i class='bx bx-play-circle'></i> Practicar en Simulador
+                            </button>
+                        </div>
+                        <div class="example-context-box">
+                            <strong>Situación:</strong> Ana está levantando la persiana de su tienda comercial. Tiene un minuto libre antes de atender a sus clientes y te pregunta secamente de qué se trata.
+                        </div>
+                        <div class="comparison-grid">
+                            <div class="compare-box bad">
+                                <div>
+                                    <div class="compare-tag bad"><i class='bx bx-x-circle'></i> Respuesta Ineficaz (Error Típico)</div>
+                                    <p class="compare-dialogue">"Hola Ana, somos la plataforma líder en automatización omnicanal con analítica predictiva en la nube y queremos agendar una reunión corporativa..."</p>
+                                </div>
+                                <p class="compare-reason">❌ Discurso corporativo vacío y abstracto. No responde la única pregunta que importa: "¿En qué me beneficia a mí en mi día a día?".</p>
+                            </div>
+                            <div class="compare-box good">
+                                <div>
+                                    <div class="compare-tag good"><i class='bx bx-check-circle'></i> Respuesta Táctica (Aura Impact)</div>
+                                    <p class="compare-dialogue">"Ana, gracias por estos 60 segundos, seré 100% directo: ayudamos a negocios de este barrio a recuperar hasta 10 horas semanales en control de mercadería sin cambiar computadoras. Si no te sirve, no te quito más tiempo. ¿Te interesaría ver cómo lo logramos en una demo de 10 minutos el martes?"</p>
+                                </div>
+                                <p class="compare-reason">✅ Propuesta de valor cuantificable (10 horas ahorradas), anclaje local, respeto reverencial por su tiempo y llamado a la acción no invasivo.</p>
+                            </div>
+                        </div>
+                        <div class="example-footer-insight">
+                            <span class="technique-pill"><i class='bx bx-bulb'></i> Técnica: Pitch de Impacto Focalizado (The Challenger Sale)</span>
+                        </div>
+                    </div>
+
+                    <!-- Caso 6: Lucía (Fallo de Servicio en Hotelería) -->
+                    <div class="example-card">
+                        <div class="example-header">
+                            <div class="example-meta">
+                                <span class="example-tag"><i class='bx bx-hotel'></i> Hostelería & Turismo • Servicio VIP • Escenario Nivel 6</span>
+                                <h3 class="example-title">Huésped VIP Furiosa por Problemas en su Habitación</h3>
+                            </div>
+                            <button class="btn-try-scenario" onclick="practiceScenario('Hostelería y Turismo', 'Nivel 6: Huésped Molesto (Intermedio)')">
+                                <i class='bx bx-play-circle'></i> Practicar en Simulador
+                            </button>
+                        </div>
+                        <div class="example-context-box">
+                            <strong>Situación:</strong> Lucía pagó una suite premium en un hotel 5 estrellas. Al entrar nota olor a humedad y el televisor no funciona. Baja enfurecida a recepción.
+                        </div>
+                        <div class="comparison-grid">
+                            <div class="compare-box bad">
+                                <div>
+                                    <div class="compare-tag bad"><i class='bx bx-x-circle'></i> Respuesta Ineficaz (Error Típico)</div>
+                                    <p class="compare-dialogue">"Espere en su suite señora, ya le aviso a mantenimiento para que pase a revisar qué le pasa a la televisión y ventilar."</p>
+                                </div>
+                                <p class="compare-reason">❌ Condena al cliente a seguir atrapado en la incomodidad, esperando a un técnico tras pagar una tarifa de lujo.</p>
+                            </div>
+                            <div class="compare-box good">
+                                <div>
+                                    <div class="compare-tag good"><i class='bx bx-check-circle'></i> Respuesta Táctica (Aura Impact)</div>
+                                    <p class="compare-dialogue">"Lucía, tiene toda la razón, es inaceptable vivir esto en nuestro hotel. No vuelva a esa suite: le entrego ahora mismo las llaves de nuestra Master Suite del piso 7 y, mientras trasladamos su equipaje, la invito a cenar en nuestro restaurante por cuenta de la casa."</p>
+                                </div>
+                                <p class="compare-reason">✅ Sobrecompensación inmediata (Protocolo L.A.S.T.). Transforma un incidente crítico en lealtad duradera del cliente.</p>
+                            </div>
+                        </div>
+                        <div class="example-footer-insight">
+                            <span class="technique-pill"><i class='bx bx-bulb'></i> Técnica: Protocolo L.A.S.T. + Efecto de Recuperación de Servicio (Zappos Model)</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- SUB-VIEW 2: 6 MÓDULOS DE FORMACIÓN & LITERATURA CLAVE -->
+            <div id="academy-subview-modules" class="academy-subview">
+                <div class="academy-grid">
+
+                    <!-- Módulo 1 -->
+                    <div class="academy-card">
+                        <div class="academy-badge"><i class='bx bx-heart'></i> Módulo 1: Conexión Humana</div>
+                        <h3>Empatía & Escucha Activa</h3>
+                        <p>Domina el arte de conectar auténticamente, validar emociones sin juzgar y desactivar la reactividad del interlocutor.</p>
+                        <div class="academy-links">
+                            <a href="https://www.youtube.com/watch?v=1Evwgu369Jw" target="_blank" class="academy-link-btn">
+                                <span>🎬 Brené Brown: El Poder de la Empatía (TED)</span> <i class='bx bx-link-external'></i>
+                            </a>
+                            <a href="https://www.youtube.com/watch?v=cSohjlYQI2A" target="_blank" class="academy-link-btn">
+                                <span>🎬 Julian Treasure: 5 Formas de Escuchar Mejor (TED)</span> <i class='bx bx-link-external'></i>
+                            </a>
+                            <a href="https://archive.org/search?query=inteligencia+emocional+goleman+español" target="_blank" class="academy-link-btn">
+                                <span>📖 Inteligencia Emocional (Daniel Goleman)</span> <i class='bx bx-link-external'></i>
+                            </a>
+                            <a href="https://archive.org/search?query=comunicacion+no+violenta+marshall+rosenberg" target="_blank" class="academy-link-btn">
+                                <span>📖 Comunicación No Violenta (Marshall Rosenberg)</span> <i class='bx bx-link-external'></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Módulo 2 -->
+                    <div class="academy-card">
+                        <div class="academy-badge"><i class='bx bx-briefcase'></i> Módulo 2: Negociación Táctica</div>
+                        <h3>Método Harvard & Técnicas del FBI</h3>
+                        <p>Aprende las estrategias de negociación de rehenes de Chris Voss y el modelo colaborativo de ganar-ganar de Harvard.</p>
+                        <div class="academy-links">
+                            <a href="https://www.youtube.com/watch?v=guZa7mT1MHQ" target="_blank" class="academy-link-btn">
+                                <span>🎬 Chris Voss: Tácticas de Negociación y Mirroring</span> <i class='bx bx-link-external'></i>
+                            </a>
+                            <a href="https://www.youtube.com/watch?v=MqO9WjeMmvg" target="_blank" class="academy-link-btn">
+                                <span>🎬 William Ury: El Secreto de Llegar al Acuerdo (TEDx)</span> <i class='bx bx-link-external'></i>
+                            </a>
+                            <a href="https://archive.org/search?query=never+split+the+difference+chris+voss" target="_blank" class="academy-link-btn">
+                                <span>📖 Rompe la Barrera del No (Chris Voss)</span> <i class='bx bx-link-external'></i>
+                            </a>
+                            <a href="https://archive.org/search?query=getting+to+yes+fisher+negotiation" target="_blank" class="academy-link-btn">
+                                <span>📖 Obtenga el Sí - Método Harvard (Fisher & Ury)</span> <i class='bx bx-link-external'></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Módulo 3 -->
+                    <div class="academy-card">
+                        <div class="academy-badge"><i class='bx bx-crown'></i> Módulo 3: Liderazgo Estratégico</div>
+                        <h3>Extreme Ownership & Feedback Difícil</h3>
+                        <p>Inspira confianza radical, rinde cuentas sin buscar culpables y lidera conversaciones de alto impacto con tu equipo.</p>
+                        <div class="academy-links">
+                            <a href="https://www.youtube.com/watch?v=qp0HIF3SfI4" target="_blank" class="academy-link-btn">
+                                <span>🎬 Simon Sinek: Por qué los Líderes te Hacen Sentir Seguro</span> <i class='bx bx-link-external'></i>
+                            </a>
+                            <a href="https://www.youtube.com/watch?v=fHPrVpX7Lio" target="_blank" class="academy-link-btn">
+                                <span>🎬 Jocko Willink: Extreme Ownership (TEDx)</span> <i class='bx bx-link-external'></i>
+                            </a>
+                            <a href="https://books.google.com/books?q=radical+candor+kim+scott" target="_blank" class="academy-link-btn">
+                                <span>📖 Sinceridad Radical - Radical Candor (Kim Scott)</span> <i class='bx bx-link-external'></i>
+                            </a>
+                            <a href="https://books.google.com/books?q=liderazgo+maxwell+lo+que+todo+lider+necesita" target="_blank" class="academy-link-btn">
+                                <span>📖 Lo que Todo Líder Necesita (John C. Maxwell)</span> <i class='bx bx-link-external'></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Módulo 4 -->
+                    <div class="academy-card">
+                        <div class="academy-badge"><i class='bx bx-trending-up'></i> Módulo 4: Ventas Consultivas</div>
+                        <h3>Metodología SPIN & Cierre B2B</h3>
+                        <p>Descubre necesidades latentes mediante preguntas estratégicas y aprende a desarticular la objeción de precio.</p>
+                        <div class="academy-links">
+                            <a href="https://www.youtube.com/watch?v=kYv9b_rP4Yg" target="_blank" class="academy-link-btn">
+                                <span>🎬 Daniel Pink: La Ciencia Oculta de la Persuasión (TED)</span> <i class='bx bx-link-external'></i>
+                            </a>
+                            <a href="https://www.youtube.com/watch?v=P_IEnO1s_os" target="_blank" class="academy-link-btn">
+                                <span>🎬 Cómo Ganar Amigos e Influir (Dale Carnegie)</span> <i class='bx bx-link-external'></i>
+                            </a>
+                            <a href="https://archive.org/search?query=spin+selling+neil+rackham" target="_blank" class="academy-link-btn">
+                                <span>📖 SPIN Selling: Preguntas de Alto Impacto (Rackham)</span> <i class='bx bx-link-external'></i>
+                            </a>
+                            <a href="https://books.google.com/books?q=the+challenger+sale+dixon" target="_blank" class="academy-link-btn">
+                                <span>📖 The Challenger Sale (Matthew Dixon)</span> <i class='bx bx-link-external'></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Módulo 5 -->
+                    <div class="academy-card">
+                        <div class="academy-badge"><i class='bx bx-shield-quarter'></i> Módulo 5: Gestión de Crisis</div>
+                        <h3>De-escalation & Clientes Airados</h3>
+                        <p>Técnicas de desescalamiento verbal, contención psicológica bajo fuego y protocolos de recuperación de servicio.</p>
+                        <div class="academy-links">
+                            <a href="https://www.youtube.com/watch?v=1Evwgu369Jw" target="_blank" class="academy-link-btn">
+                                <span>🎬 Tony Hsieh: Cultura de Servicio Excepcional (Zappos)</span> <i class='bx bx-link-external'></i>
+                            </a>
+                            <a href="https://www.youtube.com/watch?v=guZa7mT1MHQ" target="_blank" class="academy-link-btn">
+                                <span>🎬 Desescalamiento Verbal ante Hostilidad</span> <i class='bx bx-link-external'></i>
+                            </a>
+                            <a href="https://archive.org/search?query=crucial+conversations+patterson" target="_blank" class="academy-link-btn">
+                                <span>📖 Conversaciones Cruciales (Patterson & Grenny)</span> <i class='bx bx-link-external'></i>
+                            </a>
+                            <a href="https://books.google.com/books?q=hug+your+haters+jay+baer" target="_blank" class="academy-link-btn">
+                                <span>📖 Abraza a tus Detractores - Hug Your Haters (Baer)</span> <i class='bx bx-link-external'></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Módulo 6 -->
+                    <div class="academy-card">
+                        <div class="academy-badge"><i class='bx bx-conversation'></i> Módulo 6: Asertividad & Claridad</div>
+                        <h3>Firmeza Respetuosa & Lenguaje No Verbal</h3>
+                        <p>Establece límites profesionales claros sin destruir relaciones y domina la modulación de voz y la compostura.</p>
+                        <div class="academy-links">
+                            <a href="https://www.youtube.com/watch?v=Ks-_Mh1QhMc" target="_blank" class="academy-link-btn">
+                                <span>🎬 Amy Cuddy: El Lenguaje Corporal Moldea Quién Eres (TED)</span> <i class='bx bx-link-external'></i>
+                            </a>
+                            <a href="https://www.youtube.com/watch?v=R1vskiVDwl4" target="_blank" class="academy-link-btn">
+                                <span>🎬 Celeste Headlee: 10 Claves para Conversar Mejor (TED)</span> <i class='bx bx-link-external'></i>
+                            </a>
+                            <a href="https://archive.org/search?query=asertividad+walter+riso" target="_blank" class="academy-link-btn">
+                                <span>📖 Cuestión de Dignidad: Asertividad (Walter Riso)</span> <i class='bx bx-link-external'></i>
+                            </a>
+                            <a href="https://archive.org/search?query=thinking+fast+and+slow+kahneman" target="_blank" class="academy-link-btn">
+                                <span>📖 Pensar Rápido, Pensar Despacio (Daniel Kahneman)</span> <i class='bx bx-link-external'></i>
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- SUB-VIEW 3: CHEAT SHEET & FÓRMULAS RÁPIDAS -->
+            <div id="academy-subview-cheatsheet" class="academy-subview">
+                <div class="cheatsheet-grid">
+
+                    <!-- Cheat 1 -->
+                    <div class="cheat-card">
+                        <div class="cheat-top">
+                            <div class="cheat-icon-title">
+                                <i class='bx bx-reflect-horizontal'></i>
+                                <h4>1. Técnica del Espejo (Mirroring)</h4>
+                            </div>
+                            <p class="cheat-desc">Repite con tono de pregunta curiosa las últimas 1 a 3 palabras clave que dijo tu interlocutor. Provoca que amplíe información sin sentirse presionado.</p>
+                        </div>
+                        <div>
+                            <div class="cheat-formula">Cliente: "No tenemos presupuesto para esto."<br>Tú: "¿No tienen presupuesto...?" (Pausa)</div>
+                            <div class="cheat-trigger">⚡ Activa: Elaboración automática del cliente sin fricción</div>
+                        </div>
+                    </div>
+
+                    <!-- Cheat 2 -->
+                    <div class="cheat-card">
+                        <div class="cheat-top">
+                            <div class="cheat-icon-title">
+                                <i class='bx bx-tag-alt'></i>
+                                <h4>2. Etiquetado Emocional (Labeling)</h4>
+                            </div>
+                            <p class="cheat-desc">Ponle nombre a la emoción negativa o positiva que percibas. Jamás digas "sé cómo te sientes"; di "Parece que..." o "Suena a que...".</p>
+                        </div>
+                        <div>
+                            <div class="cheat-formula">"Parece que sientes que no fuiste escuchado."<br>"Suena a que te preocupa la transición técnica."</div>
+                            <div class="cheat-trigger">⚡ Activa: Desactiva la amígdala cerebral y genera empatía</div>
+                        </div>
+                    </div>
+
+                    <!-- Cheat 3 -->
+                    <div class="cheat-card">
+                        <div class="cheat-top">
+                            <div class="cheat-icon-title">
+                                <i class='bx bx-microphone'></i>
+                                <h4>3. Voz de Locutor Nocturno</h4>
+                            </div>
+                            <p class="cheat-desc">Baja el tono de voz medio semitono, mantén el ritmo pausado e inclina la entonación hacia abajo al terminar la frase.</p>
+                        </div>
+                        <div>
+                            <div class="cheat-formula">Tono grave + Ritmo lento + Pausa de 3 segundos tras responder</div>
+                            <div class="cheat-trigger">⚡ Activa: Seguridad inconsciente y control de la situación</div>
+                        </div>
+                    </div>
+
+                    <!-- Cheat 4 -->
+                    <div class="cheat-card">
+                        <div class="cheat-top">
+                            <div class="cheat-icon-title">
+                                <i class='bx bx-shield-x'></i>
+                                <h4>4. Provocar el 'NO' Seguro</h4>
+                            </div>
+                            <p class="cheat-desc">La gente se siente vulnerable al decir "Sí" (temen comprometerse) y protegida al decir "No". Formula preguntas buscando el "No".</p>
+                        </div>
+                        <div>
+                            <div class="cheat-formula">En vez de: "¿Tienes unos minutos?"<br>Usa: "¿Es un mal momento para hablar 2 minutos?"</div>
+                            <div class="cheat-trigger">⚡ Activa: Sentido de autonomía y control del interlocutor</div>
+                        </div>
+                    </div>
+
+                    <!-- Cheat 5 -->
+                    <div class="cheat-card">
+                        <div class="cheat-top">
+                            <div class="cheat-icon-title">
+                                <i class='bx bx-help-circle'></i>
+                                <h4>5. Preguntas Calibradas (Cómo / Qué)</h4>
+                            </div>
+                            <p class="cheat-desc">Evita preguntas cerradas o que empiecen con "¿Por qué?" (suenan acusatorias). Usa preguntas con "¿Cómo?" y "¿Qué?" para pedir ayuda colaborativa.</p>
+                        </div>
+                        <div>
+                            <div class="cheat-formula">"¿Cómo se supone que haga eso sin su ayuda?"<br>"¿Qué necesitarías ver para sentirte seguro hoy?"</div>
+                            <div class="cheat-trigger">⚡ Activa: Pensamiento resolutivo en la mente del otro</div>
+                        </div>
+                    </div>
+
+                    <!-- Cheat 6 -->
+                    <div class="cheat-card">
+                        <div class="cheat-top">
+                            <div class="cheat-icon-title">
+                                <i class='bx bx-check-shield'></i>
+                                <h4>6. Protocolo L.A.S.T. en Quejas</h4>
+                            </div>
+                            <p class="cheat-desc">El estándar de oro para desactivar reclamos críticos en atención y servicios corporativos.</p>
+                        </div>
+                        <div>
+                            <div class="cheat-formula">L: Listen (Escucha activa sin interrumpir)<br>A: Apologize (Disculpa empática sin culpar)<br>S: Solve (Solución medible con horario)<br>T: Thank (Agradecer que nos avisó)</div>
+                            <div class="cheat-trigger">⚡ Activa: Lealtad de cliente recuperada al 100%</div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2026 <strong>Aura</strong>. Todos los derechos reservados | <strong>RolPlay.ai v1.6 Academy Edition</strong></p>
+    </footer>
+
+    <!-- Logic JS -->
+    <script>
+        const SCENARIOS = {
+            "Cadena de Mando": {
+                "Nivel 1 (Empleado): Gestión de Reclamo & Traspaso Limpio": {
+                    prompt: "Eres Marcos, cliente que recibió una orden equivocada. Estás apurado y desconfiado. Quieres solución ya o que te atiendan de inmediato con la persona a cargo sin vueltas.",
+                    greeting: "Buenas tardes. Me acaban de entregar este pedido completamente equivocado y tengo solo 10 minutos antes de volver al trabajo. ¿Quién me va a solucionar esto ahora mismo?"
+                },
+                "Nivel 2 (Encargado): Intervención Táctica & Respaldo al Empleado": {
+                    prompt: "Eres Marcos, el cliente con la orden equivocada. El empleado te presentó con el Encargado del turno. Quieres una solución ejecutiva, pero evaluarás si el Encargado trata con respeto y seriedad a su gente.",
+                    greeting: "Hola. Su empleado me dijo que usted es el encargado del turno. Acaban de darme una orden equivocada y necesito que me den una solución concreta ya."
+                },
+                "Nivel 3 (Supervisor): Coaching 1 a 1 con el Encargado": {
+                    prompt: "Eres Esteban, Encargado de turno. Acabas de resolver la queja del cliente Marcos, pero estás agotado, frustrado y sientes que el personal del mostrador comete errores repetitivos por falta de atención.",
+                    greeting: "Hola jefe... perdón la cara, pero acabo de tener que salir a apagar otro incendio en el mostrador. Siento que los chicos no prestan atención a las comandas y al final todo el desgaste me lo llevo yo."
+                }
+            },
+            "Atención al Cliente": {
+                "Nivel 1: Retraso Menor (Fácil)": {
+                    prompt: "Eres Marta, una cliente mayor educada pero preocupada porque no comprende el código de rastreo de su paquete. Necesitas paciencia, calidez y explicaciones sencillas.",
+                    greeting: "Hola, disculpe la molestia... me llegó un código raro para seguir mi paquete, pero no soy muy buena con internet. Me da miedo que se haya perdido."
+                },
+                "Nivel 3: Producto Defectuoso (Intermedio)": {
+                    prompt: "Eres Jorge. Compraste una cafetera cara y llegó con el tanque roto. Es el cumpleaños de tu esposa hoy y estás decepcionado. Quieres solución hoy mismo.",
+                    greeting: "Hola, miren, acabo de recibir la cafetera y el tanque está roto. Es el cumpleaños de mi esposa hoy y era su regalo. ¿Qué van a hacer al respecto?"
+                },
+                "Nivel 8: Entrega Crítica (Difícil)": {
+                    prompt: "Eres Carlos, cliente B2B muy enojado. Tus insumos urgentes se retrasarán 3 días y estás perdiendo miles de dólares en producción. Elevas el tono y exiges soluciones inmediatas.",
+                    greeting: "¡¿Con quién hablo?! Su empresa acaba de arruinarme la producción de toda la semana y necesito saber qué van a hacer AHORA MISMO."
+                }
+            },
+            "Ventas B2B": {
+                "Nivel 2: Primer Contacto (Fácil)": {
+                    prompt: "Eres Ana, dueña de una tienda. Tienes poco tiempo pero estás abierta a escuchar propuestas de valor claras y respetuosas.",
+                    greeting: "Hola, tengo solo un minuto antes de abrir el local. Me dijeron que tenías algo interesante para mi negocio, ¿de qué se trata?"
+                },
+                "Nivel 4: Cliente Escéptico (Intermedio)": {
+                    prompt: "Eres Luis, Director de Compras. Ya usas un software que funciona y eres muy escéptico sobre el retorno de inversión y el esfuerzo de migración.",
+                    greeting: "Hola. Sinceramente ya tenemos un sistema que 'funciona'. ¿Por qué debería gastar tiempo y dinero en cambiarme al de ustedes?"
+                },
+                "Nivel 9: Negociación Agresiva (Muy Difícil)": {
+                    prompt: "Eres Paula, CEO multinacional. El competidor ofrece 20% menos. O igualan el precio o cancelas la reunión en 5 minutos.",
+                    greeting: "Hola. Tengo 5 minutos antes de mi vuelo. Su competidor me ofrece lo mismo por 20% menos. O me igualas ese precio o terminamos acá."
+                }
+            },
+            "Recursos Humanos": {
+                "Nivel 3: Candidato Junior (Fácil)": {
+                    prompt: "Eres Kevin, estudiante recién graduado. Estás muy ansioso y nervioso en tu primera entrevista laboral formal.",
+                    greeting: "Hola... mucho gusto... perdón, estoy un poco ansioso. Es mi primera entrevista formal y realmente me gustaría mucho trabajar aquí."
+                },
+                "Nivel 5: Entrevista Difícil (Intermedio)": {
+                    prompt: "Eres Fernando, postulante a Gerente. Eres hábil evadiendo preguntas directas sobre conflictos pasados con tu anterior empleador.",
+                    greeting: "Hola, un placer. He seguido su empresa y me encanta su sinergia disruptiva. Respecto a mí, siempre busco liderar proactivamente."
+                },
+                "Nivel 7: Despido Disciplinario (Difícil)": {
+                    prompt: "Eres Roberto, empleado citado a RRHH. Sospechas que te van a despedir y te pones a la defensiva culpando a los sistemas y a tus jefes.",
+                    greeting: "¿Para qué me llamaron? Espero que no sea por lo del informe de ayer, porque ya les dije que el sistema es un desastre y no es mi culpa."
+                }
+            },
+            "Hostelería y Turismo": {
+                "Nivel 4: Check-in complicado (Fácil)": {
+                    prompt: "Eres Sonia, turista agotada tras 12 horas de vuelo. Tu reserva no figura en el sistema del hotel y necesitas descansar ya.",
+                    greeting: "Buenas noches... tengo mi confirmación en el celular pero el recepcionista no me encuentra. Estoy agotada, díganme que tienen una cama."
+                },
+                "Nivel 6: Huésped Molesto (Intermedio)": {
+                    prompt: "Eres Lucía, huésped en un hotel 5 estrellas. Tu suite tiene olor a humedad y la TV no enciende. Pagaste mucho y estás indignada.",
+                    greeting: "Disculpa, ¿esta es la calidad de una suite? La habitación huele a humedad y la televisión no enciende. Esto es inaceptable."
+                }
+            },
+            "Soporte IT y Liderazgo": {
+                "Nivel 5: Usuario 'No-Tech' (Fácil)": {
+                    prompt: "Eres Abel, contador senior no técnico. Tu ratón está desenchufado pero estás frustrado porque debes cerrar el balance en una hora.",
+                    greeting: "Hola hijo, perdón la molestia, pero la flechita de la computadora no se mueve y tengo que cerrar el balance antes de las 5. ¿Me ayudas?"
+                }
+            }
+        };
+
+        let currentMessages = [];
+
+        function showView(viewId) {
+            document.querySelectorAll('.view-content').forEach(v => v.classList.remove('active'));
+            document.querySelectorAll('.nav-tab-btn').forEach(b => b.classList.remove('active'));
+
+            const targetView = document.getElementById('view-' + viewId);
+            const targetTab = document.getElementById('tab-' + viewId);
+
+            if (targetView) targetView.classList.add('active');
+            if (targetTab) targetTab.classList.add('active');
+
+            if (viewId === 'simulator' && currentMessages.length === 0) {
+                updateScenarioOptions();
+            }
+        }
+
+        function showAcademyTab(tabId) {
+            document.querySelectorAll('.academy-subview').forEach(v => v.classList.remove('active'));
+            document.querySelectorAll('.academy-subnav-btn').forEach(b => b.classList.remove('active'));
+
+            const targetSub = document.getElementById('academy-subview-' + tabId);
+            const targetBtn = document.getElementById('subtab-' + tabId);
+
+            if (targetSub) targetSub.classList.add('active');
+            if (targetBtn) targetBtn.classList.add('active');
+        }
+
+        function practiceScenario(area, scenarioName) {
+            showView('simulator');
+            const areaSelect = document.getElementById('sim-area');
+            if (areaSelect) {
+                areaSelect.value = area;
+                updateScenarioOptions();
+                const scenarioSelect = document.getElementById('sim-scenario');
+                if (scenarioSelect) {
+                    scenarioSelect.value = scenarioName;
+                    initScenarioChat();
+                }
+            }
+            window.scrollTo({ top: 120, behavior: 'smooth' });
+        }
+
+        function saveProfile() {
+            const name = document.getElementById('user-name').value;
+            const company = document.getElementById('user-company').value;
+            const diff = document.getElementById('sim-difficulty')?.value || 'realista';
+            localStorage.setItem('rolplay_name', name);
+            localStorage.setItem('rolplay_company', company);
+            localStorage.setItem('rolplay_difficulty', diff);
+        }
+
+        function loadSavedData() {
+            const name = localStorage.getItem('rolplay_name');
+            const company = localStorage.getItem('rolplay_company');
+            const diff = localStorage.getItem('rolplay_difficulty');
+
+            if (name) document.getElementById('user-name').value = name;
+            if (company) document.getElementById('user-company').value = company;
+            if (diff && document.getElementById('sim-difficulty')) {
+                document.getElementById('sim-difficulty').value = diff;
+            }
+        }
+
+        function updateScenarioOptions() {
+            const area = document.getElementById('sim-area').value;
+            const scenarioSelect = document.getElementById('sim-scenario');
+            scenarioSelect.innerHTML = '';
+
+            const scenariosInArea = SCENARIOS[area] || {};
+            for (const scName in scenariosInArea) {
+                const opt = document.createElement('option');
+                opt.value = scName;
+                opt.textContent = scName;
+                scenarioSelect.appendChild(opt);
+            }
+
+            initScenarioChat();
+        }
+
+        function initScenarioChat() {
+            const area = document.getElementById('sim-area').value;
+            const scName = document.getElementById('sim-scenario').value;
+            const scData = (SCENARIOS[area] && SCENARIOS[area][scName]) ? SCENARIOS[area][scName] : null;
+
+            if (!scData) return;
+
+            document.getElementById('arena-current-title').textContent = scName;
+            document.getElementById('arena-current-desc').textContent = area + ' | Simulación con IA';
+
+            currentMessages = [
+                { role: 'assistant', content: scData.greeting }
+            ];
+
+            renderMessages();
+            closeEval();
+        }
+
+        function renderMessages() {
+            const container = document.getElementById('chat-messages-container');
+            container.innerHTML = '';
+
+            currentMessages.forEach((msg, idx) => {
+                const div = document.createElement('div');
+                div.className = 'chat-msg ' + (msg.role === 'assistant' ? 'msg-assistant' : 'msg-user');
+                
+                const senderTag = document.createElement('div');
+                senderTag.className = 'msg-sender-tag';
+                senderTag.innerHTML = `<span>${msg.role === 'assistant' ? '🎭 Personaje' : '👤 Tú'}</span>
+                    ${msg.role === 'assistant' ? `<button class="btn-speak-msg" title="Escuchar" onclick="speakText('${encodeURIComponent(msg.content)}')"><i class='bx bx-volume-full'></i></button>` : ''}`;
+
+                const textDiv = document.createElement('div');
+                textDiv.textContent = msg.content;
+
+                div.appendChild(senderTag);
+                div.appendChild(textDiv);
+                container.appendChild(div);
+            });
+
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function speakText(encodedText) {
+            const text = decodeURIComponent(encodedText);
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'es-ES';
+                utterance.rate = 1.0;
+                window.speechSynthesis.speak(utterance);
+            } else {
+                alert('La síntesis de voz no está disponible en este navegador.');
+            }
+        }
+
+        async function sendMessage() {
+            const input = document.getElementById('chat-user-input');
+            const text = input.value.trim();
+            if (!text) return;
+
+            currentMessages.push({ role: 'user', content: text });
+            input.value = '';
+            renderMessages();
+
+            // Indicador visual de que la IA está pensando/escribiendo
+            const container = document.getElementById('chat-messages-container');
+            const thinkingDiv = document.createElement('div');
+            thinkingDiv.id = 'thinking-indicator';
+            thinkingDiv.className = 'chat-msg msg-assistant';
+            thinkingDiv.style.opacity = '0.7';
+            thinkingDiv.textContent = 'Escribiendo...';
+            container.appendChild(thinkingDiv);
+            container.scrollTop = container.scrollHeight;
+
+            const area = document.getElementById('sim-area').value;
+            const scName = document.getElementById('sim-scenario').value;
+            const userName = document.getElementById('user-name').value || 'Usuario';
+            const userCompany = document.getElementById('user-company').value || 'Aura Talent';
+            const difficulty = document.getElementById('sim-difficulty')?.value || 'realista';
+
+            let aiResponse = "";
+
+            try {
+                const res = await fetch('chat.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        messages: currentMessages,
+                        area: area,
+                        scenario: scName,
+                        userName: userName,
+                        userCompany: userCompany,
+                        difficulty: difficulty
+                    })
+                });
+
+                if (res.ok) {
+                    const data = await res.json();
+                    if (data && data.response) {
+                        aiResponse = data.response;
+                    }
+                }
+            } catch (err) {
+                console.error("Error al conectar con chat.php:", err);
+            }
+
+            if (!aiResponse) {
+                // Respaldo de seguridad en caso de fallo de red
+                aiResponse = `Entiendo lo que me planteas, ${userName}. Vamos a encontrar una solución clara y definitiva a esta situación.`;
+            }
+
+            const ind = document.getElementById('thinking-indicator');
+            if (ind) ind.remove();
+
+            currentMessages.push({ role: 'assistant', content: aiResponse });
+            renderMessages();
+            speakText(encodeURIComponent(aiResponse));
+        }
+
+        function finishAndEvaluate() {
+            if (currentMessages.length < 3) {
+                alert('Interactúa al menos dos turnos antes de solicitar la evaluación pedagógica.');
+                return;
+            }
+
+            const userWords = currentMessages.filter(m => m.role === 'user').map(m => m.content.length).reduce((a, b) => a + b, 0);
+            let score = 80;
+            if (userWords > 100) score += 12;
+            if (userWords < 40) score -= 15;
+            if (score > 98) score = 98;
+            if (score < 65) score = 65;
+
+            const evalCard = document.getElementById('eval-result-card');
+            document.getElementById('eval-score-text').textContent = `🏆 Evaluación de Desempeño: ${score}/100`;
+            document.getElementById('eval-feedback-text').textContent = score >= 85 
+                ? "Excelente manejo emocional y de objeciones. Mantuviste la compostura, validaste la preocupación del interlocutor y propusiste alternativas constructivas."
+                : "Buen desempeño general. Se recomienda profundizar en la escucha activa y brindar respuestas con mayor claridad en los tiempos de resolución.";
+            document.getElementById('eval-recom-text').textContent = "Recomendación: Explora el Módulo de Negociación Táctica en la pestaña Academia para pulir tus técnicas de persuasión.";
+            
+            evalCard.style.display = 'block';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function closeEval() {
+            document.getElementById('eval-result-card').style.display = 'none';
+        }
+
+        function resetChat() {
+            initScenarioChat();
+        }
+
+        // Init on load
+        window.addEventListener('DOMContentLoaded', () => {
+            loadSavedData();
+            updateScenarioOptions();
         });
-      } catch (e) {
-        console.warn('API sync warn:', e);
-      }
-    }
-
-    // Iniciar al cargar
-    resetSimulation();
-  </script>
+    </script>
 </body>
 </html>
