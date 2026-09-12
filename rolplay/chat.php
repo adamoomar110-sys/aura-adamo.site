@@ -225,8 +225,17 @@ function handleJorgeScenario($apology, $empathy, $solution, $time, $turn, $name,
 }
 
 function handleCarlosScenario($empathy, $solution, $time, $turn, $name, $diff) {
-    if ($turn >= 3 && $solution && $time) {
-        return "Bueno... al menos veo que se están haciendo cargo con seriedad. Si ese camión de contingencia llega mañana a primera hora como se compromete, podemos salvar el turno de la tarde. Envíeme ahora mismo la confirmación por escrito a mi correo corporativo.";
+    if ($turn >= 9) {
+        return "Perfecto, {$name}. Valoro mucho la celeridad y que hayan dado la cara con este nivel de compromiso profesional. Quedo a la espera de ese flete express a las 16 hs y de la confirmación por escrito. Si esto se cumple según lo acordado, mantendremos la cuenta con ustedes.";
+    }
+    if ($turn >= 7) {
+        return "De acuerdo, {$name}. Voy a avisar de inmediato al jefe de depósito de nuestra planta para que tengan listo el muelle de descarga rápida ni bien arribe el transporte. Manténgame al tanto del contacto del chofer.";
+    }
+    if ($turn >= 5) {
+        return "Me parece un gesto necesario y justo que Aura bonifique el flete de contingencia. Con esos insumos parciales podemos sostener el turno de hoy. ¿Cómo coordinamos el remanente prioritario de mañana?";
+    }
+    if ($turn >= 3 && ($solution || $time)) {
+        return "Bueno... al menos veo que se están haciendo cargo con seriedad. Si ese camión de contingencia llega como se compromete, podemos salvar el turno de la tarde. Envíeme ahora mismo la confirmación por escrito a mi correo corporativo.";
     }
     if ($solution) {
         return "Eso suena razonable en los papeles, {$name}, pero cada hora que pasa me cuesta miles de dólares. Quiero garantías firmes: si hay alguna penalidad o retraso extra, ¿quién responde? Necesito ese compromiso ya.";
