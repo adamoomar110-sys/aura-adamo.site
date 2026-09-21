@@ -343,9 +343,28 @@
         </div>
         <div class="footer-bottom">
             <p>&copy; 2026 Aura. Todos los derechos reservados.</p>
+            <div style="margin-top: 8px; display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; background: rgba(255,255,255,0.05); border-radius: 12px; border: 1px solid rgba(56, 189, 248, 0.2); font-size: 0.8rem; color: #cbd5e1;">
+                👁️ Visitas: <strong id="contador-visitas-aura" style="color: #38bdf8;">...</strong>
+            </div>
         </div>
     </footer>
 
     <script src="script.js"></script>
+    <script>
+        fetch('https://l1deres.site/sistema_aura.php?accion=visita&sitio=aura-adamo')
+            .then(res => res.json())
+            .then(data => {
+                const elem = document.getElementById('contador-visitas-aura');
+                if (elem && data.total) elem.innerText = Number(data.total).toLocaleString('es-AR');
+            })
+            .catch(() => {
+                fetch('/sistema_aura.php?accion=visita&sitio=aura-adamo')
+                    .then(res => res.json())
+                    .then(data => {
+                        const elem = document.getElementById('contador-visitas-aura');
+                        if (elem && data.total) elem.innerText = Number(data.total).toLocaleString('es-AR');
+                    }).catch(() => {});
+            });
+    </script>
 </body>
 </html>
