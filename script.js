@@ -1,64 +1,85 @@
+/**
+ * AURA-ADAMO · LÓGICA FRONTEND & CONECTIVIDAD API
+ * Arquitectura: Vanilla JavaScript ES6+ (Sin dependencias)
+ * Conexión: DonWeb Cloud (aura-api / sistema_aura.php)
+ */
+
 document.addEventListener('DOMContentLoaded', () => {
-    
-    // --- Menú Móvil ---
-    const menuIcon = document.getElementById('menu-icon');
-    const navbar = document.getElementById('navbar');
+
+    // --- 1. Control del Menú Móvil (Pill Navbar) ---
+    const navToggle = document.getElementById('nav-toggle');
+    const navMenu = document.getElementById('nav-menu');
+    const toggleIcon = document.getElementById('toggle-icon');
     const navLinks = document.querySelectorAll('.nav-link');
 
-    menuIcon.addEventListener('click', () => {
-        navbar.classList.toggle('active');
-        // Cambiar icono entre menú y X
-        const icon = menuIcon.querySelector('i');
-        if (navbar.classList.contains('active')) {
-            icon.classList.remove('bx-menu');
-            icon.classList.add('bx-x');
-        } else {
-            icon.classList.remove('bx-x');
-            icon.classList.add('bx-menu');
-        }
-    });
-
-    // Cerrar menú móvil al hacer click en un enlace
-    navLinks.forEach(link => {
-        link.addEventListener('click', () => {
-            navbar.classList.remove('active');
-            const icon = menuIcon.querySelector('i');
-            icon.classList.remove('bx-x');
-            icon.classList.add('bx-menu');
-        });
-    });
-
-    // --- Animaciones on Scroll (Fade-In-Up) ---
-    const observerOptions = {
-        root: null,
-        rootMargin: '0px',
-        threshold: 0.15
-    };
-
-    const observer = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
-                // Opcional: Descomentar la siguiente línea si quieres que la animación ocurra solo 1 vez
-                // observer.unobserve(entry.target);
+    if (navToggle && navMenu) {
+        navToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+            const isActive = navMenu.classList.contains('active');
+            
+            if (toggleIcon) {
+                toggleIcon.className = isActive ? 'bx bx-x' : 'bx bx-menu';
             }
         });
-    }, observerOptions);
 
-    const fadeElements = document.querySelectorAll('.fade-in-up');
-    fadeElements.forEach(el => observer.observe(el));
+        // Cerrar menú móvil al hacer clic en un enlace
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('active');
+                if (toggleIcon) {
+                    toggleIcon.className = 'bx bx-menu';
+                }
+            });
+        });
+    }
 
-    // --- Header Background on Scroll ---
-    const header = document.querySelector('.header');
+    // --- 2. Animaciones Suaves on Scroll (IntersectionObserver) ---
+    const revealElements = document.querySelectorAll('.reveal');
+
+    if ('IntersectionObserver' in window) {
+        const revealObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    // Desactivar observación una vez revelado para mejor rendimiento
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, {
+            root: null,
+            threshold: 0.12,
+            rootMargin: '0px 0px -40px 0px'
+        });
+
+        revealElements.forEach(el => revealObserver.observe(el));
+    } else {
+        // Fallback para navegadores antiguos
+        revealElements.forEach(el => el.classList.add('visible'));
+    }
+
+    // --- 3. Enlace Activo en Navbar según Sección Visible ---
+    const sections = document.querySelectorAll('section[id]');
+    
     window.addEventListener('scroll', () => {
-        if (window.scrollY > 50) {
-            header.style.boxShadow = '0 4px 20px rgba(0,0,0,0.05)';
-        } else {
-            header.style.boxShadow = 'none';
-        }
-    });
+        const scrollY = window.pageYOffset;
 
-    // --- Formulario de Contacto / Cotización (API a0170001_aura) ---
+        sections.forEach(current => {
+            const sectionHeight = current.offsetHeight;
+            const sectionTop = current.offsetTop - 140;
+            const sectionId = current.getAttribute('id');
+            const targetLink = document.querySelector(`.nav-link[href*="${sectionId}"]`);
+
+            if (targetLink && !targetLink.classList.contains('btn-nav-contact')) {
+                if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
+                    targetLink.classList.add('active');
+                } else {
+                    targetLink.classList.remove('active');
+                }
+            }
+        });
+    }, { passive: true });
+
+    // --- 4. Conexión Formulario de Contacto (Fetch API con aura-api/contacto.php) ---
     const contactForm = document.getElementById('aura-contact-form');
     const submitBtn = document.getElementById('btn-submit-contact');
     const alertBox = document.getElementById('contact-alert');
@@ -69,7 +90,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const name = document.getElementById('contact-name').value.trim();
             const email = document.getElementById('contact-email').value.trim();
-            const phone = document.getElementById('contact-phone').value.trim();
+            const phone = document.getElementById('contact-phone') ? document.getElementById('contact-phone').value.trim() : '';
             const service = document.getElementById('contact-service').value;
             const message = document.getElementById('contact-message').value.trim();
 
@@ -78,15 +99,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
-            // Cambiar estado a cargando
-            setLoading(true);
+            // Activar estado cargando en el botón
+            setLoadingState(true);
             hideAlert();
 
             try {
+                // Enviar datos en formato JSON a la API nativa de DonWeb
                 const response = await fetch('aura-api/contacto.php', {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
                     },
                     body: JSON.stringify({
                         nombre: name,
@@ -100,32 +123,32 @@ document.addEventListener('DOMContentLoaded', () => {
                 const data = await response.json();
 
                 if (response.ok && data.success) {
-                    showAlert(data.message || '¡Mensaje enviado con éxito! Te contactaremos a la brevedad.', 'success');
+                    showAlert(data.message || '¡Mensaje recibido con éxito! Te responderemos a la brevedad.', 'success');
                     contactForm.reset();
                 } else {
-                    showAlert(data.error || 'Ocurrió un error al enviar tu consulta. Intentá nuevamente.', 'error');
+                    showAlert(data.error || data.message || 'Ocurrió un error al procesar tu consulta. Intenta nuevamente.', 'error');
                 }
             } catch (err) {
                 console.error('Error al conectar con la API de Aura:', err);
-                showAlert('Error de conexión con el servidor. Por favor intentá más tarde o escribinos a contacto@aura-adamo.site.', 'error');
+                showAlert('No pudimos conectar con el servidor. Podés escribirnos directo a contacto@aura-adamo.site.', 'error');
             } finally {
-                setLoading(false);
+                setLoadingState(false);
             }
         });
     }
 
-    function setLoading(isLoading) {
+    function setLoadingState(isLoading) {
         if (!submitBtn) return;
         const btnText = submitBtn.querySelector('.btn-text');
         const btnSpinner = submitBtn.querySelector('.btn-spinner');
-        
+
         submitBtn.disabled = isLoading;
         if (isLoading) {
-            btnText.style.display = 'none';
-            btnSpinner.style.display = 'inline-flex';
+            if (btnText) btnText.style.display = 'none';
+            if (btnSpinner) btnSpinner.style.display = 'inline-flex';
         } else {
-            btnText.style.display = 'inline-flex';
-            btnSpinner.style.display = 'none';
+            if (btnText) btnText.style.display = 'inline-flex';
+            if (btnSpinner) btnSpinner.style.display = 'none';
         }
     }
 
@@ -141,4 +164,32 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!alertBox) return;
         alertBox.style.display = 'none';
     }
+
+    // --- 5. Contador de Visitas Dinámico Aura (DonWeb) ---
+    const contadorElem = document.getElementById('contador-visitas-aura');
+    
+    if (contadorElem) {
+        // Consultar el endpoint de telemetría de Aura en DonWeb
+        fetch('https://l1deres.site/sistema_aura.php?accion=visita&sitio=aura-adamo')
+            .then(res => res.json())
+            .then(data => {
+                if (data && data.total) {
+                    contadorElem.innerText = Number(data.total).toLocaleString('es-AR');
+                } else {
+                    contadorElem.innerText = 'Activo';
+                }
+            })
+            .catch(() => {
+                // Fallback de contingencia local o relativo
+                fetch('aura-api/status.php')
+                    .then(res => res.json())
+                    .then(data => {
+                        contadorElem.innerText = (data && data.visitas) ? Number(data.visitas).toLocaleString('es-AR') : 'Activo';
+                    })
+                    .catch(() => {
+                        contadorElem.innerText = 'Activo';
+                    });
+            });
+    }
+
 });
