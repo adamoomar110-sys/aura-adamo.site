@@ -371,8 +371,71 @@ body {
     display: flex;
     align-items: center;
     gap: 16px;
-    margin-bottom: 48px;
+    margin-bottom: 28px;
     flex-wrap: wrap;
+}
+
+/* Accesos Rápidos Hero a tus Apps */
+.apps-quick-bar {
+    margin-bottom: 36px;
+    background: rgba(15, 23, 42, 0.65);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--radius-md);
+    padding: 14px 18px;
+    backdrop-filter: blur(12px);
+}
+
+.quick-bar-label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--accent-cyan);
+    margin-bottom: 10px;
+}
+
+.quick-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.app-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-pill);
+    color: #e2e8f0;
+    text-decoration: none;
+    font-size: 0.82rem;
+    font-weight: 600;
+    transition: var(--transition);
+}
+
+.app-chip:hover {
+    background: rgba(0, 242, 254, 0.15);
+    border-color: var(--accent-cyan);
+    color: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 242, 254, 0.25);
+}
+
+.chip-ai {
+    background: rgba(168, 85, 247, 0.12);
+    border-color: rgba(168, 85, 247, 0.3);
+    color: #d8b4fe;
+}
+
+.chip-ai:hover {
+    background: rgba(168, 85, 247, 0.25);
+    border-color: #c084fc;
+    box-shadow: 0 4px 15px rgba(168, 85, 247, 0.35);
 }
 
 /* Métricas Rápidas */
@@ -713,7 +776,7 @@ body {
 /* --- 10. Portfolio Grid (#portfolio) --- */
 .portfolio-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
     gap: 24px;
 }
 
@@ -752,7 +815,7 @@ body {
 }
 
 .portfolio-icon {
-    font-size: 1.5rem;
+    font-size: 1.6rem;
     color: var(--text-muted);
 }
 
@@ -766,13 +829,14 @@ body {
     color: var(--text-secondary);
     font-size: 0.9rem;
     line-height: 1.6;
-    margin-bottom: 24px;
+    margin-bottom: 20px;
 }
 
 .portfolio-tags {
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
+    margin-bottom: 18px;
 }
 
 .portfolio-tags span {
@@ -782,6 +846,49 @@ body {
     border: 1px solid rgba(255, 255, 255, 0.08);
     padding: 4px 8px;
     border-radius: var(--radius-sm);
+}
+
+.portfolio-actions {
+    margin-top: auto;
+    padding-top: 14px;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.btn-app-direct {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    padding: 11px 16px;
+    border-radius: var(--radius-md);
+    background: rgba(0, 242, 254, 0.1);
+    border: 1px solid rgba(0, 242, 254, 0.3);
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.88rem;
+    transition: var(--transition);
+}
+
+.btn-app-direct:hover {
+    background: var(--gradient-primary);
+    color: #060913;
+    border-color: transparent;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 242, 254, 0.35);
+}
+
+.btn-ai-direct {
+    background: rgba(168, 85, 247, 0.15);
+    border-color: rgba(168, 85, 247, 0.4);
+    color: #f3e8ff;
+}
+
+.btn-ai-direct:hover {
+    background: linear-gradient(135deg, #a855f7 0%, #6366f1 100%);
+    color: #ffffff;
+    box-shadow: 0 6px 20px rgba(168, 85, 247, 0.4);
 }
 
 /* --- 11. Sobre Nosotros (#sobre-nosotros) --- */
