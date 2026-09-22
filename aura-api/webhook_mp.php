@@ -69,15 +69,17 @@ if ($httpCode === 200 && !empty($payment['status']) && $payment['status'] === 'a
             $bloqueDescarga = "
                 <h3 style='color: #fff; margin-top: 0;'>Mega Pack Completo (20 Libros):</h3>
                 <p><a href='https://aura-adamo.site/descargas/Mega_Pack_20_Libros_Completo_Aura.zip' style='display: inline-block; background: #ef4444; color: #fff; font-weight: bold; padding: 14px 28px; border-radius: 8px; text-decoration: none;'>🚀 Descargar Mega Pack 20 Libros (ZIP)</a></p>
-                <p style='font-size: 13px; color: #94a3b8;'><a href='https://aura-adamo.site/descarga-exitosa.html?tipo=pack20' style='color:#38bdf8;'>Abrir portal web para ver libro por libro</a></p>
+                <p style='font-size: 13px; color: #94a3b8;'><a href='https://aura-adamo.site/descarga-exitosa.html?pago=aprobado&tipo=pack20' style='color:#38bdf8;'>Abrir portal web para ver libro por libro</a></p>
             ";
         } elseif ($monto >= 8000) {
             // Pack 10
             $asunto = "¡Tu Pack de 10 Libros! - Aura Ediciones";
-            $zipFile = (stripos($descripcion, 'salud') !== false) ? 'Pack_10_Libros_Salud_Aura.zip' : 'Pack_10_Libros_Negocios_Aura.zip';
+            $tipoPack10 = (stripos($descripcion, 'salud') !== false) ? 'pack_salud' : 'pack_negocios';
+            $zipFile = ($tipoPack10 === 'pack_salud') ? 'Pack_10_Libros_Salud_Aura.zip' : 'Pack_10_Libros_Negocios_Aura.zip';
             $bloqueDescarga = "
                 <h3 style='color: #fff; margin-top: 0;'>Pack de 10 Libros:</h3>
                 <p><a href='https://aura-adamo.site/descargas/{$zipFile}' style='display: inline-block; background: #6366f1; color: #fff; font-weight: bold; padding: 14px 28px; border-radius: 8px; text-decoration: none;'>💼 Descargar Pack de 10 Libros (ZIP)</a></p>
+                <p style='font-size: 13px; color: #94a3b8;'><a href='https://aura-adamo.site/descarga-exitosa.html?pago=aprobado&tipo={$tipoPack10}' style='color:#38bdf8;'>Abrir portal web para ver la colección</a></p>
             ";
         } else {
             // Libro Individual ($2.500)
@@ -85,7 +87,7 @@ if ($httpCode === 200 && !empty($payment['status']) && $payment['status'] === 'a
             $bloqueDescarga = "
                 <h3 style='color: #fff; margin-top: 0;'>Tu Libro Individual Adquirido:</h3>
                 <p style='color: #38bdf8; font-weight: bold; font-size: 16px;'>{$descripcion}</p>
-                <p><a href='https://aura-adamo.site/descarga-exitosa.html?tipo=individual&titulo=" . urlencode($descripcion) . "' style='display: inline-block; background: #10b981; color: #000; font-weight: bold; padding: 14px 28px; border-radius: 8px; text-decoration: none;'>📥 Descargar Mi Libro en PDF</a></p>
+                <p><a href='https://aura-adamo.site/descarga-exitosa.html?pago=aprobado&tipo=individual&titulo=" . urlencode($descripcion) . "' style='display: inline-block; background: #10b981; color: #000; font-weight: bold; padding: 14px 28px; border-radius: 8px; text-decoration: none;'>📥 Descargar Mi Libro en PDF</a></p>
                 <p style='font-size: 13px; color: #94a3b8; margin-top: 15px;'>¿Querés la colección completa? Podés adquirir los 19 restantes con descuento en <a href='https://aura-adamo.site/libros.html' style='color:#818cf8;'>nuestra tienda</a>.</p>
             ";
         }

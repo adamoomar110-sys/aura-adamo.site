@@ -200,8 +200,38 @@
 <body>
 
     <div class="container">
-        <!-- Hero Éxito -->
-        <header class="hero-success">
+        <!-- Bloque de Acceso Restringido (Se muestra si no hay pago acreditado) -->
+        <div id="accessDeniedBlock" style="display: none; text-align: center; max-width: 680px; margin: 40px auto 60px; background: rgba(15, 23, 42, 0.95); border: 2px solid rgba(239, 68, 68, 0.5); border-radius: 24px; padding: 45px 30px; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 0 30px rgba(239, 68, 68, 0.15);">
+            <div style="width: 86px; height: 86px; margin: 0 auto 20px; background: rgba(239, 68, 68, 0.15); border: 2px solid #ef4444; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 30px rgba(239, 68, 68, 0.3);">
+                <i class="bx bx-lock-alt" style="font-size: 3rem; color: #ef4444;"></i>
+            </div>
+            <span style="background: rgba(239, 68, 68, 0.2); color: #f87171; font-weight: 800; font-size: 0.8rem; padding: 6px 16px; border-radius: 999px; text-transform: uppercase; letter-spacing: 0.8px; border: 1px solid rgba(239, 68, 68, 0.3);">
+                🔒 Área Restringida para Compradores
+            </span>
+            <h1 style="color: #fff; font-size: 2.2rem; font-weight: 800; margin: 18px 0 12px; font-family: 'Outfit', sans-serif;">
+                Pago No Verificado
+            </h1>
+            <p style="color: #cbd5e1; font-size: 1.05rem; line-height: 1.6; margin-bottom: 28px;">
+                Esta sección es exclusiva para la entrega de libros de <strong>Aura Ediciones</strong> tras confirmar el pago en <strong>Mercado Pago</strong>.<br>
+                Si todavía no compraste tu libro, podés adquirirlo desde nuestra tienda online oficial.
+            </p>
+            <div style="display: flex; justify-content: center; gap: 14px; flex-wrap: wrap;">
+                <a href="https://aura-adamo.site/libros.html" style="background: linear-gradient(135deg, #10b981, #059669); color: #fff; font-weight: 800; font-size: 1rem; padding: 14px 28px; border-radius: 12px; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);">
+                    <i class="bx bx-shopping-bag"></i> Ir a la Tienda de Libros ($2.500)
+                </a>
+                <a href="https://wa.me/5491178295317?text=Hola%20Omar,%20ya%20pagu%C3%A9%20por%20Mercado%20Pago%20pero%20no%20pude%20descargar%20mi%20libro,%20te%20env%C3%ADo%20el%20comprobante." target="_blank" style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.2); color: #e2e8f0; font-weight: 700; font-size: 0.95rem; padding: 14px 22px; border-radius: 12px; text-decoration: none; display: inline-flex; align-items: center; gap: 8px;">
+                    <i class="bx bxl-whatsapp" style="color: #25d366; font-size: 1.25rem;"></i> Avisar por WhatsApp (+54 9 11 7829-5317)
+                </a>
+            </div>
+            <p style="color: #64748b; font-size: 0.85rem; margin-top: 24px;">
+                ¿Ya pagaste? Comunicate por WhatsApp con Omar Horacio Adamo y te habilitamos el enlace de inmediato.
+            </p>
+        </div>
+
+        <!-- Contenedor Autorizado (Solo visible tras acreditar pago) -->
+        <div id="authorizedContent" style="display: none;">
+            <!-- Hero Éxito -->
+            <header class="hero-success">
             <div class="success-icon-wrap">
                 <i class="bx bx-check"></i>
             </div>
@@ -284,115 +314,119 @@
             <div id="emailStatus" style="margin-top: 14px; font-weight: 700; font-size: 0.9rem;"></div>
         </div>
 
-        <!-- Descarga Individual de Negocios -->
-        <h3 class="section-sub"><i class="bx bx-briefcase" style="color: #818cf8;"></i> Descarga Individual: Negocios, Tecnología e IA</h3>
-        <p class="section-desc">Hacé clic en cualquier libro para abrir o descargar directamente el PDF oficial:</p>
-        <div class="books-grid">
-            <div class="book-item">
-                <div class="book-name">01. El Manual del Dropshipping</div>
-                <div class="book-sub">Tiendas online sin stock previo y escala.</div>
-                <a href="descargas/01_El_Manual_del_Dropshipping.pdf" download class="btn-download-single"><i class="bx bx-download"></i> Descargar PDF</a>
-            </div>
-            <div class="book-item">
-                <div class="book-name">02. Inteligencia Artificial para Negocios</div>
-                <div class="book-sub">Automatización comercial y agentes autónomos.</div>
-                <a href="descargas/02_Inteligencia_Artificial_para_Negocios.pdf" download class="btn-download-single"><i class="bx bx-download"></i> Descargar PDF</a>
-            </div>
-            <div class="book-item">
-                <div class="book-name">03. E-commerce Avanzado</div>
-                <div class="book-sub">Embudos de alta conversión y tráfico masivo.</div>
-                <a href="descargas/03_Ecommerce_Avanzado.pdf" download class="btn-download-single"><i class="bx bx-download"></i> Descargar PDF</a>
-            </div>
-            <div class="book-item">
-                <div class="book-name">04. Hardware, IoT y Telemetría</div>
-                <div class="book-sub">Sensores, microcontroladores y tiempo real.</div>
-                <a href="descargas/04_Hardware_IoT_Telemetria.pdf" download class="btn-download-single"><i class="bx bx-download"></i> Descargar PDF</a>
-            </div>
-            <div class="book-item">
-                <div class="book-name">05. Branding y Marca Digital</div>
-                <div class="book-sub">Identidad comercial y posicionamiento premium.</div>
-                <a href="descargas/05_Branding_y_Marca_Digital.pdf" download class="btn-download-single"><i class="bx bx-download"></i> Descargar PDF</a>
-            </div>
-            <div class="book-item">
-                <div class="book-name">06. Finanzas para Startups</div>
-                <div class="book-sub">Flujo de caja, pricing y rentabilidad real.</div>
-                <a href="descargas/06_Finanzas_para_Startups.pdf" download class="btn-download-single"><i class="bx bx-download"></i> Descargar PDF</a>
-            </div>
-            <div class="book-item">
-                <div class="book-name">07. Logística y Cadena de Suministro</div>
-                <div class="book-sub">Rutas, almacenamiento y aduanas.</div>
-                <a href="descargas/07_Logistica_y_Cadena_de_Suministro.pdf" download class="btn-download-single"><i class="bx bx-download"></i> Descargar PDF</a>
-            </div>
-            <div class="book-item">
-                <div class="book-name">08. Ventas B2B y Negociación</div>
-                <div class="book-sub">Cierre corporativo y prospección ejecutiva.</div>
-                <a href="descargas/08_Ventas_B2B_y_Negociacion.pdf" download class="btn-download-single"><i class="bx bx-download"></i> Descargar PDF</a>
-            </div>
-            <div class="book-item">
-                <div class="book-name">09. Gestión de Equipos y Delegación</div>
-                <div class="book-sub">Equipos autónomos y liderazgo efectivo.</div>
-                <a href="descargas/09_Gestion_de_Equipos_y_Delegacion.pdf" download class="btn-download-single"><i class="bx bx-download"></i> Descargar PDF</a>
-            </div>
-            <div class="book-item">
-                <div class="book-name">10. El Ecosistema Aura</div>
-                <div class="book-sub">Arquitectura técnica para escalar negocios.</div>
-                <a href="descargas/10_El_Ecosistema_Aura.pdf" download class="btn-download-single"><i class="bx bx-download"></i> Descargar PDF</a>
+        <div id="sectionNegocios">
+            <!-- Descarga Individual de Negocios -->
+            <h3 class="section-sub"><i class="bx bx-briefcase" style="color: #818cf8;"></i> Descarga Individual: Negocios, Tecnología e IA</h3>
+            <p class="section-desc">Hacé clic en cualquier libro para abrir o descargar directamente el PDF oficial:</p>
+            <div class="books-grid">
+                <div class="book-item">
+                    <div class="book-name">01. El Manual del Dropshipping</div>
+                    <div class="book-sub">Tiendas online sin stock previo y escala.</div>
+                    <a href="descargas/01_El_Manual_del_Dropshipping.pdf" download class="btn-download-single"><i class="bx bx-download"></i> Descargar PDF</a>
+                </div>
+                <div class="book-item">
+                    <div class="book-name">02. Inteligencia Artificial para Negocios</div>
+                    <div class="book-sub">Automatización comercial y agentes autónomos.</div>
+                    <a href="descargas/02_Inteligencia_Artificial_para_Negocios.pdf" download class="btn-download-single"><i class="bx bx-download"></i> Descargar PDF</a>
+                </div>
+                <div class="book-item">
+                    <div class="book-name">03. E-commerce Avanzado</div>
+                    <div class="book-sub">Embudos de alta conversión y tráfico masivo.</div>
+                    <a href="descargas/03_Ecommerce_Avanzado.pdf" download class="btn-download-single"><i class="bx bx-download"></i> Descargar PDF</a>
+                </div>
+                <div class="book-item">
+                    <div class="book-name">04. Hardware, IoT y Telemetría</div>
+                    <div class="book-sub">Sensores, microcontroladores y tiempo real.</div>
+                    <a href="descargas/04_Hardware_IoT_Telemetria.pdf" download class="btn-download-single"><i class="bx bx-download"></i> Descargar PDF</a>
+                </div>
+                <div class="book-item">
+                    <div class="book-name">05. Branding y Marca Digital</div>
+                    <div class="book-sub">Identidad comercial y posicionamiento premium.</div>
+                    <a href="descargas/05_Branding_y_Marca_Digital.pdf" download class="btn-download-single"><i class="bx bx-download"></i> Descargar PDF</a>
+                </div>
+                <div class="book-item">
+                    <div class="book-name">06. Finanzas para Startups</div>
+                    <div class="book-sub">Flujo de caja, pricing y rentabilidad real.</div>
+                    <a href="descargas/06_Finanzas_para_Startups.pdf" download class="btn-download-single"><i class="bx bx-download"></i> Descargar PDF</a>
+                </div>
+                <div class="book-item">
+                    <div class="book-name">07. Logística y Cadena de Suministro</div>
+                    <div class="book-sub">Rutas, almacenamiento y aduanas.</div>
+                    <a href="descargas/07_Logistica_y_Cadena_de_Suministro.pdf" download class="btn-download-single"><i class="bx bx-download"></i> Descargar PDF</a>
+                </div>
+                <div class="book-item">
+                    <div class="book-name">08. Ventas B2B y Negociación</div>
+                    <div class="book-sub">Cierre corporativo y prospección ejecutiva.</div>
+                    <a href="descargas/08_Ventas_B2B_y_Negociacion.pdf" download class="btn-download-single"><i class="bx bx-download"></i> Descargar PDF</a>
+                </div>
+                <div class="book-item">
+                    <div class="book-name">09. Gestión de Equipos y Delegación</div>
+                    <div class="book-sub">Equipos autónomos y liderazgo efectivo.</div>
+                    <a href="descargas/09_Gestion_de_Equipos_y_Delegacion.pdf" download class="btn-download-single"><i class="bx bx-download"></i> Descargar PDF</a>
+                </div>
+                <div class="book-item">
+                    <div class="book-name">10. El Ecosistema Aura</div>
+                    <div class="book-sub">Arquitectura técnica para escalar negocios.</div>
+                    <a href="descargas/10_El_Ecosistema_Aura.pdf" download class="btn-download-single"><i class="bx bx-download"></i> Descargar PDF</a>
+                </div>
             </div>
         </div>
 
-        <!-- Descarga Individual de Salud -->
-        <h3 class="section-sub"><i class="bx bx-heart" style="color: #34d399;"></i> Descarga Individual: Salud, Nutrición y Dietas</h3>
-        <p class="section-desc">Hacé clic en cualquier libro para abrir o descargar directamente el PDF con referencias científicas:</p>
-        <div class="books-grid">
-            <div class="book-item">
-                <div class="book-name">01. La Dieta Cetogénica Práctica</div>
-                <div class="book-sub">Cetosis nutricional y adaptación metabólica.</div>
-                <a href="descargas/01_La_Dieta_Cetogenica_Practica.pdf" download class="btn-download-single"><i class="bx bx-download"></i> Descargar PDF</a>
-            </div>
-            <div class="book-item">
-                <div class="book-name">02. El Poder del Ayuno Intermitente</div>
-                <div class="book-sub">Autofagia celular y flexibilidad metabólica.</div>
-                <a href="descargas/02_El_Poder_del_Ayuno_Intermitente.pdf" download class="btn-download-single"><i class="bx bx-download"></i> Descargar PDF</a>
-            </div>
-            <div class="book-item">
-                <div class="book-name">03. Dieta Antiinflamatoria</div>
-                <div class="book-sub">Reducción de citoquinas y regeneración.</div>
-                <a href="descargas/03_Dieta_Antiinflamatoria.pdf" download class="btn-download-single"><i class="bx bx-download"></i> Descargar PDF</a>
-            </div>
-            <div class="book-item">
-                <div class="book-name">04. Nutrición Deportiva y Fuerza</div>
-                <div class="book-sub">Hipertrofia, energía y síntesis proteica.</div>
-                <a href="descargas/04_Nutricion_Deportiva_y_Fuerza.pdf" download class="btn-download-single"><i class="bx bx-download"></i> Descargar PDF</a>
-            </div>
-            <div class="book-item">
-                <div class="book-name">05. La Dieta Mediterránea Moderna</div>
-                <div class="book-sub">Protección cardiovascular y polifenoles.</div>
-                <a href="descargas/05_La_Dieta_Mediterranea_Moderna.pdf" download class="btn-download-single"><i class="bx bx-download"></i> Descargar PDF</a>
-            </div>
-            <div class="book-item">
-                <div class="book-name">06. Microbiota y Salud Intestinal</div>
-                <div class="book-sub">Eje intestino-cerebro y flora bacteriana.</div>
-                <a href="descargas/06_Microbiota_y_Salud_Intestinal.pdf" download class="btn-download-single"><i class="bx bx-download"></i> Descargar PDF</a>
-            </div>
-            <div class="book-item">
-                <div class="book-name">07. Alimentación Basada en Plantas</div>
-                <div class="book-sub">Salud integral sin carencias nutricionales.</div>
-                <a href="descargas/07_Alimentacion_Basada_en_Plantas.pdf" download class="btn-download-single"><i class="bx bx-download"></i> Descargar PDF</a>
-            </div>
-            <div class="book-item">
-                <div class="book-name">08. Control de Glucosa e Insulina</div>
-                <div class="book-sub">Prevención metabólica y estabilidad glucémica.</div>
-                <a href="descargas/08_Control_de_Glucosa_e_Insulina.pdf" download class="btn-download-single"><i class="bx bx-download"></i> Descargar PDF</a>
-            </div>
-            <div class="book-item">
-                <div class="book-name">09. Comer sin Ansiedad (Mindful Eating)</div>
-                <div class="book-sub">Paz mental y neurobiología de los antojos.</div>
-                <a href="descargas/09_Comer_sin_Ansiedad_Mindful_Eating.pdf" download class="btn-download-single"><i class="bx bx-download"></i> Descargar PDF</a>
-            </div>
-            <div class="book-item">
-                <div class="book-name">10. Longevidad y Biohacking Nutricional</div>
-                <div class="book-sub">Vías mTOR/AMPK y biología del envejecimiento.</div>
-                <a href="descargas/10_Longevidad_y_Biohacking_Nutricional.pdf" download class="btn-download-single"><i class="bx bx-download"></i> Descargar PDF</a>
+        <div id="sectionSalud">
+            <!-- Descarga Individual de Salud -->
+            <h3 class="section-sub"><i class="bx bx-heart" style="color: #34d399;"></i> Descarga Individual: Salud, Nutrición y Dietas</h3>
+            <p class="section-desc">Hacé clic en cualquier libro para abrir o descargar directamente el PDF con referencias científicas:</p>
+            <div class="books-grid">
+                <div class="book-item">
+                    <div class="book-name">01. La Dieta Cetogénica Práctica</div>
+                    <div class="book-sub">Cetosis nutricional y adaptación metabólica.</div>
+                    <a href="descargas/01_La_Dieta_Cetogenica_Practica.pdf" download class="btn-download-single"><i class="bx bx-download"></i> Descargar PDF</a>
+                </div>
+                <div class="book-item">
+                    <div class="book-name">02. El Poder del Ayuno Intermitente</div>
+                    <div class="book-sub">Autofagia celular y flexibilidad metabólica.</div>
+                    <a href="descargas/02_El_Poder_del_Ayuno_Intermitente.pdf" download class="btn-download-single"><i class="bx bx-download"></i> Descargar PDF</a>
+                </div>
+                <div class="book-item">
+                    <div class="book-name">03. Dieta Antiinflamatoria</div>
+                    <div class="book-sub">Reducción de citoquinas y regeneración.</div>
+                    <a href="descargas/03_Dieta_Antiinflamatoria.pdf" download class="btn-download-single"><i class="bx bx-download"></i> Descargar PDF</a>
+                </div>
+                <div class="book-item">
+                    <div class="book-name">04. Nutrición Deportiva y Fuerza</div>
+                    <div class="book-sub">Hipertrofia, energía y síntesis proteica.</div>
+                    <a href="descargas/04_Nutricion_Deportiva_y_Fuerza.pdf" download class="btn-download-single"><i class="bx bx-download"></i> Descargar PDF</a>
+                </div>
+                <div class="book-item">
+                    <div class="book-name">05. La Dieta Mediterránea Moderna</div>
+                    <div class="book-sub">Protección cardiovascular y polifenoles.</div>
+                    <a href="descargas/05_La_Dieta_Mediterranea_Moderna.pdf" download class="btn-download-single"><i class="bx bx-download"></i> Descargar PDF</a>
+                </div>
+                <div class="book-item">
+                    <div class="book-name">06. Microbiota y Salud Intestinal</div>
+                    <div class="book-sub">Eje intestino-cerebro y flora bacteriana.</div>
+                    <a href="descargas/06_Microbiota_y_Salud_Intestinal.pdf" download class="btn-download-single"><i class="bx bx-download"></i> Descargar PDF</a>
+                </div>
+                <div class="book-item">
+                    <div class="book-name">07. Alimentación Basada en Plantas</div>
+                    <div class="book-sub">Salud integral sin carencias nutricionales.</div>
+                    <a href="descargas/07_Alimentacion_Basada_en_Plantas.pdf" download class="btn-download-single"><i class="bx bx-download"></i> Descargar PDF</a>
+                </div>
+                <div class="book-item">
+                    <div class="book-name">08. Control de Glucosa e Insulina</div>
+                    <div class="book-sub">Prevención metabólica y estabilidad glucémica.</div>
+                    <a href="descargas/08_Control_de_Glucosa_e_Insulina.pdf" download class="btn-download-single"><i class="bx bx-download"></i> Descargar PDF</a>
+                </div>
+                <div class="book-item">
+                    <div class="book-name">09. Comer sin Ansiedad (Mindful Eating)</div>
+                    <div class="book-sub">Paz mental y neurobiología de los antojos.</div>
+                    <a href="descargas/09_Comer_sin_Ansiedad_Mindful_Eating.pdf" download class="btn-download-single"><i class="bx bx-download"></i> Descargar PDF</a>
+                </div>
+                <div class="book-item">
+                    <div class="book-name">10. Longevidad y Biohacking Nutricional</div>
+                    <div class="book-sub">Vías mTOR/AMPK y biología del envejecimiento.</div>
+                    <a href="descargas/10_Longevidad_y_Biohacking_Nutricional.pdf" download class="btn-download-single"><i class="bx bx-download"></i> Descargar PDF</a>
+                </div>
             </div>
         </div>
 
@@ -456,22 +490,30 @@
             </div>
         </div>
 
+        </div><!-- /#authorizedContent -->
+        
         <footer>
             <p>&copy; 2026 <a href="https://aura-adamo.site/">Aura</a>. Todos los derechos reservados. Plataforma fundada por Omar Horacio Adamo.</p>
         </footer>
     </div>
 
-    <!-- Script de Segmentación Dinámica y Envío Automático -->
+    <!-- Script de Segmentación Dinámica y Verificación Estricta de Pago -->
     <script>
         const urlParams = new URLSearchParams(window.location.search);
-        let tipo = urlParams.get('tipo') || '';
+        const pago = urlParams.get('pago');
+        const collectionStatus = urlParams.get('collection_status');
+        const status = urlParams.get('status');
+        const paymentId = urlParams.get('payment_id');
+        let tipo = (urlParams.get('tipo') || '').trim();
         const tituloParam = decodeURIComponent(urlParams.get('titulo') || '').trim();
 
-        if (!tipo && tituloParam) {
-            tipo = 'individual';
-        } else if (!tipo) {
-            tipo = 'pack20'; // Modo catálogo abierto
-        }
+        // Verificación estricta de pago verificado por Mercado Pago
+        const tienePagoValido = (
+            pago === 'aprobado' ||
+            collectionStatus === 'approved' ||
+            status === 'approved' ||
+            (paymentId && paymentId !== 'null' && paymentId !== '')
+        );
 
         const mapaLibros = [
             { key: 'dropshipping', name: '01. El Manual del Dropshipping', file: '01_El_Manual_del_Dropshipping.pdf', cat: 'negocios' },
@@ -498,14 +540,43 @@
 
         let libroSeleccionado = null;
 
-        // Inicializar interfaz según el tipo de compra
         document.addEventListener('DOMContentLoaded', () => {
+            const accessDeniedBlock = document.getElementById('accessDeniedBlock');
+            const authorizedContent = document.getElementById('authorizedContent');
+
+            // 1. CONTROL DE ACCESO ESTRICTO: Si no hay pago acreditado, BLOQUEAR
+            if (!tienePagoValido) {
+                if (accessDeniedBlock) accessDeniedBlock.style.display = 'block';
+                if (authorizedContent) authorizedContent.style.display = 'none';
+                return;
+            }
+
+            // Si hay pago verificado, mostrar contenedor de descargas
+            if (accessDeniedBlock) accessDeniedBlock.style.display = 'none';
+            if (authorizedContent) authorizedContent.style.display = 'block';
+
+            if (!tipo && tituloParam) {
+                tipo = 'individual';
+            } else if (!tipo) {
+                tipo = 'pack20';
+            }
+
+            const packsGrid = document.getElementById('packsGrid');
+            const card20 = document.getElementById('cardPack20');
+            const cardNegocios = document.getElementById('cardPackNegocios');
+            const cardSalud = document.getElementById('cardPackSalud');
+            const secNegocios = document.getElementById('sectionNegocios');
+            const secSalud = document.getElementById('sectionSalud');
+
             if (tipo === 'individual') {
-                // Ocultar packs masivos de regalo
-                const packsGrid = document.getElementById('packsGrid');
+                // Ocultar TODOS los packs ZIP
                 if (packsGrid) packsGrid.style.display = 'none';
 
-                // Buscar el libro comprado
+                // Ocultar las listas completas de 20 libros
+                if (secNegocios) secNegocios.style.display = 'none';
+                if (secSalud) secSalud.style.display = 'none';
+
+                // Buscar el libro individual comprado
                 if (tituloParam) {
                     libroSeleccionado = mapaLibros.find(l => 
                         tituloParam.toLowerCase().includes(l.key) || 
@@ -513,10 +584,10 @@
                     );
                 }
                 if (!libroSeleccionado) {
-                    libroSeleccionado = mapaLibros[0]; // fallback
+                    libroSeleccionado = mapaLibros[0];
                 }
 
-                // Mostrar banner de libro individual
+                // Mostrar SOLAMENTE el libro comprado
                 const singleBlock = document.getElementById('singleBookBlock');
                 const singleTitle = document.getElementById('singleBookTitle');
                 const singleBtn = document.getElementById('singleBookDownloadBtn');
@@ -528,39 +599,38 @@
                     singleBlock.style.display = 'block';
                 }
 
-                // Ajustar cuadrícula de libros: bloquear los otros 19 libros
-                document.querySelectorAll('.book-item').forEach(item => {
-                    const nameEl = item.querySelector('.book-name');
-                    const linkEl = item.querySelector('.btn-download-single');
-                    if (nameEl && linkEl) {
-                        const itemText = nameEl.innerText.trim();
-                        if (itemText.includes(libroSeleccionado.name) || libroSeleccionado.name.includes(itemText)) {
-                            item.style.border = '2px solid #10b981';
-                            item.style.background = 'rgba(16, 185, 129, 0.1)';
-                            linkEl.innerHTML = '<i class="bx bx-check-circle"></i> Tu Libro (Descargar)';
-                            linkEl.style.background = '#10b981';
-                            linkEl.style.color = '#000';
-                            linkEl.style.fontWeight = '800';
-                        } else {
-                            item.style.opacity = '0.6';
-                            linkEl.innerHTML = '<i class="bx bx-lock-alt"></i> Adquirir en Tienda ($2.500)';
-                            linkEl.href = 'https://aura-adamo.site/libros.html';
-                            linkEl.removeAttribute('download');
-                            linkEl.style.background = 'rgba(255,255,255,0.05)';
-                        }
-                    }
-                });
-
             } else if (tipo === 'pack_negocios') {
-                const card20 = document.getElementById('cardPack20');
-                const cardSalud = document.getElementById('cardPackSalud');
+                // Pack 10 Negocios: solo ZIP de Negocios y libros de Negocios
+                const singleBlock = document.getElementById('singleBookBlock');
+                if (singleBlock) singleBlock.style.display = 'none';
+
                 if (card20) card20.style.display = 'none';
                 if (cardSalud) cardSalud.style.display = 'none';
+                if (cardNegocios) cardNegocios.style.display = 'flex';
+
+                if (secSalud) secSalud.style.display = 'none';
+                if (secNegocios) secNegocios.style.display = 'block';
+
             } else if (tipo === 'pack_salud') {
-                const card20 = document.getElementById('cardPack20');
-                const cardNegocios = document.getElementById('cardPackNegocios');
+                // Pack 10 Salud: solo ZIP de Salud y libros de Salud
+                const singleBlock = document.getElementById('singleBookBlock');
+                if (singleBlock) singleBlock.style.display = 'none';
+
                 if (card20) card20.style.display = 'none';
                 if (cardNegocios) cardNegocios.style.display = 'none';
+                if (cardSalud) cardSalud.style.display = 'flex';
+
+                if (secNegocios) secNegocios.style.display = 'none';
+                if (secSalud) secSalud.style.display = 'block';
+
+            } else {
+                // Mega Pack 20: acceso a todo
+                const singleBlock = document.getElementById('singleBookBlock');
+                if (singleBlock) singleBlock.style.display = 'none';
+
+                if (card20) card20.style.display = 'flex';
+                if (secNegocios) secNegocios.style.display = 'block';
+                if (secSalud) secSalud.style.display = 'block';
             }
         });
 

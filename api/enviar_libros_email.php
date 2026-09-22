@@ -65,21 +65,21 @@ if ($pack === 'pack20') {
     $bloqueDescarga = "
         <h3 style='color: #fff; margin-bottom: 12px;'>Mega Pack 20 Libros (Colección Completa):</h3>
         <p style='margin-bottom: 15px;'><a href='https://aura-adamo.site/descargas/Mega_Pack_20_Libros_Completo_Aura.zip' class='btn btn-green'>🚀 Descargar Mega Pack 20 Libros (ZIP)</a></p>
-        <p style='font-size: 13px; color: #94a3b8;'>Acceso al portal para ver libro por libro: <a href='https://aura-adamo.site/descarga-exitosa.html?tipo=pack20' style='color:#38bdf8;'>Abrir Portal</a></p>
+        <p style='font-size: 13px; color: #94a3b8;'>Acceso al portal para ver libro por libro: <a href='https://aura-adamo.site/descarga-exitosa.html?pago=aprobado&tipo=pack20' style='color:#38bdf8;'>Abrir Portal</a></p>
     ";
 } elseif ($pack === 'pack_negocios') {
     $asunto = "Tu Pack de 10 Libros de Negocios & IA - Aura Ediciones";
     $bloqueDescarga = "
         <h3 style='color: #fff; margin-bottom: 12px;'>Pack 10 Libros Negocios, IA & Tecnología:</h3>
         <p style='margin-bottom: 15px;'><a href='https://aura-adamo.site/descargas/Pack_10_Libros_Negocios_Aura.zip' class='btn btn-blue'>💼 Descargar Pack Negocios (ZIP)</a></p>
-        <p style='font-size: 13px; color: #94a3b8;'>Acceso a la colección: <a href='https://aura-adamo.site/descarga-exitosa.html?tipo=pack_negocios' style='color:#38bdf8;'>Abrir Portal</a></p>
+        <p style='font-size: 13px; color: #94a3b8;'>Acceso a la colección: <a href='https://aura-adamo.site/descarga-exitosa.html?pago=aprobado&tipo=pack_negocios' style='color:#38bdf8;'>Abrir Portal</a></p>
     ";
 } elseif ($pack === 'pack_salud') {
     $asunto = "Tu Pack de 10 Libros de Salud & Dietas - Aura Ediciones";
     $bloqueDescarga = "
         <h3 style='color: #fff; margin-bottom: 12px;'>Pack 10 Libros Salud & Nutrición:</h3>
         <p style='margin-bottom: 15px;'><a href='https://aura-adamo.site/descargas/Pack_10_Libros_Salud_Aura.zip' class='btn btn-green'>🥗 Descargar Pack Salud (ZIP)</a></p>
-        <p style='font-size: 13px; color: #94a3b8;'>Acceso a la colección: <a href='https://aura-adamo.site/descarga-exitosa.html?tipo=pack_salud' style='color:#38bdf8;'>Abrir Portal</a></p>
+        <p style='font-size: 13px; color: #94a3b8;'>Acceso a la colección: <a href='https://aura-adamo.site/descarga-exitosa.html?pago=aprobado&tipo=pack_salud' style='color:#38bdf8;'>Abrir Portal</a></p>
     ";
 } else {
     // Libro individual ($2.500)
