@@ -141,7 +141,7 @@ $htmlMessage = "
 
     <div style='background: rgba(16,185,129,0.1); border: 1px solid rgba(16,185,129,0.25); border-radius: 10px; padding: 14px; text-align: left;'>
         <h4 style='color: #34d399; margin: 0 0 6px 0;'>¿Dudas o preferís tener el archivo en tu WhatsApp?</h4>
-        <p style='font-size: 13px; margin: 0;'>Podés escribirle directamente al autor Omar Horacio Adamo: <a href='https://api.whatsapp.com/send?text=Hola%20Omar,%20compr%C3%A9%20el%20libro%20con%20el%20email%20" . urlencode($email) . "' style='color: #10b981; font-weight: bold;'>💬 Hablar por WhatsApp</a></p>
+        <p style='font-size: 13px; margin: 0;'>Podés escribirle directamente al autor Omar Horacio Adamo: <a href='https://wa.me/5491178295317?text=Hola%20Omar,%20compr%C3%A9%20el%20libro%20con%20el%20email%20" . urlencode($email) . "' style='color: #10b981; font-weight: bold;'>💬 Hablar por WhatsApp (+54 9 11 7829-5317)</a></p>
     </div>
 
     <div class='footer'>

@@ -106,7 +106,7 @@ if ($httpCode === 200 && !empty($payment['status']) && $payment['status'] === 'a
 
                 <div style='border-top: 1px solid #334155; padding-top: 20px; font-size: 13px; color: #94a3b8;'>
                     <p>Si tenés alguna duda o querés recibir los archivos directamente por WhatsApp, escribile a Omar Horacio Adamo:</p>
-                    <p><a href='https://api.whatsapp.com/send?text=Hola%20Omar,%20compr%C3%A9%20el%20libro%20con%20el%20email%20{$email}' style='color: #10b981; font-weight: bold;'>💬 Hablar por WhatsApp con Omar</a></p>
+                    <p><a href='https://wa.me/5491178295317?text=Hola%20Omar,%20compr%C3%A9%20el%20libro%20con%20el%20email%20{$email}' style='color: #10b981; font-weight: bold;'>💬 Hablar por WhatsApp con Omar (+54 9 11 7829-5317)</a></p>
                 </div>
 
                 <div style='text-align: center; margin-top: 30px; font-size: 12px; color: #64748b;'>
