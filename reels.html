@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aura Reels Hub | Descargas y Copetes Oficiales</title>
+    <meta name="description" content="Descarga los reels oficiales de Aura con la mascota Auri listos para publicar en Instagram @aura_adamo_omar.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #080c14;
+            --bg-card: rgba(18, 26, 43, 0.75);
+            --card-border: rgba(99, 102, 241, 0.25);
+            --primary: #6366f1;
+            --primary-glow: #818cf8;
+            --accent: #06b6d4;
+            --wa-color: #25d366;
+            --ig-gradient: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            min-height: 100vh;
+            padding: 20px 16px 80px;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(99, 102, 241, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(6, 182, 212, 0.15) 0%, transparent 40%);
+            background-attachment: fixed;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .brand-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(99, 102, 241, 0.15);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            color: #a5b4fc;
+            padding: 6px 16px;
+            border-radius: 999px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 14px;
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #fff 0%, #94a3b8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+            line-height: 1.2;
+        }
+
+        p.subtitle {
+            color: var(--text-muted);
+            font-size: 1rem;
+            max-width: 550px;
+            margin: 0 auto 20px;
+        }
+
+        /* Top Action Bar */
+        .top-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: center;
+            margin-bottom: 36px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 20px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            text-decoration: none;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s ease;
+        }
+
+        .btn-wa {
+            background-color: var(--wa-color);
+            color: #ffffff;
+            box-shadow: 0 4px 14px rgba(37, 211, 102, 0.3);
+        }
+        .btn-wa:hover {
+            background-color: #20ba59;
+            transform: translateY(-2px);
+        }
+
+        .btn-zip {
+            background: linear-gradient(135deg, #6366f1, #4f46e5);
+            color: white;
+            box-shadow: 0 4px 14px rgba(99, 102, 241, 0.35);
+        }
+        .btn-zip:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn-ig {
+            background: var(--ig-gradient);
+            color: white;
+            box-shadow: 0 4px 14px rgba(225, 48, 108, 0.3);
+        }
+
+        /* Video Cards Grid */
+        .reels-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+        }
+
+        .reel-card {
+            background: var(--bg-card);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            backdrop-filter: blur(16px);
+            padding: 24px;
+            display: grid;
+            grid-template-columns: 260px 1fr;
+            gap: 24px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+            transition: border-color 0.3s ease;
+        }
+
+        .reel-card:hover {
+            border-color: rgba(99, 102, 241, 0.6);
+        }
+
+        .video-wrapper {
+            position: relative;
+            border-radius: 14px;
+            overflow: hidden;
+            background: #000;
+            aspect-ratio: 9 / 16;
+            max-height: 460px;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.5);
+        }
+
+        .video-wrapper video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .reel-info {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .reel-meta {
+            margin-bottom: 16px;
+        }
+
+        .ep-tag {
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--accent);
+            margin-bottom: 6px;
+        }
+
+        .reel-title {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 12px;
+        }
+
+        .caption-box {
+            background: rgba(10, 15, 29, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 14px;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            color: #cbd5e1;
+            margin-bottom: 18px;
+            position: relative;
+            white-space: pre-wrap;
+            user-select: all;
+        }
+
+        .reel-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .btn-download {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            flex: 1;
+            min-width: 160px;
+        }
+        .btn-download:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-copy {
+            background: #312e81;
+            color: #c7d2fe;
+            border: 1px solid #4338ca;
+            flex: 1;
+            min-width: 160px;
+        }
+        .btn-copy:hover {
+            background: #3730a3;
+            color: #fff;
+        }
+
+        .btn-card-wa {
+            background: rgba(37, 211, 102, 0.15);
+            color: #4ade80;
+            border: 1px solid rgba(37, 211, 102, 0.4);
+            flex: 1;
+            min-width: 160px;
+        }
+        .btn-card-wa:hover {
+            background: rgba(37, 211, 102, 0.25);
+        }
+
+        /* Toast feedback */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #10b981;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            box-shadow: 0 10px 25px rgba(16, 185, 129, 0.4);
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        footer {
+            margin-top: 60px;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            padding-top: 30px;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        footer a {
+            color: var(--primary-glow);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .reel-card {
+                grid-template-columns: 1fr;
+            }
+            .video-wrapper {
+                max-width: 280px;
+                margin: 0 auto;
+            }
+            h1 {
+                font-size: 1.7rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <div class="brand-badge">
+                <i class="bx bx-bot"></i> AURI · MASCOTA OFICIAL DE AURA
+            </div>
+            <h1>Pack de Reels para Instagram</h1>
+            <p class="subtitle">
+                Los 5 videos generados en formato 9:16 con audio oficial, subtítulos animados y mascota robot. Descargalos a tu teléfono o compartilos directamente.
+            </p>
+
+            <div class="top-actions">
+                <a href="assets/ig/reels_auri/reels_aura_completos.zip" download="reels_aura_completos.zip" class="btn btn-zip">
+                    <i class="bx bxs-file-archive"></i> Descargar Pack ZIP (5 Videos)
+                </a>
+                <a href="https://api.whatsapp.com/send?text=%F0%9F%A4%96%20*Pack%20de%20Reels%20AURA%20con%20Auri*%0A%0AAc%C3%A1%20ten%C3%A9s%20todos%20los%20videos%20para%20subir%20al%20Instagram%20de%20Aura%3A%0Ahttps%3A%2F%2Faura-adamo.site%2Freels.html" target="_blank" rel="noopener noreferrer" class="btn btn-wa">
+                    <i class="bx bxl-whatsapp"></i> Enviar Links a mi WhatsApp
+                </a>
+                <a href="https://www.instagram.com/aura_adamo_omar/" target="_blank" rel="noopener noreferrer" class="btn btn-ig">
+                    <i class="bx bxl-instagram"></i> Ir a @aura_adamo_omar
+                </a>
+            </div>
+        </header>
+
+        <main class="reels-grid">
+
+            <!-- EP 1 -->
+            <article class="reel-card">
+                <div class="video-wrapper">
+                    <video src="assets/ig/reels_auri/ep1_rolplay.mp4" controls playsinline preload="metadata"></video>
+                </div>
+                <div class="reel-info">
+                    <div class="reel-meta">
+                        <div class="ep-tag">Episodio 1 · IA Aplicada</div>
+                        <h2 class="reel-title">RolPlay.ai — Simulador de Ventas</h2>
+                        <div class="caption-box" id="caption-1">🤖 ¿Querés que tu equipo cierre más ventas?
+
+Te presento RolPlay.ai, el simulador con Inteligencia Artificial que entrena a tus vendedores contra objeciones de clientes reales en tiempo real. 
+
+🎯 Evaluaciones automáticas y feedback inmediato.
+👉 Probá la demo gratis en aura-adamo.site/rolplay
+
+#RolPlayAI #InteligenciaArtificial #Ventas #EntrenamientoComercial #Aura #Startup #Auri</div>
+                    </div>
+                    <div class="reel-actions">
+                        <a href="assets/ig/reels_auri/ep1_rolplay.mp4" download="ep1_rolplay_aura.mp4" class="btn btn-download">
+                            <i class="bx bx-download"></i> Descargar MP4
+                        </a>
+                        <button class="btn btn-copy" onclick="copyText('caption-1')">
+                            <i class="bx bx-copy"></i> Copiar Copete
+                        </button>
+                        <a href="https://api.whatsapp.com/send?text=Video%20Ep1%20RolPlay%3A%20https%3A%2F%2Faura-adamo.site%2Fassets%2Fig%2Freels_auri%2Fep1_rolplay.mp4" target="_blank" class="btn btn-card-wa">
+                            <i class="bx bxl-whatsapp"></i> WhatsApp
+                        </a>
+                    </div>
+                </div>
+            </article>
+
+            <!-- EP 2 -->
+            <article class="reel-card">
+                <div class="video-wrapper">
+                    <video src="assets/ig/reels_auri/ep2_spinaz.mp4" controls playsinline preload="metadata"></video>
+                </div>
+                <div class="reel-info">
+                    <div class="reel-meta">
+                        <div class="ep-tag">Episodio 2 · Gestión Cloud</div>
+                        <h2 class="reel-title">Spinaz Garage — Talleres Mecánicos</h2>
+                        <div class="caption-box" id="caption-2">🚗 ¿Administrás un taller mecánico o una flota?
+
+Spinaz Garage es el software en la nube que automatiza órdenes de reparación, control de repuestos y presupuesto a clientes en segundos.
+
+⚙️ Cero planillas en papel, máxima rentabilidad.
+👉 Digitalizá tu taller hoy en aura-adamo.site/spinaz
+
+#SpinazGarage #TalleresMecanicos #SoftwareAutomotriz #GestionCloud #Aura #Auri</div>
+                    </div>
+                    <div class="reel-actions">
+                        <a href="assets/ig/reels_auri/ep2_spinaz.mp4" download="ep2_spinaz_aura.mp4" class="btn btn-download">
+                            <i class="bx bx-download"></i> Descargar MP4
+                        </a>
+                        <button class="btn btn-copy" onclick="copyText('caption-2')">
+                            <i class="bx bx-copy"></i> Copiar Copete
+                        </button>
+                        <a href="https://api.whatsapp.com/send?text=Video%20Ep2%20Spinaz%3A%20https%3A%2F%2Faura-adamo.site%2Fassets%2Fig%2Freels_auri%2Fep2_spinaz.mp4" target="_blank" class="btn btn-card-wa">
+                            <i class="bx bxl-whatsapp"></i> WhatsApp
+                        </a>
+                    </div>
+                </div>
+            </article>
+
+            <!-- EP 3 -->
+            <article class="reel-card">
+                <div class="video-wrapper">
+                    <video src="assets/ig/reels_auri/ep3_l1deres.mp4" controls playsinline preload="metadata"></video>
+                </div>
+                <div class="reel-info">
+                    <div class="reel-meta">
+                        <div class="ep-tag">Episodio 3 · Hardware & IoT</div>
+                        <h2 class="reel-title">L1deres AutoWash — Telemetría & IoT</h2>
+                        <div class="caption-box" id="caption-3">💦 El futuro de los lavaderos de autos ya llegó.
+
+L1deres AutoWash integra hardware IoT propio en los boxes de lavado con control de recaudación en vivo desde tu celular.
+
+📈 Telemetría, seguridad y control total 24/7.
+👉 Mirá cómo funciona en aura-adamo.site y l1deres.site
+
+#L1deresAutoWash #IoT #Hardware #Telemetria #Aura #Innovacion #Auri</div>
+                    </div>
+                    <div class="reel-actions">
+                        <a href="assets/ig/reels_auri/ep3_l1deres.mp4" download="ep3_l1deres_aura.mp4" class="btn btn-download">
+                            <i class="bx bx-download"></i> Descargar MP4
+                        </a>
+                        <button class="btn btn-copy" onclick="copyText('caption-3')">
+                            <i class="bx bx-copy"></i> Copiar Copete
+                        </button>
+                        <a href="https://api.whatsapp.com/send?text=Video%20Ep3%20L1deres%3A%20https%3A%2F%2Faura-adamo.site%2Fassets%2Fig%2Freels_auri%2Fep3_l1deres.mp4" target="_blank" class="btn btn-card-wa">
+                            <i class="bx bxl-whatsapp"></i> WhatsApp
+                        </a>
+                    </div>
+                </div>
+            </article>
+
+            <!-- EP 4 -->
+            <article class="reel-card">
+                <div class="video-wrapper">
+                    <video src="assets/ig/reels_auri/ep4_odontomerlo.mp4" controls playsinline preload="metadata"></video>
+                </div>
+                <div class="reel-info">
+                    <div class="reel-meta">
+                        <div class="ep-tag">Episodio 4 · Salud Digital</div>
+                        <h2 class="reel-title">Odonto Merlo — Gestión Odontológica</h2>
+                        <div class="caption-box" id="caption-4">🦷 La gestión clínica odontológica más moderna y veloz.
+
+Odonto Merlo ofrece odontograma digital interactivo, turnero inteligente por WhatsApp y fichas clínicas seguras en la nube.
+
+✨ Más tiempo para tus pacientes, menos carga administrativa.
+👉 Descubrilo en aura-adamo.site/odonto
+
+#OdontoMerlo #Odontologia #SaludDigital #Odontograma #Aura #Auri</div>
+                    </div>
+                    <div class="reel-actions">
+                        <a href="assets/ig/reels_auri/ep4_odontomerlo.mp4" download="ep4_odontomerlo_aura.mp4" class="btn btn-download">
+                            <i class="bx bx-download"></i> Descargar MP4
+                        </a>
+                        <button class="btn btn-copy" onclick="copyText('caption-4')">
+                            <i class="bx bx-copy"></i> Copiar Copete
+                        </button>
+                        <a href="https://api.whatsapp.com/send?text=Video%20Ep4%20OdontoMerlo%3A%20https%3A%2F%2Faura-adamo.site%2Fassets%2Fig%2Freels_auri%2Fep4_odontomerlo.mp4" target="_blank" class="btn btn-card-wa">
+                            <i class="bx bxl-whatsapp"></i> WhatsApp
+                        </a>
+                    </div>
+                </div>
+            </article>
+
+            <!-- EP 5 -->
+            <article class="reel-card">
+                <div class="video-wrapper">
+                    <video src="assets/ig/reels_auri/ep5_choferonline.mp4" controls playsinline preload="metadata"></video>
+                </div>
+                <div class="reel-info">
+                    <div class="reel-meta">
+                        <div class="ep-tag">Episodio 5 · Movilidad Inteligente</div>
+                        <h2 class="reel-title">Chofer Online — Red Logística</h2>
+                        <div class="caption-box" id="caption-5">🚖 ¿Necesitás traslados corporativos y choferes de confianza?
+
+Chofer Online conecta usuarios y empresas con conductores profesionales verificados y tarifas transparentes.
+
+⚡ La red de movilidad que evoluciona con vos.
+👉 Conectate en aura-adamo.site/chofer
+
+#ChoferOnline #Movilidad #Logistica #Transporte #Aura #Auri</div>
+                    </div>
+                    <div class="reel-actions">
+                        <a href="assets/ig/reels_auri/ep5_choferonline.mp4" download="ep5_choferonline_aura.mp4" class="btn btn-download">
+                            <i class="bx bx-download"></i> Descargar MP4
+                        </a>
+                        <button class="btn btn-copy" onclick="copyText('caption-5')">
+                            <i class="bx bx-copy"></i> Copiar Copete
+                        </button>
+                        <a href="https://api.whatsapp.com/send?text=Video%20Ep5%20ChoferOnline%3A%20https%3A%2F%2Faura-adamo.site%2Fassets%2Fig%2Freels_auri%2Fep5_choferonline.mp4" target="_blank" class="btn btn-card-wa">
+                            <i class="bx bxl-whatsapp"></i> WhatsApp
+                        </a>
+                    </div>
+                </div>
+            </article>
+
+        </main>
+
+        <footer>
+            <p>&copy; 2026 <a href="https://aura-adamo.site/">Aura</a>. Todos los derechos reservados. Startup fundada por Omar.</p>
+        </footer>
+    </div>
+
+    <div id="toast" class="toast">
+        <i class="bx bx-check-circle"></i> ¡Texto copiado al portapapeles!
+    </div>
+
+    <script>
+        function copyText(elementId) {
+            const text = document.getElementById(elementId).innerText;
+            navigator.clipboard.writeText(text).then(() => {
+                showToast("¡Texto copiado al portapapeles!");
+            }).catch(() => {
+                // Fallback
+                const textarea = document.createElement('textarea');
+                textarea.value = text;
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+                showToast("¡Texto copiado al portapapeles!");
+            });
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.innerHTML = `<i class="bx bx-check-circle"></i> ${msg}`;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 2500);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,74 @@
+# ============================================================
+# Apache / LiteSpeed Configuration - AURA EDICIONES & AURA-ADAMO.SITE
+# Seguridad Enterprise, Anti-Phishing y Protección de Visitantes
+# Startup Aura - Omar Horacio Adamo
+# ============================================================
+
+DirectoryIndex index.html libros.html
+Options -Indexes -MultiViews
+
+# ============================================================
+# BLINDAJE DE SEGURIDAD, ANTI-PHISHING Y PROTECCIÓN DE DATOS
+# ============================================================
+<IfModule mod_headers.c>
+    # Anti-Clickjacking: Impide que terceros incrusten la tienda en un iframe para robar pagos
+    Header always set X-Frame-Options "SAMEORIGIN"
+
+    # Anti-MIME Sniffing: Fuerza a los navegadores a respetar el tipo MIME declarado
+    Header always set X-Content-Type-Options "nosniff"
+
+    # Anti-XSS: Bloquea intentos de Cross-Site Scripting
+    Header always set X-XSS-Protection "1; mode=block"
+
+    # Privacidad de Referrers en compras y descargas
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+
+    # HSTS: Cifrado HTTPS estricto
+    Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+
+    # Anti-Tabnapping: Protege contra suplantación de identidad en nuevas pestañas
+    Header always set Cross-Origin-Opener-Policy "same-origin-allow-popups"
+
+    # Política de Permisos del Navegador
+    Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(self)"
+</IfModule>
+
+# ============================================================
+# PROTECCIÓN DE ARCHIVOS SENSIBLES Y REGISTROS
+# ============================================================
+<FilesMatch "(\.(bak|config|sql|fla|psd|ini|log|sh|inc|swp|dist|env|git|htaccess|csv)|~)$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# Permitir archivos públicos indispensables
+<Files "robots.txt">
+    Allow from all
+</Files>
+<Files "sitemap.xml">
+    Allow from all
+</Files>
+
+# ============================================================
+# BLOQUEO DE BOTS Y SCANNERS MALICIOSOS (ANTI-EXPLOIT)
+# ============================================================
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteCond %{HTTP_USER_AGENT} (nikto|sqlmap|acunetix|nessus|nmap|masscan|zgrab|jorgee|morfeus|dirbuster|harvest|miner) [NC]
+    RewriteRule .* - [F,L]
+</IfModule>
+
+# ============================================================
+# OPTIMIZACIÓN DE CACHÉ PARA ASSETS Y LIBROS
+# ============================================================
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType text/css "access plus 1 hour"
+    ExpiresByType application/javascript "access plus 1 hour"
+    ExpiresByType text/javascript "access plus 1 hour"
+    ExpiresByType image/jpeg "access plus 1 week"
+    ExpiresByType image/png "access plus 1 week"
+    ExpiresByType image/webp "access plus 1 week"
+    ExpiresByType application/pdf "access plus 1 day"
+    ExpiresByType application/zip "access plus 1 day"
+</IfModule>

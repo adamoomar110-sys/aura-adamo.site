@@ -1,0 +1,1104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campaña Publicitaria Instagram & Ventas Directas | Aura</title>
+    <!-- Fuentes Google -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+    <!-- Iconos Boxicons -->
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #07090e;
+            --bg-card: rgba(16, 20, 31, 0.85);
+            --bg-card-hover: rgba(24, 30, 48, 0.95);
+            --primary: #6366f1;
+            --primary-glow: rgba(99, 102, 241, 0.35);
+            --accent-green: #10b981;
+            --accent-pink: #ec4899;
+            --accent-amber: #f59e0b;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border: rgba(255, 255, 255, 0.08);
+            --border-highlight: rgba(99, 102, 241, 0.4);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            min-height: 100vh;
+            line-height: 1.6;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 15% 15%, rgba(99, 102, 241, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 85% 85%, rgba(236, 72, 153, 0.12) 0%, transparent 45%);
+            background-attachment: fixed;
+        }
+
+        /* Banner Alerta Monetización */
+        .urgent-banner {
+            background: linear-gradient(90deg, #1e1b4b, #311042);
+            border-bottom: 1px solid var(--border-highlight);
+            padding: 14px 20px;
+            text-align: center;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .urgent-banner strong {
+            color: #38bdf8;
+            font-weight: 700;
+        }
+        .urgent-badge {
+            background: #ef4444;
+            color: #fff;
+            padding: 2px 10px;
+            border-radius: 999px;
+            font-size: 0.75rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Header Principal */
+        header {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 40px 24px 20px;
+            text-align: center;
+        }
+        .logo-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(99, 102, 241, 0.15);
+            border: 1px solid var(--border-highlight);
+            padding: 6px 16px;
+            border-radius: 999px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #a5b4fc;
+            margin-bottom: 16px;
+        }
+        h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2.8rem;
+            font-weight: 800;
+            line-height: 1.15;
+            background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 50%, #818cf8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 16px;
+        }
+        p.hero-desc {
+            font-size: 1.15rem;
+            color: var(--text-muted);
+            max-width: 800px;
+            margin: 0 auto 30px;
+        }
+
+        /* Accesos Rápidos de Venta */
+        .quick-actions {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+        }
+        .btn-action {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            border: 1px solid transparent;
+        }
+        .btn-live {
+            background: linear-gradient(135deg, #4f46e5, #7c3aed);
+            color: #fff;
+            box-shadow: 0 4px 20px var(--primary-glow);
+        }
+        .btn-live:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 28px rgba(99, 102, 241, 0.5);
+        }
+        .btn-meta {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: var(--border);
+            color: #e2e8f0;
+        }
+        .btn-meta:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+        .btn-wa {
+            background: rgba(16, 185, 129, 0.15);
+            border-color: rgba(16, 185, 129, 0.3);
+            color: #34d399;
+        }
+        .btn-wa:hover {
+            background: rgba(16, 185, 129, 0.25);
+            transform: translateY(-2px);
+        }
+
+        /* Estrategia de Monetización Box */
+        .strategy-grid {
+            max-width: 1280px;
+            margin: 0 auto 50px;
+            padding: 0 24px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 20px;
+        }
+        .strategy-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 24px;
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+        .strategy-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--primary);
+        }
+        .strategy-card.green::before { background: var(--accent-green); }
+        .strategy-card.pink::before { background: var(--accent-pink); }
+        .strategy-card.amber::before { background: var(--accent-amber); }
+
+        .strategy-card h3 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .strategy-card p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        /* Navegación por Pestañas de Colección */
+        .tabs-container {
+            max-width: 1280px;
+            margin: 0 auto 30px;
+            padding: 0 24px;
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+        }
+        .tab-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border);
+            padding: 12px 28px;
+            border-radius: 999px;
+            color: var(--text-muted);
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .tab-btn.active {
+            background: var(--primary);
+            color: #fff;
+            border-color: var(--primary);
+            box-shadow: 0 4px 18px var(--primary-glow);
+        }
+
+        /* Contenedor de Libros */
+        .posts-container {
+            max-width: 1280px;
+            margin: 0 auto 60px;
+            padding: 0 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 28px;
+        }
+
+        /* Tarjeta de Publicación */
+        .post-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            overflow: hidden;
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(12px);
+        }
+        .post-card:hover {
+            border-color: var(--border-highlight);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Columna Izquierda: Tapa */
+        .post-cover-wrap {
+            background: #000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            position: relative;
+            border-right: 1px solid var(--border);
+        }
+        .post-cover-wrap img {
+            width: 100%;
+            max-width: 210px;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+            transition: transform 0.3s ease;
+        }
+        .post-cover-wrap:hover img {
+            transform: scale(1.04);
+        }
+        .cover-tag {
+            position: absolute;
+            top: 14px;
+            left: 14px;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(6px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #38bdf8;
+        }
+
+        /* Columna Derecha: Contenido y Copywriting */
+        .post-content-wrap {
+            padding: 28px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .post-header {
+            margin-bottom: 16px;
+        }
+        .post-vol {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: #818cf8;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+        }
+        .post-title {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 6px;
+        }
+        .post-subtitle {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+        }
+
+        /* Caja de Texto para Instagram */
+        .copy-box {
+            background: #090c14;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 12px;
+            padding: 16px;
+            font-size: 0.9rem;
+            color: #e2e8f0;
+            white-space: pre-wrap;
+            max-height: 220px;
+            overflow-y: auto;
+            font-family: 'Inter', sans-serif;
+            position: relative;
+            margin-bottom: 16px;
+            line-height: 1.5;
+        }
+        .copy-box::-webkit-scrollbar {
+            width: 6px;
+        }
+        .copy-box::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 4px;
+        }
+
+        /* Barra de Acciones del Post */
+        .post-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            flex-wrap: wrap;
+            padding-top: 12px;
+            border-top: 1px solid var(--border);
+        }
+        .post-pricing {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .price-single {
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: #10b981;
+        }
+        .price-pack {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .post-btns {
+            display: flex;
+            gap: 10px;
+        }
+        .btn-copy {
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            padding: 9px 18px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s;
+        }
+        .btn-copy:hover {
+            background: #4f46e5;
+            transform: translateY(-1px);
+        }
+        .btn-copy.copied {
+            background: var(--accent-green);
+        }
+        .btn-img-open {
+            background: rgba(255, 255, 255, 0.08);
+            color: #cbd5e1;
+            text-decoration: none;
+            padding: 9px 14px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s;
+        }
+        .btn-img-open:hover {
+            background: rgba(255, 255, 255, 0.15);
+            color: #fff;
+        }
+
+        /* Footer Obligatorio según Regla */
+        footer {
+            background: #040609;
+            border-top: 1px solid var(--border);
+            padding: 40px 24px;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+        footer a {
+            color: #818cf8;
+            text-decoration: none;
+        }
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 860px) {
+            .post-card {
+                grid-template-columns: 1fr;
+            }
+            .post-cover-wrap {
+                border-right: none;
+                border-bottom: 1px solid var(--border);
+            }
+            h1 {
+                font-size: 2.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Alerta de Urgencia e Ingresos Directos -->
+    <div class="urgent-banner">
+        <span class="urgent-badge">Plan de Acción Rápido</span>
+        <span>Omar, tu tienda ya está online en <strong>aura-adamo.site/libros.html</strong>. Cada publicación está optimizada para cerrar ventas por WhatsApp y Transferencia.</span>
+    </div>
+
+    <!-- Encabezado Principal -->
+    <header>
+        <div class="logo-tag">
+            <i class="bx bxl-instagram"></i> Campaña Maestra de Publicidad y Ventas
+        </div>
+        <h1>Convierte Tus Libros en Ingresos Reales</h1>
+        <p class="hero-desc">
+            Tienes en tus manos 20 activos de alto valor listos para monetizar. A continuación tienes las tapas oficiales en HD y los copetes persuasivos (copywriting probado) listos para copiar, publicar en Instagram y empezar a cobrar.
+        </p>
+
+        <!-- Accesos Rápidos -->
+        <div class="quick-actions">
+            <a href="https://aura-adamo.site/libros.html" target="_blank" class="btn-action btn-live">
+                <i class="bx bx-globe"></i> Ver Tienda Online en Vivo
+            </a>
+            <a href="https://business.facebook.com/latest/composer" target="_blank" class="btn-action btn-meta">
+                <i class="bx bxl-meta"></i> Abrir Meta Business Suite (Programar Gratis)
+            </a>
+            <a href="https://www.instagram.com/aura_adamo_omar/" target="_blank" class="btn-action btn-meta">
+                <i class="bx bxl-instagram"></i> Ir a tu Perfil de Instagram
+            </a>
+        </div>
+
+        <!-- Panel de Cobro Directo Mercado Pago -->
+        <div style="max-width: 960px; margin: 0 auto 35px; background: linear-gradient(135deg, rgba(0, 158, 227, 0.12), rgba(99, 102, 241, 0.12)); border: 2px solid rgba(0, 158, 227, 0.4); border-radius: 18px; padding: 24px; box-shadow: 0 10px 30px rgba(0,0,0,0.4);">
+            <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-bottom: 18px;">
+                <div style="display: flex; align-items: center; gap: 10px; text-align: left;">
+                    <i class="bx bx-credit-card" style="font-size: 2.2rem; color: #38bdf8;"></i>
+                    <div>
+                        <h3 style="font-size: 1.25rem; font-weight: 800; color: #fff; margin: 0;">Tus Enlaces de Cobro de Mercado Pago</h3>
+                        <p style="font-size: 0.85rem; color: #94a3b8; margin: 0;">Cobro directo a tu cuenta de Omar Adamo. Copiá y pegá directo en los mensajes privados (DM) de Instagram o chats de WhatsApp.</p>
+                    </div>
+                </div>
+                <span style="background: #10b981; color: #000; font-weight: 800; font-size: 0.75rem; padding: 4px 12px; border-radius: 999px;">100% ACTIVOS</span>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; text-align: left;">
+                <!-- Link 1 -->
+                <div style="background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 16px; display: flex; flex-direction: column; justify-content: space-between;">
+                    <div>
+                        <div style="font-size: 0.75rem; font-weight: 800; color: #38bdf8; text-transform: uppercase;">1 LIBRO INDIVIDUAL</div>
+                        <div style="font-size: 1.35rem; font-weight: 900; color: #fff; margin: 4px 0 8px;">$2.500 ARS</div>
+                        <div style="font-size: 0.8rem; color: #cbd5e1; word-break: break-all; margin-bottom: 12px; font-family: monospace;">https://mpago.la/2BqvYag</div>
+                    </div>
+                    <div style="display: flex; gap: 8px;">
+                        <button onclick="copyLink('https://mpago.la/2BqvYag', this)" style="flex: 1; background: #009ee3; color: #fff; border: none; padding: 9px 12px; border-radius: 8px; font-weight: 700; font-size: 0.85rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; transition: 0.2s;">
+                            <i class="bx bx-copy"></i> Copiar Link
+                        </button>
+                        <a href="https://mpago.la/2BqvYag" target="_blank" style="background: rgba(255,255,255,0.08); color: #fff; padding: 9px 12px; border-radius: 8px; text-decoration: none; font-size: 0.9rem; display: flex; align-items: center;">
+                            <i class="bx bx-link-external"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Link 2 -->
+                <div style="background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 16px; display: flex; flex-direction: column; justify-content: space-between;">
+                    <div>
+                        <div style="font-size: 0.75rem; font-weight: 800; color: #a5b4fc; text-transform: uppercase;">PACK 10 LIBROS</div>
+                        <div style="font-size: 1.35rem; font-weight: 900; color: #fff; margin: 4px 0 8px;">$9.900 ARS</div>
+                        <div style="font-size: 0.8rem; color: #cbd5e1; word-break: break-all; margin-bottom: 12px; font-family: monospace;">https://mpago.la/2Lw5sXc</div>
+                    </div>
+                    <div style="display: flex; gap: 8px;">
+                        <button onclick="copyLink('https://mpago.la/2Lw5sXc', this)" style="flex: 1; background: #6366f1; color: #fff; border: none; padding: 9px 12px; border-radius: 8px; font-weight: 700; font-size: 0.85rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; transition: 0.2s;">
+                            <i class="bx bx-copy"></i> Copiar Link
+                        </button>
+                        <a href="https://mpago.la/2Lw5sXc" target="_blank" style="background: rgba(255,255,255,0.08); color: #fff; padding: 9px 12px; border-radius: 8px; text-decoration: none; font-size: 0.9rem; display: flex; align-items: center;">
+                            <i class="bx bx-link-external"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Link 3 -->
+                <div style="background: rgba(0,0,0,0.4); border: 2px solid rgba(239, 68, 68, 0.4); border-radius: 12px; padding: 16px; display: flex; flex-direction: column; justify-content: space-between;">
+                    <div>
+                        <div style="font-size: 0.75rem; font-weight: 800; color: #f87171; text-transform: uppercase;">MEGA PACK 20 LIBROS</div>
+                        <div style="font-size: 1.35rem; font-weight: 900; color: #fff; margin: 4px 0 8px;">$14.900 ARS</div>
+                        <div style="font-size: 0.8rem; color: #cbd5e1; word-break: break-all; margin-bottom: 12px; font-family: monospace;">https://mpago.la/2R4nxKB</div>
+                    </div>
+                    <div style="display: flex; gap: 8px;">
+                        <button onclick="copyLink('https://mpago.la/2R4nxKB', this)" style="flex: 1; background: #ef4444; color: #fff; border: none; padding: 9px 12px; border-radius: 8px; font-weight: 700; font-size: 0.85rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; transition: 0.2s;">
+                            <i class="bx bx-copy"></i> Copiar Link
+                        </button>
+                        <a href="https://mpago.la/2R4nxKB" target="_blank" style="background: rgba(255,255,255,0.08); color: #fff; padding: 9px 12px; border-radius: 8px; text-decoration: none; font-size: 0.9rem; display: flex; align-items: center;">
+                            <i class="bx bx-link-external"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Estrategia de 3 Pasos para Generar Ingresos Hoy -->
+    <div class="strategy-grid">
+        <div class="strategy-card green">
+            <h3><i class="bx bx-dollar-circle"></i> 1. Venta Directa e Inmediata</h3>
+            <p>Pon el enlace <strong>https://aura-adamo.site/libros.html</strong> en la bio de tu Instagram. Los lectores tocan el botón de WhatsApp y te pagan por Mercado Pago o Transferencia bancaria ($2.500 individual / $14.900 pack completo).</p>
+        </div>
+        <div class="strategy-card pink">
+            <h3><i class="bx bxl-instagram-alt"></i> 2. Publicaciones Seguras (Cero Baneo)</h3>
+            <p>Usá <strong>Meta Business Suite</strong> desde tu computadora o la app de Instagram en tu móvil. Es 100% oficial de Meta, no arriesga tu cuenta a bloqueos y te permite subir o programar los 20 posteos en pocos minutos.</p>
+        </div>
+        <div class="strategy-card amber">
+            <h3><i class="bx bx-book-open"></i> 3. Ingresos Pasivos en Dólares</h3>
+            <p>Tus 20 libros ya están formateados en <strong>EPUB y PDF con medidas estándar (6x9)</strong>. Puedes subirlos a Amazon KDP (Kindle Direct Publishing) sin costo y cobrar regalías mensuales en dólares en todo el mundo.</p>
+        </div>
+    </div>
+
+    <!-- Navegación de Colecciones -->
+    <div class="tabs-container">
+        <button class="tab-btn active" onclick="showCollection('negocios', this)">
+            <i class="bx bx-line-chart"></i> Colección 1: Negocios, IA y Tecnología (10 Libros)
+        </button>
+        <button class="tab-btn" onclick="showCollection('salud', this)">
+            <i class="bx bx-heart"></i> Colección 2: Salud, Nutrición y Dietas (10 Libros)
+        </button>
+    </div>
+
+    <!-- Listado de Publicaciones -->
+    <main class="posts-container">
+
+        <!-- ==================== COLECCIÓN 1: NEGOCIOS ==================== -->
+        <div id="col-negocios">
+
+            <!-- Libro 1 -->
+            <article class="post-card">
+                <div class="post-cover-wrap">
+                    <span class="cover-tag">VOL. 01 NEGOCIOS</span>
+                    <img src="01_Coleccion_Negocios_y_Tecnologia/02_Tapas_Oficiales_HD/01_Tapa_El_Manual_del_Dropshipping.jpg" alt="El Manual del Dropshipping">
+                </div>
+                <div class="post-content-wrap">
+                    <div class="post-header">
+                        <div class="post-vol">Libro 1 de 10 · E-Commerce</div>
+                        <h2 class="post-title">El Manual del Dropshipping</h2>
+                        <p class="post-subtitle">Cómo crear y escalar tu tienda online desde cero sin inventario físico.</p>
+                    </div>
+                    <div class="copy-box" id="copy-neg-1">¿Querés generar ingresos vendiendo por internet sin gastar un solo peso en stock previo? 📦🚀
+
+El dropshipping cambió las reglas del comercio: el cliente compra en tu tienda y el proveedor despacha directamente. Cero riesgo de mercadería parada.
+
+En mi nuevo libro "El Manual del Dropshipping" te revelo paso a paso:
+✅ Cómo encontrar productos ganadores con alta demanda.
+✅ Cómo montar tu tienda en minutos y configurar pasarelas de pago.
+✅ Proveedores confiables y logística sin demoras.
+✅ Embudos de tráfico con anuncios para multiplicar tus ventas.
+
+🔥 PRECIO LANZAMIENTO: Solo $2.500 ARS (o llevate el pack de 10 libros de negocios por solo $9.900 ARS).
+
+📥 Comentá "DROPSHIPPING" o hacé click en el enlace de mi biografía para descargarlo al instante en PDF y EPUB.
+
+#dropshipping #ecommerce #negociosdigitales #tiendaonline #emprendedores #librosdenegocios #ingresospasivos #libertadfinanciera #aura
+
+🔥 PRECIO LANZAMIENTO: Solo $2.500 ARS (o Pack Completo por $14.900 ARS)
+💳 Link de pago con Mercado Pago: https://mpago.la/2BqvYag
+👉 O entrá directo a mi tienda oficial: https://aura-adamo.site/libros.html
+📥 Comentá "LIBRO" o escribime al DM para recibirlo al instante.</div>
+                    <div class="post-bar">
+                        <div class="post-pricing">
+                            <span class="price-single">$2.500 ARS</span>
+                            <span class="price-pack">o $14.900 (Pack 20 Libros)</span>
+                        </div>
+                        <div class="post-btns">
+                            <a href="01_Coleccion_Negocios_y_Tecnologia/02_Tapas_Oficiales_HD/01_Tapa_El_Manual_del_Dropshipping.jpg" target="_blank" class="btn-img-open"><i class="bx bx-image"></i> Ver Tapa HD</a>
+                            <button class="btn-copy" onclick="copyText('copy-neg-1', this)"><i class="bx bx-copy"></i> Copiar Texto</button>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Libro 2 -->
+            <article class="post-card">
+                <div class="post-cover-wrap">
+                    <span class="cover-tag">VOL. 02 NEGOCIOS</span>
+                    <img src="01_Coleccion_Negocios_y_Tecnologia/02_Tapas_Oficiales_HD/02_Tapa_Inteligencia_Artificial_para_Negocios.jpg" alt="IA para Negocios">
+                </div>
+                <div class="post-content-wrap">
+                    <div class="post-header">
+                        <div class="post-vol">Libro 2 de 10 · Automatización</div>
+                        <h2 class="post-title">Inteligencia Artificial para Negocios</h2>
+                        <p class="post-subtitle">Automatización comercial, agentes autónomos y reducción del 80% del trabajo manual.</p>
+                    </div>
+                    <div class="copy-box" id="copy-neg-2">La IA no va a reemplazar a tu negocio... pero un competidor que use IA sí lo hará. 🤖⚡
+
+¿Seguís perdiendo horas respondiendo los mismos mensajes, armando presupuestos a mano o persiguiendo clientes?
+
+En "Inteligencia Artificial para Negocios" te muestro cómo construir una máquina que trabaje por vos 24/7:
+🤖 Agentes de IA que atienden y cierran ventas en WhatsApp e Instagram.
+📊 Automatización de tareas repetitivas y análisis de clientes.
+⚡ Reducción de costos operativos y optimización de tu tiempo.
+
+📚 Formato PDF + EPUB listo para leer en tu celular, tablet o Kindle.
+📲 Conseguí tu copia desde el enlace en mi perfil o pedímelo por mensaje directo.
+
+#inteligenciaartificial #automatizacion #agentesia #negociosdigitales #productividad #innovacion #aura #emprendedores
+
+🔥 PRECIO LANZAMIENTO: Solo $2.500 ARS (o Pack Completo por $14.900 ARS)
+💳 Link de pago con Mercado Pago: https://mpago.la/2BqvYag
+👉 O entrá directo a mi tienda oficial: https://aura-adamo.site/libros.html
+📥 Comentá "LIBRO" o escribime al DM para recibirlo al instante.</div>
+                    <div class="post-bar">
+                        <div class="post-pricing">
+                            <span class="price-single">$2.500 ARS</span>
+                            <span class="price-pack">o $14.900 (Pack 20 Libros)</span>
+                        </div>
+                        <div class="post-btns">
+                            <a href="01_Coleccion_Negocios_y_Tecnologia/02_Tapas_Oficiales_HD/02_Tapa_Inteligencia_Artificial_para_Negocios.jpg" target="_blank" class="btn-img-open"><i class="bx bx-image"></i> Ver Tapa HD</a>
+                            <button class="btn-copy" onclick="copyText('copy-neg-2', this)"><i class="bx bx-copy"></i> Copiar Texto</button>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Libro 3 -->
+            <article class="post-card">
+                <div class="post-cover-wrap">
+                    <span class="cover-tag">VOL. 03 NEGOCIOS</span>
+                    <img src="01_Coleccion_Negocios_y_Tecnologia/02_Tapas_Oficiales_HD/03_Tapa_Ecommerce_Avanzado.jpg" alt="E-commerce Avanzado">
+                </div>
+                <div class="post-content-wrap">
+                    <div class="post-header">
+                        <div class="post-vol">Libro 3 de 10 · Crecimiento</div>
+                        <h2 class="post-title">E-commerce Avanzado</h2>
+                        <p class="post-subtitle">Embudos de conversión, optimización de checkout y tráfico de alto impacto.</p>
+                    </div>
+                    <div class="copy-box" id="copy-neg-3">Tener una tienda online no sirve de nada si las visitas no compran. 📉➡️📈
+
+El 70% de las ventas en internet se pierden en el carrito abandonado o por un embudo mal diseñado.
+
+En "E-commerce Avanzado" aprendés las estrategias que usan las marcas líderes:
+🛒 Optimización de tasa de conversión (CRO) para duplicar ventas con las mismas visitas.
+🔄 Recuperación automática de carritos y secuencias de email marketing.
+📈 Estrategias de retargeting y tráfico pagado rentable.
+
+Descargá tu ejemplar hoy mismo haciendo clic en el enlace de la bio. ¡Disponible entrega inmediata por WhatsApp! 📲
+
+#ecommerce #ventasonline #marketingdigital #tiendavirtual #traficoweb #conversion #ventas #aura
+
+🔥 PRECIO LANZAMIENTO: Solo $2.500 ARS (o Pack Completo por $14.900 ARS)
+💳 Link de pago con Mercado Pago: https://mpago.la/2BqvYag
+👉 O entrá directo a mi tienda oficial: https://aura-adamo.site/libros.html
+📥 Comentá "LIBRO" o escribime al DM para recibirlo al instante.</div>
+                    <div class="post-bar">
+                        <div class="post-pricing">
+                            <span class="price-single">$2.500 ARS</span>
+                            <span class="price-pack">o $14.900 (Pack 20 Libros)</span>
+                        </div>
+                        <div class="post-btns">
+                            <a href="01_Coleccion_Negocios_y_Tecnologia/02_Tapas_Oficiales_HD/03_Tapa_Ecommerce_Avanzado.jpg" target="_blank" class="btn-img-open"><i class="bx bx-image"></i> Ver Tapa HD</a>
+                            <button class="btn-copy" onclick="copyText('copy-neg-3', this)"><i class="bx bx-copy"></i> Copiar Texto</button>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Libro 4 -->
+            <article class="post-card">
+                <div class="post-cover-wrap">
+                    <span class="cover-tag">VOL. 04 NEGOCIOS</span>
+                    <img src="01_Coleccion_Negocios_y_Tecnologia/02_Tapas_Oficiales_HD/04_Tapa_Hardware_IoT_Telemetria.jpg" alt="Hardware IoT y Telemetría">
+                </div>
+                <div class="post-content-wrap">
+                    <div class="post-header">
+                        <div class="post-vol">Libro 4 de 10 · Tecnología</div>
+                        <h2 class="post-title">Hardware, IoT y Telemetría</h2>
+                        <p class="post-subtitle">Sensores, microcontroladores y conexión de dispositivos al mundo digital.</p>
+                    </div>
+                    <div class="copy-box" id="copy-neg-4">¿Querés conectar máquinas, sensores o flotas de vehículos directo a la nube? 📡⚙️
+
+El Internet de las Cosas (IoT) y la telemetría son el puente definitivo entre el hardware físico y el software moderno.
+
+En este manual práctico aprenderás:
+🔌 Arquitecturas de sensores, microcontroladores y módulos de comunicación.
+🌐 Conexión en tiempo real con protocolos MQTT y HTTP.
+📊 Dashboards de monitoreo remoto y control de dispositivos en vivo.
+
+Conseguilo en versión digital de alta definición. Link en mi perfil para acceder a la biblioteca completa. 📲
+
+#iot #hardware #telemetria #ingenieria #tecnologia #sensores #arduino #esp32 #aura
+
+🔥 PRECIO LANZAMIENTO: Solo $2.500 ARS (o Pack Completo por $14.900 ARS)
+💳 Link de pago con Mercado Pago: https://mpago.la/2BqvYag
+👉 O entrá directo a mi tienda oficial: https://aura-adamo.site/libros.html
+📥 Comentá "LIBRO" o escribime al DM para recibirlo al instante.</div>
+                    <div class="post-bar">
+                        <div class="post-pricing">
+                            <span class="price-single">$2.500 ARS</span>
+                            <span class="price-pack">o $14.900 (Pack 20 Libros)</span>
+                        </div>
+                        <div class="post-btns">
+                            <a href="01_Coleccion_Negocios_y_Tecnologia/02_Tapas_Oficiales_HD/04_Tapa_Hardware_IoT_Telemetria.jpg" target="_blank" class="btn-img-open"><i class="bx bx-image"></i> Ver Tapa HD</a>
+                            <button class="btn-copy" onclick="copyText('copy-neg-4', this)"><i class="bx bx-copy"></i> Copiar Texto</button>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Libro 5 -->
+            <article class="post-card">
+                <div class="post-cover-wrap">
+                    <span class="cover-tag">VOL. 05 NEGOCIOS</span>
+                    <img src="01_Coleccion_Negocios_y_Tecnologia/02_Tapas_Oficiales_HD/05_Tapa_Branding_y_Marca_Digital.jpg" alt="Branding y Creación de Marca">
+                </div>
+                <div class="post-content-wrap">
+                    <div class="post-header">
+                        <div class="post-vol">Libro 5 de 10 · Branding</div>
+                        <h2 class="post-title">Branding y Creación de Marca</h2>
+                        <p class="post-subtitle">Identidad visual, narrativa de impacto y posicionamiento premium en el mercado.</p>
+                    </div>
+                    <div class="copy-box" id="copy-neg-5">La gente no compra productos... compra significado, estatus y confianza. 💎✨
+
+Si tu marca compite por precio, estás en una carrera hacia abajo. El secreto está en construir una identidad de marca magnética.
+
+En "Branding y Creación de Marca Digital":
+🎨 Creación de una identidad visual consistente y profesional.
+🗣️ Tono de voz, storytelling y conexión emocional con tu audiencia.
+🚀 Cómo cobrar más caro y que tus clientes te elijan con orgullo.
+
+Accedé a tu libro hoy mismo. Disponible en el link de la bio. 📲
+
+#branding #diseñodemarca #identidadvisual #marketing #storytelling #negociosdigitales #aura
+
+🔥 PRECIO LANZAMIENTO: Solo $2.500 ARS (o Pack Completo por $14.900 ARS)
+💳 Link de pago con Mercado Pago: https://mpago.la/2BqvYag
+👉 O entrá directo a mi tienda oficial: https://aura-adamo.site/libros.html
+📥 Comentá "LIBRO" o escribime al DM para recibirlo al instante.</div>
+                    <div class="post-bar">
+                        <div class="post-pricing">
+                            <span class="price-single">$2.500 ARS</span>
+                            <span class="price-pack">o $14.900 (Pack 20 Libros)</span>
+                        </div>
+                        <div class="post-btns">
+                            <a href="01_Coleccion_Negocios_y_Tecnologia/02_Tapas_Oficiales_HD/05_Tapa_Branding_y_Marca_Digital.jpg" target="_blank" class="btn-img-open"><i class="bx bx-image"></i> Ver Tapa HD</a>
+                            <button class="btn-copy" onclick="copyText('copy-neg-5', this)"><i class="bx bx-copy"></i> Copiar Texto</button>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Libro 6 al 10 en resumen de colección -->
+            <article class="post-card">
+                <div class="post-cover-wrap">
+                    <span class="cover-tag">PACK COMPLETO</span>
+                    <img src="01_Coleccion_Negocios_y_Tecnologia/02_Tapas_Oficiales_HD/10_Tapa_El_Ecosistema_Aura.jpg" alt="Colección Negocios Completa">
+                </div>
+                <div class="post-content-wrap">
+                    <div class="post-header">
+                        <div class="post-vol">Mega Oferta · Colección Completa</div>
+                        <h2 class="post-title">Colección Maestra de Negocios (10 Libros)</h2>
+                        <p class="post-subtitle">Dropshipping + IA + E-commerce + IoT + Branding + Finanzas + Logística + Ventas B2B + Gestión + Ecosistema Aura.</p>
+                    </div>
+                    <div class="copy-box" id="copy-neg-pack">🔥 OFERTA ESPECIAL DE LANZAMIENTO: Llevate los 10 Libros de Negocios y Tecnología por el precio de cuatro. 📚💼
+
+Toda la formación que necesitás para emprender, digitalizar y escalar un negocio rentable este 2026:
+1. El Manual del Dropshipping
+2. Inteligencia Artificial para Negocios
+3. E-commerce Avanzado
+4. Hardware, IoT y Telemetría
+5. Branding y Marca Digital
+6. Finanzas para Startups y Pricing
+7. Logística Internacional
+8. Ventas B2B y Negociación
+9. Gestión de Equipos y Delegación
+10. El Ecosistema Aura
+
+💸 Precio Individual: $25.000 ARS.
+🎁 PRECIO PACK COMPLETO HOY: Solo $9.900 ARS (o $14.900 si sumás los 10 libros de salud).
+
+Hacé click en el enlace de la bio o envíame un mensaje directo para recibir tus libros al instante en tu WhatsApp. 📲
+
+#emprendimiento #negociosdigitales #librosdeemprendimiento #ofertalanzamiento #finanzas #ia #aura #ventas
+
+🔥 PRECIO LANZAMIENTO: Solo $2.500 ARS (o Pack Completo por $14.900 ARS)
+💳 Link de pago con Mercado Pago: https://mpago.la/2BqvYag
+👉 O entrá directo a mi tienda oficial: https://aura-adamo.site/libros.html
+📥 Comentá "LIBRO" o escribime al DM para recibirlo al instante.</div>
+                    <div class="post-bar">
+                        <div class="post-pricing">
+                            <span class="price-single">$9.900 ARS</span>
+                            <span class="price-pack">Ahorro del 60%</span>
+                        </div>
+                        <div class="post-btns">
+                            <button class="btn-copy" onclick="copyText('copy-neg-pack', this)"><i class="bx bx-copy"></i> Copiar Texto del Pack</button>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+        </div>
+
+        <!-- ==================== COLECCIÓN 2: SALUD ==================== -->
+        <div id="col-salud" style="display: none;">
+
+            <!-- Libro 1 Salud -->
+            <article class="post-card">
+                <div class="post-cover-wrap">
+                    <span class="cover-tag">VOL. 01 SALUD</span>
+                    <img src="02_Coleccion_Salud_y_Nutricion/02_Tapas_Oficiales_HD/01_Tapa_Salud_1_dieta-cetogenica-practica.jpg" alt="Dieta Cetogénica">
+                </div>
+                <div class="post-content-wrap">
+                    <div class="post-header">
+                        <div class="post-vol">Libro 1 de 10 · Salud & Nutrición</div>
+                        <h2 class="post-title">La Dieta Cetogénica Práctica</h2>
+                        <p class="post-subtitle">Guía definitiva para entrar en cetosis, quemar grasa como energía y ganar claridad mental.</p>
+                    </div>
+                    <div class="copy-box" id="copy-sal-1">¿Querés quemar grasa de forma eficiente sin pasar hambre ni sufrir el efecto rebote? 🥑🥩
+
+La dieta cetogénica (Keto) no es una moda pasajera: es una reprogramación metabólica donde tu cuerpo pasa de quemar azúcar a utilizar grasas saludables como combustible principal.
+
+En "La Dieta Cetogénica Práctica" descubrirás:
+🥑 Cómo entrar en cetosis de forma segura y sin los efectos del "keto flu".
+🍳 Menús semanales simples con alimentos reales y económicos.
+⚡ Beneficios en la claridad mental, concentración y niveles de energía estables.
+❌ Los 5 errores típicos que impiden perder peso en keto y cómo evitarlos.
+
+🔥 OFERTA DE LANZAMIENTO: Solo $2.500 ARS en formato digital (PDF + EPUB).
+
+📥 Tocá el enlace de mi biografía o mandame un mensaje con la palabra "KETO" para enviártelo directamente a tu WhatsApp.
+
+#dietaketo #cetogenica #cetosis #vidasaludable #nutricion #perderpeso #bienestar #saludnatural #aura
+
+🔥 PRECIO LANZAMIENTO: Solo $2.500 ARS (o Pack Completo por $14.900 ARS)
+💳 Link de pago con Mercado Pago: https://mpago.la/2BqvYag
+👉 O entrá directo a mi tienda oficial: https://aura-adamo.site/libros.html
+📥 Comentá "LIBRO" o escribime al DM para recibirlo al instante.</div>
+                    <div class="post-bar">
+                        <div class="post-pricing">
+                            <span class="price-single">$2.500 ARS</span>
+                            <span class="price-pack">o $14.900 (Pack 20 Libros)</span>
+                        </div>
+                        <div class="post-btns">
+                            <a href="02_Coleccion_Salud_y_Nutricion/02_Tapas_Oficiales_HD/01_Tapa_Salud_1_dieta-cetogenica-practica.jpg" target="_blank" class="btn-img-open"><i class="bx bx-image"></i> Ver Tapa HD</a>
+                            <button class="btn-copy" onclick="copyText('copy-sal-1', this)"><i class="bx bx-copy"></i> Copiar Texto</button>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Libro 2 Salud -->
+            <article class="post-card">
+                <div class="post-cover-wrap">
+                    <span class="cover-tag">VOL. 02 SALUD</span>
+                    <img src="02_Coleccion_Salud_y_Nutricion/02_Tapas_Oficiales_HD/02_Tapa_Salud_2_poder-ayuno-intermitente.jpg" alt="Ayuno Intermitente">
+                </div>
+                <div class="post-content-wrap">
+                    <div class="post-header">
+                        <div class="post-vol">Libro 2 de 10 · Longevidad</div>
+                        <h2 class="post-title">El Poder del Ayuno Intermitente</h2>
+                        <p class="post-subtitle">Protocolos 16/8, autofagia celular, sensibilidad a la insulina y longevidad.</p>
+                    </div>
+                    <div class="copy-box" id="copy-sal-2">El ayuno intermitente no se trata de comer menos... se trata de comer en los momentos adecuados para que tu cuerpo se repare solo. ⏳✨
+
+Durante las horas de ayuno, el organismo activa la autofagia: un proceso natural de limpieza donde tus células reciclan componentes dañados y reducen la inflamación.
+
+En este libro aprenderás:
+⏰ Protocolo 16/8 paso a paso: cómo empezar sin pasar hambre ni debilidad.
+☕ Qué bebidas rompen el ayuno y cuáles lo potencian.
+💪 Cómo entrenar en ayunas y preservar tu masa muscular.
+🔬 La evidencia médica detrás del rejuvenecimiento metabólico.
+
+Descargá tu copia digital hoy mismo en el enlace de la bio o comentá "AYUNO" para recibirlo. 📲
+
+#ayunointermitente #fasting #autofagia #longevidad #saludmetabolica #bienestar #habitosaludables #aura
+
+🔥 PRECIO LANZAMIENTO: Solo $2.500 ARS (o Pack Completo por $14.900 ARS)
+💳 Link de pago con Mercado Pago: https://mpago.la/2BqvYag
+👉 O entrá directo a mi tienda oficial: https://aura-adamo.site/libros.html
+📥 Comentá "LIBRO" o escribime al DM para recibirlo al instante.</div>
+                    <div class="post-bar">
+                        <div class="post-pricing">
+                            <span class="price-single">$2.500 ARS</span>
+                            <span class="price-pack">o $14.900 (Pack 20 Libros)</span>
+                        </div>
+                        <div class="post-btns">
+                            <a href="02_Coleccion_Salud_y_Nutricion/02_Tapas_Oficiales_HD/02_Tapa_Salud_2_poder-ayuno-intermitente.jpg" target="_blank" class="btn-img-open"><i class="bx bx-image"></i> Ver Tapa HD</a>
+                            <button class="btn-copy" onclick="copyText('copy-sal-2', this)"><i class="bx bx-copy"></i> Copiar Texto</button>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Libro 3 Salud -->
+            <article class="post-card">
+                <div class="post-cover-wrap">
+                    <span class="cover-tag">VOL. 03 SALUD</span>
+                    <img src="02_Coleccion_Salud_y_Nutricion/02_Tapas_Oficiales_HD/03_Tapa_Salud_3_dieta-antiinflamatoria.jpg" alt="Dieta Antiinflamatoria">
+                </div>
+                <div class="post-content-wrap">
+                    <div class="post-header">
+                        <div class="post-vol">Libro 3 de 10 · Inmunidad</div>
+                        <h2 class="post-title">Dieta Antiinflamatoria</h2>
+                        <p class="post-subtitle">Cómo sanar tu intestino, calmar dolores crónicos y potenciar tu sistema inmunológico.</p>
+                    </div>
+                    <div class="copy-box" id="copy-sal-3">¿Vivís con cansancio crónico, hinchazón abdominal o dolores articulares? La causa silenciosa suele ser la inflamación de bajo grado. 🌿🥗
+
+La inflamación crónica acelera el envejecimiento y debilita tus defensas. La buena noticia es que tu tenedor es la herramienta más poderosa para apagarla.
+
+En "Dieta Antiinflamatoria" te enseño:
+🫐 Los superalimentos con mayor poder antiinflamatorio y antioxidante.
+🚫 Alimentos ultraprocesados que dañan la barrera intestinal.
+🍲 Recetas y combinaciones nutritivas fáciles de preparar.
+
+Disponible en PDF y EPUB para entrega inmediata. Accedé al link en mi perfil para adquirir tu ejemplar por solo $2.500 ARS. 📲
+
+#antioxidantes #antiinflamatorio #saludintestinal #inmunidad #nutricionholistica #alimentacionsana #aura
+
+🔥 PRECIO LANZAMIENTO: Solo $2.500 ARS (o Pack Completo por $14.900 ARS)
+💳 Link de pago con Mercado Pago: https://mpago.la/2BqvYag
+👉 O entrá directo a mi tienda oficial: https://aura-adamo.site/libros.html
+📥 Comentá "LIBRO" o escribime al DM para recibirlo al instante.</div>
+                    <div class="post-bar">
+                        <div class="post-pricing">
+                            <span class="price-single">$2.500 ARS</span>
+                            <span class="price-pack">o $14.900 (Pack 20 Libros)</span>
+                        </div>
+                        <div class="post-btns">
+                            <a href="02_Coleccion_Salud_y_Nutricion/02_Tapas_Oficiales_HD/03_Tapa_Salud_3_dieta-antiinflamatoria.jpg" target="_blank" class="btn-img-open"><i class="bx bx-image"></i> Ver Tapa HD</a>
+                            <button class="btn-copy" onclick="copyText('copy-sal-3', this)"><i class="bx bx-copy"></i> Copiar Texto</button>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Pack Completo Salud -->
+            <article class="post-card">
+                <div class="post-cover-wrap">
+                    <span class="cover-tag">PACK COMPLETO</span>
+                    <img src="02_Coleccion_Salud_y_Nutricion/02_Tapas_Oficiales_HD/10_Tapa_Salud_10_longevidad-biohacking-nutricional.jpg" alt="Colección Salud Completa">
+                </div>
+                <div class="post-content-wrap">
+                    <div class="post-header">
+                        <div class="post-vol">Mega Oferta · Colección Completa</div>
+                        <h2 class="post-title">Colección Maestra de Salud y Dietas (10 Libros)</h2>
+                        <p class="post-subtitle">Keto + Ayuno + Antiinflamatoria + Deportiva + Mediterránea + Microbiota + Plant-Based + Glucosa + Mindful Eating + Biohacking.</p>
+                    </div>
+                    <div class="copy-box" id="copy-sal-pack">🌿 TRANSFORMÁ TU CUERPO Y TU ENERGÍA: La Colección Completa de 10 Libros de Nutrición y Bienestar en un solo pack con 60% de descuento. 🥑📚
+
+Todo lo que necesitás saber sobre alimentación saludable respaldado por evidencia científica:
+1. La Dieta Cetogénica Práctica
+2. El Poder del Ayuno Intermitente
+3. Dieta Antiinflamatoria
+4. Nutrición Deportiva y Fuerza
+5. Dieta Mediterránea Moderna
+6. Microbiota y Salud Intestinal
+7. Alimentación Basada en Plantas
+8. Control de Glucosa e Insulina
+9. Comer Sin Ansiedad y Mindful Eating
+10. Longevidad y Biohacking Nutricional
+
+🎁 PROMO EXCLUSIVA HOY: Llevate los 10 libros por solo $9.900 ARS (o sumá los 10 de negocios por $14.900 en total).
+
+Hacé click en el enlace de la bio o escribime por privado para recibir el pack completo en tu WhatsApp de inmediato. 📲
+
+#salud #nutricion #vidasana #habitos #biohacking #longevidad #bienestar #aura
+
+🔥 PRECIO LANZAMIENTO: Solo $2.500 ARS (o Pack Completo por $14.900 ARS)
+💳 Link de pago con Mercado Pago: https://mpago.la/2BqvYag
+👉 O entrá directo a mi tienda oficial: https://aura-adamo.site/libros.html
+📥 Comentá "LIBRO" o escribime al DM para recibirlo al instante.</div>
+                    <div class="post-bar">
+                        <div class="post-pricing">
+                            <span class="price-single">$9.900 ARS</span>
+                            <span class="price-pack">10 Libros en PDF + EPUB</span>
+                        </div>
+                        <div class="post-btns">
+                            <button class="btn-copy" onclick="copyText('copy-sal-pack', this)"><i class="bx bx-copy"></i> Copiar Texto del Pack</button>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+        </div>
+
+    </main>
+
+    <!-- Marco Legal y Descargos de Responsabilidad -->
+    <div style="max-width: 1280px; margin: 0 auto 50px; padding: 0 24px;">
+        <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 16px; padding: 24px;">
+            <h3 style="font-size: 1.1rem; color: #f8fafc; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+                <i class="bx bx-shield-quarter" style="color: #6366f1;"></i> Blindaje Legal y Transparencia Editorial
+            </h3>
+            <p style="font-size: 0.85rem; color: #94a3b8; line-height: 1.5; margin-bottom: 10px;">
+                <strong>Aviso Colección Salud:</strong> Todo el material de nutrición y hábitos se fundamenta en divulgación científica y revisión de estudios médicos indexados (PubMed). No sustituye la consulta médica o nutricional individualizada.
+            </p>
+            <p style="font-size: 0.85rem; color: #94a3b8; line-height: 1.5;">
+                <strong>Aviso Colección Negocios:</strong> Los manuales de tecnología y emprendimiento comparten frameworks y metodologías. No constituyen asesoría financiera ni promesas de rendimiento comercial.
+            </p>
+            <p style="font-size: 0.8rem; color: #64748b; margin-top: 14px;">
+                Dirección Editorial y Compilación: <strong>Omar Horacio Adamo</strong> · Sello: <strong>Aura Ediciones</strong>
+            </p>
+        </div>
+    </div>
+
+    <!-- Footer Obligatorio según Reglas Globales -->
+    <footer>
+        <p>&copy; 2026 <a href="https://aura-adamo.site/">Aura</a>. Todos los derechos reservados. Plataforma fundada por Omar Horacio Adamo.</p>
+    </footer>
+
+    <!-- Script Interactivo para Copiar Textos y Cambiar Pestañas -->
+    <script>
+        function showCollection(colName, btn) {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            if (colName === 'negocios') {
+                document.getElementById('col-negocios').style.display = 'flex';
+                document.getElementById('col-salud').style.display = 'none';
+            } else {
+                document.getElementById('col-negocios').style.display = 'none';
+                document.getElementById('col-salud').style.display = 'flex';
+            }
+        }
+
+        function copyText(elementId, btn) {
+            const text = document.getElementById(elementId).innerText;
+            navigator.clipboard.writeText(text).then(() => {
+                const originalHtml = btn.innerHTML;
+                btn.innerHTML = '<i class="bx bx-check"></i> ¡Copiado!';
+                btn.classList.add('copied');
+                setTimeout(() => {
+                    btn.innerHTML = originalHtml;
+                    btn.classList.remove('copied');
+                }, 2200);
+            }).catch(err => {
+                alert('No se pudo copiar automáticamente. Por favor seleccioná el texto manualmente.');
+            });
+        }
+
+        function copyLink(url, btn) {
+            navigator.clipboard.writeText(url).then(() => {
+                const originalHtml = btn.innerHTML;
+                btn.innerHTML = '<i class="bx bx-check"></i> ¡Copiado!';
+                btn.style.background = '#10b981';
+                setTimeout(() => {
+                    btn.innerHTML = originalHtml;
+                    btn.style.background = '';
+                }, 2000);
+            }).catch(err => {
+                prompt('Copia este enlace de pago:', url);
+            });
+        }
+    </script>
+
+</body>
+</html>
