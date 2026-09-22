@@ -192,4 +192,222 @@ document.addEventListener('DOMContentLoaded', () => {
             });
     }
 
+    // --- 6. Lógica Interactiva del Simulador Sandbox (5 Apps Aura) ---
+    initAuraSandbox();
+
+    function initAuraSandbox() {
+        // A. Control de Pestañas (Tabs)
+        const tabs = document.querySelectorAll('.sandbox-tab');
+        const panels = document.querySelectorAll('.sandbox-panel');
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const targetId = `tab-${tab.dataset.tab}`;
+
+                tabs.forEach(t => {
+                    t.classList.remove('active');
+                    t.setAttribute('aria-selected', 'false');
+                });
+                panels.forEach(p => {
+                    p.classList.remove('active');
+                    p.style.display = 'none';
+                });
+
+                tab.classList.add('active');
+                tab.setAttribute('aria-selected', 'true');
+
+                const targetPanel = document.getElementById(targetId);
+                if (targetPanel) {
+                    targetPanel.classList.add('active');
+                    targetPanel.style.display = 'block';
+                }
+            });
+        });
+
+        // B. Simulación RolPlay.ai
+        const tensionFill = document.getElementById('sim-tension-fill');
+        const tensionVal = document.getElementById('sim-tension-val');
+        const userContainer = document.getElementById('sim-user-container');
+        const userDialogue = document.getElementById('sim-user-dialogue');
+        const feedbackBox = document.getElementById('sim-ai-feedback');
+        const feedbackText = document.getElementById('sim-feedback-text');
+        const simOptions = document.querySelectorAll('.btn-sim-option');
+
+        simOptions.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const respType = btn.dataset.resp;
+
+                if (respType === '1') {
+                    // Táctica de Valor
+                    if (userDialogue) userDialogue.innerText = "Nuestro precio incluye soporte técnico 24/7 y telemetría en la nube que reduce 40% las roturas imprevistas de tu flota.";
+                    if (userContainer) userContainer.style.display = 'flex';
+                    if (tensionFill) {
+                        tensionFill.style.width = '25%';
+                        tensionFill.style.background = '#34d399';
+                    }
+                    if (tensionVal) {
+                        tensionVal.innerText = '25% (Controlada)';
+                        tensionVal.style.color = '#34d399';
+                    }
+                    if (feedbackText) {
+                        feedbackText.innerText = "✅ ¡Excelente manejo de objeción! Desviaste el foco del costo hacia el Retorno de Inversión (ROI) y prevención de fallas. El cliente se muestra receptivo.";
+                    }
+                    if (feedbackBox) feedbackBox.style.display = 'block';
+                } else if (respType === '2') {
+                    // Táctica Comparativa
+                    if (userDialogue) userDialogue.innerText = "Otras opciones aparentan ser más baratas pero cobran costos ocultos de mantenimiento mensual; nuestra plataforma se amortiza en los primeros 60 días.";
+                    if (userContainer) userContainer.style.display = 'flex';
+                    if (tensionFill) {
+                        tensionFill.style.width = '35%';
+                        tensionFill.style.background = '#facc15';
+                    }
+                    if (tensionVal) {
+                        tensionVal.innerText = '35% (Favorable)';
+                        tensionVal.style.color = '#facc15';
+                    }
+                    if (feedbackText) {
+                        feedbackText.innerText = "💡 Muy buen argumento de Costo Total de Propiedad (TCO). Justificaste la diferencia tarifaria con datos concretos.";
+                    }
+                    if (feedbackBox) feedbackBox.style.display = 'block';
+                } else if (respType === '3') {
+                    // Reiniciar
+                    if (userContainer) userContainer.style.display = 'none';
+                    if (feedbackBox) feedbackBox.style.display = 'none';
+                    if (tensionFill) {
+                        tensionFill.style.width = '65%';
+                        tensionFill.style.background = 'linear-gradient(90deg, #34d399 0%, #facc15 50%, #f87171 100%)';
+                    }
+                    if (tensionVal) {
+                        tensionVal.innerText = '65% (Media)';
+                        tensionVal.style.color = '#facc15';
+                    }
+                }
+            });
+        });
+
+        // C. Simulación Spinaz Garage (Checklist)
+        const spinazCheckboxes = document.querySelectorAll('.spinaz-chk');
+        const spinazScoreText = document.getElementById('spinaz-score-text');
+        const spinazScoreBadge = document.getElementById('spinaz-score-badge');
+
+        function updateSpinazScore() {
+            let total = 0;
+            spinazCheckboxes.forEach(chk => {
+                const card = chk.closest('.checklist-card');
+                const statusSpan = card ? card.querySelector('.chk-status') : null;
+
+                if (chk.checked) {
+                    total += Number(chk.dataset.weight || 25);
+                    if (card) card.classList.add('checked');
+                    if (statusSpan) {
+                        statusSpan.innerText = 'OK';
+                        statusSpan.className = 'chk-status ok';
+                    }
+                } else {
+                    if (card) card.classList.remove('checked');
+                    if (statusSpan) {
+                        statusSpan.innerText = 'REVISAR';
+                        statusSpan.className = 'chk-status fail';
+                    }
+                }
+            });
+
+            if (spinazScoreText) spinazScoreText.innerText = `${total}%`;
+
+            if (spinazScoreBadge) {
+                if (total === 100) {
+                    spinazScoreBadge.className = 'score-badge badge-green';
+                    spinazScoreBadge.innerText = 'APTO PARA RUTA';
+                } else if (total >= 50) {
+                    spinazScoreBadge.className = 'score-badge badge-amber';
+                    spinazScoreBadge.innerText = 'PRECAUCIÓN EN TALLER';
+                } else {
+                    spinazScoreBadge.className = 'score-badge badge-red';
+                    spinazScoreBadge.innerText = 'VEHÍCULO INMOVILIZADO';
+                }
+            }
+        }
+
+        spinazCheckboxes.forEach(chk => {
+            chk.addEventListener('change', updateSpinazScore);
+        });
+
+        // D. Simulación L1deres AutoWash (LPR / Telemetría)
+        const btnScanPlate = document.getElementById('btn-sim-scan-plate');
+        const inputPlate = document.getElementById('sim-plate-input');
+        const bayPlate = document.getElementById('sim-bay-plate');
+        const bayStatus = document.getElementById('sim-bay-status');
+        const bayTimer = document.getElementById('sim-bay-timer');
+        const bayPlan = document.getElementById('sim-bay-plan');
+
+        if (btnScanPlate && inputPlate) {
+            btnScanPlate.addEventListener('click', () => {
+                const val = inputPlate.value.trim().toUpperCase() || 'AA 000 BB';
+                inputPlate.value = val;
+
+                btnScanPlate.innerHTML = "<i class='bx bx-loader-alt bx-spin'></i> Identificando...";
+
+                setTimeout(() => {
+                    btnScanPlate.innerHTML = "<i class='bx bx-check'></i> ¡Vehículo Asignado!";
+                    if (bayPlate) bayPlate.innerHTML = `🚗 Patente: <strong>${val}</strong>`;
+                    if (bayStatus) bayStatus.innerText = 'EN LAVADO VIP';
+                    if (bayTimer) bayTimer.innerHTML = "⏱️ Tiempo Restante: <strong>04:00 min</strong>";
+                    if (bayPlan) bayPlan.innerHTML = "💎 Socio: <strong>CLUB 100 GOLD</strong>";
+
+                    setTimeout(() => {
+                        btnScanPlate.innerHTML = "<i class='bx bx-scan'></i> Simular Lectura LPR";
+                    }, 2000);
+                }, 800);
+            });
+        }
+
+        // E. Simulación Odonto Merlo (Turnero)
+        const odontoService = document.getElementById('sim-odonto-service');
+        const odontoChips = document.querySelectorAll('.odonto-chip');
+        const ticketService = document.getElementById('ticket-service');
+        const ticketTime = document.getElementById('ticket-time');
+
+        function updateOdontoTicket() {
+            const activeChip = document.querySelector('.odonto-chip.active');
+            const hour = activeChip ? activeChip.dataset.hour : '14:30';
+            const srv = odontoService ? odontoService.value : 'Limpieza & Profilaxis';
+
+            if (ticketService) ticketService.innerText = `Tratamiento: ${srv}`;
+            if (ticketTime) ticketTime.innerText = `Horario: Hoy a las ${hour} hs · Consultorio 2`;
+        }
+
+        if (odontoService) {
+            odontoService.addEventListener('change', updateOdontoTicket);
+        }
+
+        odontoChips.forEach(chip => {
+            chip.addEventListener('click', () => {
+                odontoChips.forEach(c => c.classList.remove('active'));
+                chip.classList.add('active');
+                updateOdontoTicket();
+            });
+        });
+
+        // F. Simulación Chofer Online (Filtro)
+        const choferFilters = document.querySelectorAll('.chofer-filter-btn');
+        const choferCards = document.querySelectorAll('.chofer-item-card');
+
+        choferFilters.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const cat = btn.dataset.cat;
+                choferFilters.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                choferCards.forEach(card => {
+                    if (cat === 'todos' || card.dataset.cat === cat) {
+                        card.style.display = 'flex';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+    }
+
 });
+

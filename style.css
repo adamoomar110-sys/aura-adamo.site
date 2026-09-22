@@ -1071,6 +1071,639 @@ body {
     color: var(--accent-cyan);
 }
 
+/* --- 13.5 Campaña Apps & Integración Instagram --- */
+.nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.btn-nav-ig {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 16px;
+    border-radius: var(--radius-pill);
+    background: linear-gradient(45deg, rgba(240, 148, 51, 0.15), rgba(220, 39, 67, 0.15), rgba(188, 24, 136, 0.15));
+    border: 1px solid rgba(220, 39, 67, 0.35);
+    color: #fff;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+.btn-nav-ig i {
+    font-size: 1.1rem;
+    color: #f43f5e;
+}
+
+.btn-nav-ig:hover {
+    background: linear-gradient(45deg, #f09433, #dc2743, #bc1888);
+    border-color: transparent;
+    box-shadow: 0 0 16px rgba(220, 39, 67, 0.45);
+    transform: translateY(-1px);
+    color: #fff;
+}
+
+.btn-nav-ig:hover i {
+    color: #fff;
+}
+
+.nav-link-campaign {
+    color: #fda4af !important;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.nav-link-campaign:hover {
+    color: #fff !important;
+}
+
+/* Hero Instagram CTAs */
+.btn-hero-campaign {
+    background: linear-gradient(135deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%) !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 20px rgba(220, 39, 67, 0.35) !important;
+    border: none !important;
+}
+
+.btn-hero-campaign:hover {
+    box-shadow: 0 8px 30px rgba(220, 39, 67, 0.6) !important;
+    transform: translateY(-2px);
+}
+
+.btn-ig-outline-hero {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    border-radius: var(--radius-pill);
+    border: 1px solid rgba(220, 39, 67, 0.4);
+    background: rgba(220, 39, 67, 0.08);
+    color: #ffffff;
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+.btn-ig-outline-hero i {
+    color: #f43f5e;
+    font-size: 1.2rem;
+}
+
+.btn-ig-outline-hero:hover {
+    background: linear-gradient(45deg, #f09433, #dc2743, #bc1888);
+    border-color: transparent;
+    color: #fff;
+    box-shadow: 0 0 20px rgba(220, 39, 67, 0.45);
+    transform: translateY(-2px);
+}
+
+.btn-ig-outline-hero:hover i {
+    color: #fff;
+}
+
+/* Campaña Section Layout */
+.campaign-section {
+    position: relative;
+    padding: 80px 0;
+}
+
+.campaign-badge-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 20px;
+    border-radius: var(--radius-pill);
+    background: linear-gradient(90deg, rgba(240, 148, 51, 0.12), rgba(220, 39, 67, 0.12), rgba(188, 24, 136, 0.12));
+    border: 1px solid rgba(220, 39, 67, 0.35);
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: #fda4af;
+    margin-bottom: 16px;
+}
+
+.instagram-icon-pulse {
+    font-size: 1.25rem;
+    color: #f43f5e;
+    animation: igPulse 2s infinite ease-in-out;
+}
+
+@keyframes igPulse {
+    0%, 100% { transform: scale(1); filter: drop-shadow(0 0 3px rgba(244, 63, 94, 0.6)); }
+    50% { transform: scale(1.18); filter: drop-shadow(0 0 10px rgba(244, 63, 94, 1)); }
+}
+
+.text-gradient-instagram {
+    background: linear-gradient(45deg, #f09433 0%, #e6683c 30%, #dc2743 60%, #bc1888 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+}
+
+/* Instagram Hub Profile Card */
+.ig-profile-card {
+    background: linear-gradient(135deg, rgba(25, 18, 40, 0.8) 0%, rgba(15, 23, 42, 0.9) 100%);
+    backdrop-filter: var(--glass-blur);
+    border: 1px solid rgba(220, 39, 67, 0.25);
+    border-radius: var(--radius-lg);
+    padding: 28px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: 36px;
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.4), 0 0 30px rgba(220, 39, 67, 0.08);
+}
+
+.ig-profile-left {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.ig-avatar-ring {
+    width: 68px;
+    height: 68px;
+    border-radius: 50%;
+    padding: 3px;
+    background: linear-gradient(45deg, #f09433, #dc2743, #bc1888);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    box-shadow: 0 0 15px rgba(220, 39, 67, 0.4);
+}
+
+.ig-avatar-inner {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: #0a0f1d;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.ig-avatar-initials {
+    font-size: 1.25rem;
+    font-weight: 800;
+    background: linear-gradient(45deg, #f09433, #dc2743, #bc1888);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.ig-profile-meta {
+    display: flex;
+    flex-direction: column;
+}
+
+.ig-username-badge {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.ig-username-badge h3 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #fff;
+}
+
+.ig-verified-icon {
+    color: #38bdf8;
+    font-size: 1.2rem;
+}
+
+.ig-bio-text {
+    font-size: 0.92rem;
+    color: var(--text-secondary);
+    margin: 4px 0 6px 0;
+    line-height: 1.45;
+}
+
+.ig-link-text {
+    font-size: 0.85rem;
+    color: var(--accent-cyan);
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.ig-profile-actions {
+    display: flex;
+    gap: 12px;
+    flex-shrink: 0;
+}
+
+.btn-ig-gradient {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    border-radius: var(--radius-pill);
+    background: linear-gradient(45deg, #f09433, #dc2743, #bc1888);
+    color: #ffffff;
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 0.92rem;
+    box-shadow: 0 6px 20px rgba(220, 39, 67, 0.35);
+    transition: var(--transition);
+}
+
+.btn-ig-gradient:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(220, 39, 67, 0.55);
+    color: #ffffff;
+}
+
+.btn-ig-contact {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 12px 20px;
+    border-radius: var(--radius-pill);
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: #ffffff;
+    font-weight: 500;
+    text-decoration: none;
+    font-size: 0.92rem;
+    transition: var(--transition);
+}
+
+.btn-ig-contact:hover {
+    background: rgba(255, 255, 255, 0.12);
+    color: #ffffff;
+}
+
+/* Stories / Highlights Bar */
+.campaign-stories-bar {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background: rgba(15, 23, 42, 0.55);
+    border: var(--border-glass);
+    border-radius: var(--radius-pill);
+    padding: 14px 28px;
+    margin-bottom: 40px;
+    overflow-x: auto;
+    scrollbar-width: thin;
+}
+
+.stories-label {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--text-secondary);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+}
+
+.stories-track {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+.story-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    text-decoration: none;
+    transition: var(--transition);
+    cursor: pointer;
+}
+
+.story-ring {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.35rem;
+    color: #fff;
+    transition: var(--transition);
+}
+
+.story-item span {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    white-space: nowrap;
+    transition: var(--transition);
+}
+
+.story-item:hover .story-ring {
+    transform: scale(1.12);
+}
+
+.story-item:hover span {
+    color: #ffffff;
+}
+
+.ring-ai {
+    background: linear-gradient(135deg, #a855f7, #34d399);
+    box-shadow: 0 0 12px rgba(168, 85, 247, 0.35);
+}
+
+.ring-fleet {
+    background: linear-gradient(135deg, #f97316, #ef4444);
+    box-shadow: 0 0 12px rgba(249, 115, 22, 0.35);
+}
+
+.ring-health {
+    background: linear-gradient(135deg, #0284c7, #38bdf8);
+    box-shadow: 0 0 12px rgba(56, 189, 248, 0.35);
+}
+
+.ring-logistics {
+    background: linear-gradient(135deg, #6366f1, #3b82f6);
+    box-shadow: 0 0 12px rgba(99, 102, 241, 0.35);
+}
+
+.ring-iot {
+    background: linear-gradient(135deg, #eab308, #f59e0b);
+    box-shadow: 0 0 12px rgba(234, 179, 8, 0.35);
+}
+
+/* Campaign Cards Grid */
+.campaign-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+    margin-bottom: 40px;
+}
+
+.campaign-app-card {
+    background: var(--bg-card);
+    backdrop-filter: var(--glass-blur);
+    border: var(--border-glass);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: var(--transition);
+    box-shadow: var(--glass-shadow);
+}
+
+.campaign-app-card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(220, 39, 67, 0.35);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5), 0 0 25px rgba(220, 39, 67, 0.12);
+}
+
+.campaign-card-banner {
+    height: 90px;
+    padding: 18px 24px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+}
+
+.banner-gradient-ai {
+    background: linear-gradient(135deg, rgba(168, 85, 247, 0.35), rgba(52, 211, 153, 0.2));
+}
+
+.banner-gradient-fleet {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.35), rgba(249, 115, 22, 0.2));
+}
+
+.banner-gradient-health {
+    background: linear-gradient(135deg, rgba(2, 132, 199, 0.35), rgba(56, 189, 248, 0.2));
+}
+
+.banner-gradient-logistics {
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.35), rgba(59, 130, 246, 0.2));
+}
+
+.campaign-tag-promo {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5px 14px;
+    border-radius: var(--radius-pill);
+    background: rgba(0, 0, 0, 0.45);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #ffffff;
+    z-index: 1;
+}
+
+.campaign-watermark-icon {
+    font-size: 5.5rem;
+    opacity: 0.12;
+    color: #ffffff;
+    position: absolute;
+    right: 15px;
+    bottom: -15px;
+    pointer-events: none;
+}
+
+.campaign-card-body {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.campaign-app-header {
+    margin-bottom: 8px;
+}
+
+.campaign-app-title {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 4px;
+}
+
+.campaign-app-subtitle {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--accent-cyan);
+}
+
+.campaign-app-desc {
+    font-size: 0.92rem;
+    color: var(--text-secondary);
+    margin: 14px 0 20px 0;
+    line-height: 1.55;
+}
+
+.campaign-features-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 24px;
+    margin-top: auto;
+}
+
+.c-feat {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.c-feat i {
+    color: #34d399;
+    font-size: 1.05rem;
+}
+
+.campaign-card-cta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.btn-campaign-primary {
+    flex: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 18px;
+    border-radius: var(--radius-md);
+    background: linear-gradient(135deg, rgba(0, 242, 254, 0.15) 0%, rgba(99, 102, 241, 0.15) 100%);
+    border: 1px solid rgba(0, 242, 254, 0.3);
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+.btn-campaign-primary:hover {
+    background: var(--gradient-primary);
+    border-color: transparent;
+    box-shadow: 0 0 20px rgba(0, 242, 254, 0.4);
+    transform: translateY(-2px);
+    color: #ffffff;
+}
+
+.btn-campaign-ig {
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(220, 39, 67, 0.1);
+    border: 1px solid rgba(220, 39, 67, 0.3);
+    color: #f43f5e;
+    font-size: 1.3rem;
+    text-decoration: none;
+    transition: var(--transition);
+    flex-shrink: 0;
+}
+
+.btn-campaign-ig:hover {
+    background: linear-gradient(45deg, #f09433, #dc2743, #bc1888);
+    color: #ffffff;
+    box-shadow: 0 0 15px rgba(220, 39, 67, 0.45);
+    transform: translateY(-2px);
+}
+
+/* Campaign Banner CTA */
+.campaign-banner-cta {
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(30, 18, 45, 0.95));
+    border: 1px solid rgba(220, 39, 67, 0.3);
+    border-radius: var(--radius-lg);
+    padding: 44px 32px;
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+}
+
+.cta-content h3 {
+    font-size: 1.65rem;
+    font-weight: 800;
+    color: #ffffff;
+    margin-bottom: 12px;
+}
+
+.cta-content p {
+    color: var(--text-secondary);
+    max-width: 680px;
+    margin: 0 auto 24px auto;
+    font-size: 1rem;
+}
+
+.cta-buttons-group {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.btn-ig-outline {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    border-radius: var(--radius-pill);
+    border: 1px solid rgba(220, 39, 67, 0.45);
+    background: rgba(220, 39, 67, 0.08);
+    color: #ffffff;
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: var(--transition);
+}
+
+.btn-ig-outline i {
+    font-size: 1.2rem;
+    color: #f43f5e;
+}
+
+.btn-ig-outline:hover {
+    background: linear-gradient(45deg, #f09433, #dc2743, #bc1888);
+    border-color: transparent;
+    color: #ffffff;
+    box-shadow: 0 0 20px rgba(220, 39, 67, 0.45);
+}
+
+.btn-ig-outline:hover i {
+    color: #ffffff;
+}
+
+/* Footer Social Pill */
+.footer-social-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    border-radius: var(--radius-pill);
+    background: linear-gradient(45deg, rgba(240, 148, 51, 0.15), rgba(220, 39, 67, 0.15), rgba(188, 24, 136, 0.15));
+    border: 1px solid rgba(220, 39, 67, 0.3);
+    color: #fda4af !important;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+.footer-social-pill:hover {
+    background: linear-gradient(45deg, #f09433, #dc2743, #bc1888);
+    color: #ffffff !important;
+    box-shadow: 0 0 15px rgba(220, 39, 67, 0.4);
+}
+
 /* --- 14. Responsive (Mobile & Tablets) --- */
 @media (max-width: 992px) {
     .hero-container {
@@ -1085,10 +1718,36 @@ body {
 
     .hero-actions {
         justify-content: center;
+        flex-wrap: wrap;
     }
 
     .hero-metrics {
         justify-content: center;
+    }
+
+    .campaign-cards-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .ig-profile-card {
+        flex-direction: column;
+        text-align: center;
+        padding: 24px 20px;
+    }
+
+    .ig-profile-left {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .ig-username-badge {
+        justify-content: center;
+    }
+
+    .ig-profile-actions {
+        width: 100%;
+        justify-content: center;
+        flex-wrap: wrap;
     }
 
     .bento-large {
@@ -1148,6 +1807,15 @@ body {
         display: block;
     }
 
+    .btn-hero-campaign,
+    .btn-ig-outline-hero {
+        width: 100%;
+    }
+
+    .stories-track {
+        gap: 16px;
+    }
+
     .form-row {
         grid-template-columns: 1fr;
     }
@@ -1158,3 +1826,1014 @@ body {
         gap: 16px;
     }
 }
+
+/* ==========================================================
+   AURA INSTAGRAM BENTO GRID SHOWCASE
+   ========================================================== */
+.ig-bento-section {
+    margin-top: 48px;
+    padding-top: 36px;
+    border-top: var(--border-glass);
+}
+
+.ig-bento-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 32px;
+}
+
+.badge-ig-live {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 14px;
+    background: rgba(225, 48, 108, 0.15);
+    border: 1px solid rgba(225, 48, 108, 0.4);
+    color: #ff5388;
+    border-radius: var(--radius-pill);
+    font-size: 0.82rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.ig-bento-title-wrap h3 {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: #ffffff;
+}
+
+.text-gradient-instagram {
+    background: linear-gradient(135deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.btn-ig-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: var(--radius-pill);
+    color: #ffffff;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+.btn-ig-pill:hover {
+    background: linear-gradient(135deg, #f09433, #dc2743, #bc1888);
+    border-color: transparent;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(220, 39, 67, 0.4);
+}
+
+.ig-bento-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 24px;
+}
+
+.ig-bento-card {
+    background: var(--bg-card);
+    border: var(--border-glass);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    backdrop-filter: var(--glass-blur);
+    transition: var(--transition);
+    display: flex;
+    flex-direction: column;
+}
+
+.ig-bento-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(225, 48, 108, 0.5);
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.4), 0 0 20px rgba(225, 48, 108, 0.2);
+}
+
+.ig-card-media {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    background: #000;
+}
+
+.ig-card-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.ig-bento-card:hover .ig-card-media img {
+    transform: scale(1.05);
+}
+
+.ig-media-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(10, 15, 29, 0.9) 0%, rgba(10, 15, 29, 0.2) 60%, transparent 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 16px;
+    opacity: 0;
+    transition: var(--transition);
+}
+
+.ig-bento-card:hover .ig-media-overlay {
+    opacity: 1;
+}
+
+.ig-overlay-tag {
+    align-self: flex-start;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: var(--radius-pill);
+    padding: 5px 12px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #00f2fe;
+}
+
+.btn-ig-view {
+    align-self: center;
+    margin-top: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 18px;
+    background: linear-gradient(135deg, #f09433, #dc2743, #bc1888);
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 700;
+    border-radius: var(--radius-pill);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+    transition: var(--transition);
+}
+
+.btn-ig-view:hover {
+    transform: scale(1.06);
+}
+
+.ig-card-footer {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.ig-card-caption {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    line-height: 1.45;
+}
+
+.ig-card-caption strong {
+    color: #ffffff;
+    font-weight: 700;
+    margin-right: 4px;
+}
+
+.ig-card-actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding-top: 10px;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+.ig-card-actions span {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.text-red {
+    color: #ef4444;
+}
+
+.ig-link-icon {
+    margin-left: auto;
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+.ig-link-icon:hover {
+    color: #00f2fe;
+}
+
+/* ==========================================================
+   AURA LIVE SANDBOX & MULTI-APP SIMULATOR
+   ========================================================== */
+.sandbox-section {
+    background: radial-gradient(circle at 50% 10%, rgba(0, 242, 254, 0.04) 0%, transparent 60%);
+}
+
+.sandbox-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(0, 242, 254, 0.1);
+    border: 1px solid rgba(0, 242, 254, 0.3);
+    color: var(--accent-cyan);
+    padding: 6px 16px;
+    border-radius: var(--radius-pill);
+    font-size: 0.85rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+}
+
+.sandbox-container {
+    background: rgba(15, 23, 42, 0.8);
+    border: var(--border-glass);
+    border-radius: var(--radius-lg);
+    padding: 32px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+}
+
+/* Tabs */
+.sandbox-tabs {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    padding-bottom: 16px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    margin-bottom: 28px;
+    scrollbar-width: thin;
+}
+
+.sandbox-tab {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 20px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--radius-md);
+    color: var(--text-secondary);
+    font-family: var(--font-main);
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    white-space: nowrap;
+}
+
+.sandbox-tab:hover {
+    background: rgba(255, 255, 255, 0.08);
+    color: #ffffff;
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.sandbox-tab.active {
+    background: linear-gradient(135deg, rgba(0, 242, 254, 0.15), rgba(99, 102, 241, 0.2));
+    border-color: rgba(0, 242, 254, 0.5);
+    color: #ffffff;
+    box-shadow: 0 4px 16px rgba(0, 242, 254, 0.2);
+}
+
+.tab-pill {
+    padding: 2px 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-pill);
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--text-muted);
+}
+
+.sandbox-tab.active .tab-pill {
+    background: var(--accent-cyan);
+    color: #0a0f1d;
+}
+
+.tab-icon-ai { color: #00f2fe; }
+.tab-icon-fleet { color: #f87171; }
+.tab-icon-iot { color: #facc15; }
+.tab-icon-health { color: #34d399; }
+.tab-icon-logistics { color: #818cf8; }
+
+/* Sim Header */
+.sim-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-bottom: 24px;
+}
+
+.sim-title-group h4 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 4px;
+}
+
+.sim-title-group p {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+/* Tension Widget */
+.sim-tension-widget {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: rgba(0, 0, 0, 0.3);
+    padding: 10px 18px;
+    border-radius: var(--radius-pill);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.tension-label {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+.tension-bar-track {
+    width: 110px;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-pill);
+    overflow: hidden;
+}
+
+.tension-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #34d399 0%, #facc15 50%, #f87171 100%);
+    transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.tension-value {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #facc15;
+}
+
+/* Chat Box */
+.sim-chat-box {
+    background: rgba(10, 15, 29, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: var(--radius-md);
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    margin-bottom: 24px;
+}
+
+.sim-message {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+}
+
+.sim-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #00f2fe, #6366f1);
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    flex-shrink: 0;
+}
+
+.user-avatar {
+    background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+}
+
+.sim-bubble {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 14px;
+    padding: 14px 18px;
+    max-width: 80%;
+}
+
+.sim-msg-user {
+    justify-content: flex-end;
+}
+
+.sim-msg-user .sim-bubble {
+    background: rgba(99, 102, 241, 0.18);
+    border-color: rgba(99, 102, 241, 0.35);
+}
+
+.sim-bubble strong {
+    display: block;
+    font-size: 0.82rem;
+    color: var(--accent-cyan);
+    margin-bottom: 4px;
+}
+
+.sim-msg-user .sim-bubble strong {
+    color: #818cf8;
+}
+
+.sim-bubble p {
+    font-size: 0.95rem;
+    color: var(--text-primary);
+    line-height: 1.5;
+}
+
+/* Feedback Box */
+.sim-feedback-box {
+    background: rgba(0, 242, 254, 0.08);
+    border: 1px solid rgba(0, 242, 254, 0.25);
+    border-radius: var(--radius-md);
+    padding: 16px 20px;
+}
+
+.feedback-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--accent-cyan);
+    font-size: 0.85rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.sim-feedback-box p {
+    font-size: 0.9rem;
+    color: #e2e8f0;
+    line-height: 1.5;
+}
+
+/* Controls */
+.sim-controls-label {
+    display: block;
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--text-secondary);
+    margin-bottom: 12px;
+}
+
+.sim-options-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.btn-sim-option {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--radius-md);
+    padding: 14px 18px;
+    color: var(--text-primary);
+    font-family: var(--font-main);
+    font-size: 0.88rem;
+    cursor: pointer;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: var(--transition);
+}
+
+.btn-sim-option i {
+    font-size: 1.4rem;
+    color: var(--accent-cyan);
+    flex-shrink: 0;
+}
+
+.btn-sim-option:hover {
+    background: rgba(0, 242, 254, 0.1);
+    border-color: rgba(0, 242, 254, 0.4);
+    transform: translateY(-2px);
+}
+
+.sim-footer-cta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+    padding-top: 18px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Spinaz Simulator */
+.sim-fleet-score {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: rgba(0, 0, 0, 0.3);
+    padding: 8px 18px;
+    border-radius: var(--radius-pill);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.score-number {
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: #34d399;
+}
+
+.score-badge {
+    padding: 4px 10px;
+    border-radius: var(--radius-pill);
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+
+.badge-green {
+    background: rgba(52, 211, 153, 0.2);
+    color: #34d399;
+    border: 1px solid rgba(52, 211, 153, 0.4);
+}
+
+.badge-amber {
+    background: rgba(250, 204, 21, 0.2);
+    color: #facc15;
+    border: 1px solid rgba(250, 204, 21, 0.4);
+}
+
+.badge-red {
+    background: rgba(248, 113, 113, 0.2);
+    color: #f87171;
+    border: 1px solid rgba(248, 113, 113, 0.4);
+}
+
+.spinaz-checklist-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.checklist-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--radius-md);
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.checklist-card.checked {
+    border-color: rgba(52, 211, 153, 0.4);
+    background: rgba(52, 211, 153, 0.05);
+}
+
+.checklist-card input {
+    display: none;
+}
+
+.chk-content {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.chk-content i {
+    font-size: 1.6rem;
+    color: #34d399;
+}
+
+.chk-content div strong {
+    display: block;
+    font-size: 0.95rem;
+    color: #ffffff;
+}
+
+.chk-content div span {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+.chk-status {
+    padding: 4px 10px;
+    border-radius: var(--radius-pill);
+    font-size: 0.75rem;
+    font-weight: 800;
+}
+
+.chk-status.ok {
+    background: rgba(52, 211, 153, 0.2);
+    color: #34d399;
+}
+
+.chk-status.fail {
+    background: rgba(248, 113, 113, 0.2);
+    color: #f87171;
+}
+
+.spinaz-hint {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* L1deres Simulator */
+.l1deres-sim-box {
+    background: rgba(10, 15, 29, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--radius-md);
+    padding: 24px;
+    margin-bottom: 24px;
+}
+
+.l1deres-input-row {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+}
+
+.plate-input-wrap {
+    display: flex;
+    align-items: center;
+    background: #0f172a;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    padding: 4px 10px;
+    gap: 10px;
+}
+
+.plate-badge-arg {
+    background: #0284c7;
+    color: #ffffff;
+    font-size: 0.68rem;
+    font-weight: 800;
+    padding: 4px 8px;
+    border-radius: 4px;
+    letter-spacing: 1px;
+}
+
+.plate-input-wrap input {
+    background: transparent;
+    border: none;
+    color: #ffffff;
+    font-family: monospace;
+    font-size: 1.15rem;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    width: 140px;
+    outline: none;
+}
+
+.l1deres-bay-display {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+}
+
+.bay-item {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(0, 242, 254, 0.3);
+    border-radius: var(--radius-md);
+    padding: 20px;
+    box-shadow: 0 0 24px rgba(0, 242, 254, 0.1);
+}
+
+.bay-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 800;
+    margin-bottom: 14px;
+    color: #ffffff;
+}
+
+.bay-state-badge {
+    padding: 4px 12px;
+    border-radius: var(--radius-pill);
+    font-size: 0.78rem;
+    font-weight: 800;
+}
+
+.pulse-green {
+    background: rgba(52, 211, 153, 0.2);
+    color: #34d399;
+    border: 1px solid rgba(52, 211, 153, 0.4);
+    animation: pulseGlow 2s infinite;
+}
+
+@keyframes pulseGlow {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.6; }
+}
+
+.bay-meta {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+.bay-meta strong {
+    color: #ffffff;
+}
+
+/* Odonto Simulator */
+.odonto-sim-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-bottom: 24px;
+}
+
+.odonto-selectors-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+.sim-form-group label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+}
+
+.sim-select {
+    width: 100%;
+    padding: 12px 16px;
+    background: #0f172a;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: var(--radius-md);
+    color: #ffffff;
+    font-family: var(--font-main);
+    font-size: 0.92rem;
+    outline: none;
+}
+
+.odonto-chips-grid {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.odonto-chip {
+    padding: 10px 16px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-pill);
+    color: var(--text-secondary);
+    font-family: var(--font-main);
+    font-size: 0.88rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.odonto-chip:hover,
+.odonto-chip.active {
+    background: rgba(52, 211, 153, 0.2);
+    border-color: rgba(52, 211, 153, 0.5);
+    color: #34d399;
+}
+
+.odonto-ticket {
+    background: rgba(52, 211, 153, 0.06);
+    border: 1px solid rgba(52, 211, 153, 0.3);
+    border-radius: var(--radius-md);
+    padding: 20px;
+}
+
+.ticket-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 1rem;
+    font-weight: 800;
+    color: #34d399;
+    margin-bottom: 12px;
+}
+
+.ticket-body {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-size: 0.9rem;
+    color: #e2e8f0;
+}
+
+.ticket-wa {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: #4ade80;
+    font-weight: 600;
+    margin-top: 6px;
+}
+
+/* Chofer Simulator */
+.chofer-sim-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-bottom: 24px;
+}
+
+.chofer-filters-bar {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.chofer-filter-btn {
+    padding: 8px 16px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-pill);
+    color: var(--text-secondary);
+    font-family: var(--font-main);
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.chofer-filter-btn:hover,
+.chofer-filter-btn.active {
+    background: rgba(99, 102, 241, 0.2);
+    border-color: rgba(99, 102, 241, 0.5);
+    color: #818cf8;
+}
+
+.chofer-cards-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.chofer-item-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--radius-md);
+    padding: 14px 18px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    transition: var(--transition);
+}
+
+.chofer-avatar {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: rgba(99, 102, 241, 0.2);
+    color: #818cf8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    flex-shrink: 0;
+}
+
+.chofer-info {
+    flex-grow: 1;
+}
+
+.chofer-info strong {
+    display: block;
+    font-size: 0.95rem;
+    color: #ffffff;
+}
+
+.chofer-info span {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+}
+
+.badge-verified {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: rgba(52, 211, 153, 0.15);
+    color: #34d399;
+    border: 1px solid rgba(52, 211, 153, 0.3);
+    border-radius: var(--radius-pill);
+    padding: 4px 10px;
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+
+/* ==========================================================
+   FLOATING QUICK ACTIONS BAR (WHATSAPP & INSTAGRAM)
+   ========================================================== */
+.floating-action-bar {
+    position: fixed;
+    bottom: 28px;
+    right: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    z-index: 999;
+}
+
+.floating-btn {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.6rem;
+    color: #ffffff;
+    text-decoration: none;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    transition: var(--transition);
+    position: relative;
+}
+
+.btn-floating-wa {
+    background: linear-gradient(135deg, #25d366, #128c7e);
+}
+
+.btn-floating-wa:hover {
+    transform: scale(1.1);
+    box-shadow: 0 12px 30px rgba(37, 211, 102, 0.5);
+}
+
+.btn-floating-ig {
+    background: linear-gradient(135deg, #f09433, #dc2743, #bc1888);
+}
+
+.btn-floating-ig:hover {
+    transform: scale(1.1);
+    box-shadow: 0 12px 30px rgba(220, 39, 67, 0.5);
+}
+
+.floating-tooltip {
+    position: absolute;
+    right: 64px;
+    background: rgba(15, 23, 42, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #ffffff;
+    font-size: 0.8rem;
+    font-weight: 700;
+    padding: 6px 12px;
+    border-radius: var(--radius-sm);
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(10px);
+    transition: var(--transition);
+    backdrop-filter: blur(10px);
+}
+
+.floating-btn:hover .floating-tooltip {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+@media (max-width: 640px) {
+    .floating-action-bar {
+        bottom: 18px;
+        right: 18px;
+    }
+    
+    .floating-btn {
+        width: 46px;
+        height: 46px;
+        font-size: 1.4rem;
+    }
+    
+    .sandbox-container {
+        padding: 20px 16px;
+    }
+    
+    .sim-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .sim-tension-widget {
+        width: 100%;
+        justify-content: space-between;
+    }
+}
+
