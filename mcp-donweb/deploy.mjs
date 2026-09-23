@@ -35,6 +35,12 @@ const LANDING_FILES = [
   "index.html",
   "style.css",
   "script.js",
+  "libros.html",
+  "descarga-exitosa.html",
+  "biblioteca.html",
+  "campana_instagram.html",
+  "reels.html",
+  ".htaccess"
 ];
 
 async function connectFTP() {

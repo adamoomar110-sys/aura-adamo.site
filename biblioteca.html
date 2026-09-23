@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biblioteca Digital Aura | 20 Libros Oficiales</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #070b14;
+            --card-bg: rgba(15, 23, 42, 0.7);
+            --card-border: rgba(99, 102, 241, 0.2);
+            --primary: #6366f1;
+            --primary-glow: #818cf8;
+            --accent-green: #10b981;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            min-height: 100vh;
+            padding: 30px 20px 80px;
+            background-image: 
+                radial-gradient(circle at 10% 10%, rgba(99, 102, 241, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 90% 90%, rgba(16, 185, 129, 0.12) 0%, transparent 40%);
+            background-attachment: fixed;
+        }
+        .container { max-width: 1280px; margin: 0 auto; }
+        header { text-align: center; margin-bottom: 40px; }
+        .badge-top {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: rgba(99, 102, 241, 0.15); border: 1px solid rgba(99, 102, 241, 0.3);
+            color: #c7d2fe; padding: 6px 16px; border-radius: 999px;
+            font-size: 0.85rem; font-weight: 600; margin-bottom: 14px;
+        }
+        h1 {
+            font-family: 'Cinzel', serif; font-size: 2.5rem; font-weight: 800;
+            background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            margin-bottom: 10px; letter-spacing: 1px;
+        }
+        p.subtitle { color: var(--text-muted); font-size: 1.05rem; max-width: 680px; margin: 0 auto 25px; }
+        
+        /* Stats Bar */
+        .stats-bar {
+            display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-bottom: 35px;
+        }
+        .stat-chip {
+            background: rgba(30, 41, 59, 0.6); border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 10px 20px; border-radius: 12px; display: flex; align-items: center; gap: 10px;
+            backdrop-filter: blur(8px);
+        }
+        .stat-chip i { font-size: 1.3rem; color: var(--primary-glow); }
+        .stat-chip strong { font-size: 1.1rem; color: #fff; }
+        .stat-chip span { font-size: 0.85rem; color: var(--text-muted); }
+
+        /* Controls */
+        .controls-bar {
+            display: flex; justify-content: space-between; align-items: center;
+            gap: 15px; flex-wrap: wrap; margin-bottom: 35px;
+        }
+        .filter-tabs { display: flex; gap: 10px; flex-wrap: wrap; }
+        .tab-btn {
+            background: rgba(30, 41, 59, 0.6); border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-muted); padding: 10px 18px; border-radius: 10px;
+            cursor: pointer; font-weight: 600; font-size: 0.9rem; transition: all 0.2s;
+        }
+        .tab-btn.active, .tab-btn:hover {
+            background: var(--primary); color: white; border-color: var(--primary);
+            box-shadow: 0 4px 14px rgba(99, 102, 241, 0.3);
+        }
+        .search-box {
+            display: flex; align-items: center; background: rgba(30, 41, 59, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 10px;
+            padding: 8px 16px; gap: 10px; min-width: 280px;
+        }
+        .search-box input {
+            background: transparent; border: none; outline: none; color: white;
+            font-size: 0.95rem; width: 100%;
+        }
+        .search-box i { color: var(--text-muted); font-size: 1.2rem; }
+
+        /* Books Grid */
+        .books-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 28px;
+        }
+        .book-card {
+            background: var(--card-bg); border: 1px solid var(--card-border);
+            border-radius: 18px; overflow: hidden; backdrop-filter: blur(12px);
+            display: flex; flex-direction: column; transition: transform 0.25s, border-color 0.25s;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+        .book-card:hover {
+            transform: translateY(-5px); border-color: rgba(99, 102, 241, 0.5);
+        }
+        .card-cover {
+            position: relative; aspect-ratio: 2 / 3; background: #000; overflow: hidden;
+        }
+        .card-cover img {
+            width: 100%; height: 100%; object-fit: cover; display: block;
+        }
+        .collection-tag {
+            position: absolute; top: 12px; left: 12px; font-size: 0.75rem;
+            font-weight: 700; padding: 4px 10px; border-radius: 6px;
+            backdrop-filter: blur(6px); color: white;
+        }
+        .card-body {
+            padding: 20px; display: flex; flex-direction: column; justify-content: space-between; flex: 1;
+        }
+        .book-badge {
+            font-size: 0.75rem; font-weight: 700; color: var(--primary-glow);
+            letter-spacing: 1px; text-transform: uppercase; margin-bottom: 6px;
+        }
+        .book-title {
+            font-size: 1.15rem; font-weight: 800; color: #fff; margin-bottom: 8px; line-height: 1.3;
+        }
+        .book-sub {
+            font-size: 0.85rem; color: var(--text-muted); line-height: 1.4; margin-bottom: 18px; flex: 1;
+        }
+        .book-meta {
+            display: flex; justify-content: space-between; align-items: center;
+            font-size: 0.8rem; color: #94a3b8; margin-bottom: 15px; border-top: 1px solid rgba(255, 255, 255, 0.06); padding-top: 10px;
+        }
+        .card-actions {
+            display: flex; gap: 8px;
+        }
+        .btn-act {
+            flex: 1; padding: 10px; border-radius: 10px; font-size: 0.85rem; font-weight: 600;
+            text-decoration: none; display: flex; align-items: center; justify-content: center;
+            gap: 6px; transition: all 0.2s; text-align: center;
+        }
+        .btn-pdf {
+            background: linear-gradient(135deg, #6366f1, #4f46e5); color: white;
+        }
+        .btn-pdf:hover { background: #4338ca; }
+        .btn-epub {
+            background: rgba(255, 255, 255, 0.08); color: #cbd5e1; border: 1px solid rgba(255, 255, 255, 0.12);
+        }
+        .btn-epub:hover { background: rgba(255, 255, 255, 0.15); color: white; }
+
+        footer {
+            text-align: center; margin-top: 60px; padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.08); color: var(--text-muted); font-size: 0.9rem;
+        }
+        footer a { color: var(--primary-glow); text-decoration: none; font-weight: 600; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <div class="badge-top">
+                <i class="bx bx-library"></i> AURA EDICIONES · CATÁLOGO OFICIAL
+            </div>
+            <h1>Biblioteca Digital Aura</h1>
+            <p class="subtitle">
+                Catálogo completo de los 20 libros publicados por Omar Horacio Adamo. Accedé directamente a los PDFs de alta resolución, tapas oficiales y eBooks EPUB.
+            </p>
+
+            <div class="stats-bar">
+                <div class="stat-chip">
+                    <i class="bx bxs-book-bookmark"></i>
+                    <div><strong>20 Libros</strong> <span>Publicados</span></div>
+                </div>
+                <div class="stat-chip">
+                    <i class="bx bx-layer"></i>
+                    <div><strong>2 Colecciones</strong> <span>Negocios & Salud</span></div>
+                </div>
+                <div class="stat-chip">
+                    <i class="bx bxs-check-shield"></i>
+                    <div><strong>100% Maquetado</strong> <span>6x9 Amazon KDP</span></div>
+                </div>
+                <div class="stat-chip">
+                    <i class="bx bx-bot"></i>
+                    <div><strong>MCP Server</strong> <span>Compatible IA</span></div>
+                </div>
+            </div>
+
+            <div class="controls-bar">
+                <div class="filter-tabs">
+                    <button class="tab-btn active" onclick="filterBooks('all')">Todos (20)</button>
+                    <button class="tab-btn" onclick="filterBooks('negocios')">Negocios &amp; Tecnología (10)</button>
+                    <button class="tab-btn" onclick="filterBooks('salud')">Salud &amp; Nutrición (10)</button>
+                </div>
+                <div class="search-box">
+                    <i class="bx bx-search"></i>
+                    <input type="text" id="searchInput" placeholder="Buscar por título o tema..." onkeyup="searchBooks()">
+                </div>
+            </div>
+        </header>
+
+        <main class="books-grid" id="booksGrid">
+            <!-- Renderizado dinámico con JS -->
+        </main>
+
+        <footer>
+            <p>© 2026 <a href="https://aura-adamo.site/" style="color:#818cf8; text-decoration:none;">Aura</a> • Fundada por Omar Horacio Adamo. Todos los derechos reservados.</p>
+        </footer>
+    </div>
+
+    <script>
+        const books = [{"num": 1, "col": "negocios", "col_name": "Negocios & Tecnología", "badge": "LIBRO 1 DE 10", "badge_color": "#6366f1", "titulo": "El manual del dropshipping", "subtitulo": "Cómo crear y escalar tu tienda online desde cero", "pags": 55, "pdf": "01_Coleccion_Negocios_y_Tecnologia/01_PDFs_Completos/01_El_Manual_del_Dropshipping.pdf", "tapa": "01_Coleccion_Negocios_y_Tecnologia/02_Tapas_Oficiales_HD/01_Tapa_El_Manual_del_Dropshipping.jpg", "epub": "01_Coleccion_Negocios_y_Tecnologia/03_eBooks_EPUB/El_Libro_1_dropshipping.epub"}, {"num": 2, "col": "negocios", "col_name": "Negocios & Tecnología", "badge": "LIBRO 2 DE 10", "badge_color": "#6366f1", "titulo": "Inteligencia Artificial para Negocios", "subtitulo": "Automatización comercial y agentes autónomos", "pags": 52, "pdf": "01_Coleccion_Negocios_y_Tecnologia/01_PDFs_Completos/02_Inteligencia_Artificial_para_Negocios.pdf", "tapa": "01_Coleccion_Negocios_y_Tecnologia/02_Tapas_Oficiales_HD/02_Tapa_Inteligencia_Artificial_para_Negocios.jpg", "epub": "01_Coleccion_Negocios_y_Tecnologia/03_eBooks_EPUB/El_Libro_2_IA_para_Negocios.epub"}, {"num": 3, "col": "negocios", "col_name": "Negocios & Tecnología", "badge": "LIBRO 3 DE 10", "badge_color": "#6366f1", "titulo": "E-commerce Avanzado", "subtitulo": "Embudos de conversión y tráfico de alto impacto", "pags": 52, "pdf": "01_Coleccion_Negocios_y_Tecnologia/01_PDFs_Completos/03_Ecommerce_Avanzado.pdf", "tapa": "01_Coleccion_Negocios_y_Tecnologia/02_Tapas_Oficiales_HD/03_Tapa_Ecommerce_Avanzado.jpg", "epub": "01_Coleccion_Negocios_y_Tecnologia/03_eBooks_EPUB/El_Libro_3_ecommerce-avanzado.epub"}, {"num": 4, "col": "negocios", "col_name": "Negocios & Tecnología", "badge": "LIBRO 4 DE 10", "badge_color": "#6366f1", "titulo": "Hardware, IoT y Telemetría", "subtitulo": "Conectando el mundo físico a la nube", "pags": 52, "pdf": "01_Coleccion_Negocios_y_Tecnologia/01_PDFs_Completos/04_Hardware_IoT_Telemetria.pdf", "tapa": "01_Coleccion_Negocios_y_Tecnologia/02_Tapas_Oficiales_HD/04_Tapa_Hardware_IoT_Telemetria.jpg", "epub": "01_Coleccion_Negocios_y_Tecnologia/03_eBooks_EPUB/El_Libro_4_hardware-iot-telemetria.epub"}, {"num": 5, "col": "negocios", "col_name": "Negocios & Tecnología", "badge": "LIBRO 5 DE 10", "badge_color": "#6366f1", "titulo": "Branding y Marca Digital", "subtitulo": "De producto genérico a activo de alto valor", "pags": 55, "pdf": "01_Coleccion_Negocios_y_Tecnologia/01_PDFs_Completos/05_Branding_y_Marca_Digital.pdf", "tapa": "01_Coleccion_Negocios_y_Tecnologia/02_Tapas_Oficiales_HD/05_Tapa_Branding_y_Marca_Digital.jpg", "epub": "01_Coleccion_Negocios_y_Tecnologia/03_eBooks_EPUB/El_Libro_5_branding-marca-digital.epub"}, {"num": 6, "col": "negocios", "col_name": "Negocios & Tecnología", "badge": "LIBRO 6 DE 10", "badge_color": "#6366f1", "titulo": "Finanzas para Startups", "subtitulo": "Flujo de caja, pricing y rentabilidad real", "pags": 56, "pdf": "01_Coleccion_Negocios_y_Tecnologia/01_PDFs_Completos/06_Finanzas_para_Startups.pdf", "tapa": "01_Coleccion_Negocios_y_Tecnologia/02_Tapas_Oficiales_HD/06_Tapa_Finanzas_para_Startups.jpg", "epub": "01_Coleccion_Negocios_y_Tecnologia/03_eBooks_EPUB/El_Libro_6_finanzas-startups-rentabilidad.epub"}, {"num": 7, "col": "negocios", "col_name": "Negocios & Tecnología", "badge": "LIBRO 7 DE 10", "badge_color": "#6366f1", "titulo": "Logística y Cadena de Suministro", "subtitulo": "Operaciones ágiles y gestión global de proveedores", "pags": 56, "pdf": "01_Coleccion_Negocios_y_Tecnologia/01_PDFs_Completos/07_Logistica_y_Cadena_de_Suministro.pdf", "tapa": "01_Coleccion_Negocios_y_Tecnologia/02_Tapas_Oficiales_HD/07_Tapa_Logistica_y_Cadena_de_Suministro.jpg", "epub": "01_Coleccion_Negocios_y_Tecnologia/03_eBooks_EPUB/El_Libro_7_logistica-cadena-suministro.epub"}, {"num": 8, "col": "negocios", "col_name": "Negocios & Tecnología", "badge": "LIBRO 8 DE 10", "badge_color": "#6366f1", "titulo": "Ventas B2B y Negociación", "subtitulo": "Cerrando contratos corporativos de alto ticket", "pags": 52, "pdf": "01_Coleccion_Negocios_y_Tecnologia/01_PDFs_Completos/08_Ventas_B2B_y_Negociacion.pdf", "tapa": "01_Coleccion_Negocios_y_Tecnologia/02_Tapas_Oficiales_HD/08_Tapa_Ventas_B2B_y_Negociacion.jpg", "epub": "01_Coleccion_Negocios_y_Tecnologia/03_eBooks_EPUB/El_Libro_8_ventas-b2b-negociacion-corporativa.epub"}, {"num": 9, "col": "negocios", "col_name": "Negocios & Tecnología", "badge": "LIBRO 9 DE 10", "badge_color": "#6366f1", "titulo": "Gestión de Equipos y Delegación", "subtitulo": "Construyendo empresas que funcionan sin ti", "pags": 52, "pdf": "01_Coleccion_Negocios_y_Tecnologia/01_PDFs_Completos/09_Gestion_de_Equipos_y_Delegacion.pdf", "tapa": "01_Coleccion_Negocios_y_Tecnologia/02_Tapas_Oficiales_HD/09_Tapa_Gestion_de_Equipos_y_Delegacion.jpg", "epub": "01_Coleccion_Negocios_y_Tecnologia/03_eBooks_EPUB/El_Libro_9_gestion-equipos-delegacion-autonoma.epub"}, {"num": 10, "col": "negocios", "col_name": "Negocios & Tecnología", "badge": "LIBRO 10 DE 10", "badge_color": "#6366f1", "titulo": "El Ecosistema Aura", "subtitulo": "Arquitectura tecnológica para escalar empresas", "pags": 52, "pdf": "01_Coleccion_Negocios_y_Tecnologia/01_PDFs_Completos/10_El_Ecosistema_Aura.pdf", "tapa": "01_Coleccion_Negocios_y_Tecnologia/02_Tapas_Oficiales_HD/10_Tapa_El_Ecosistema_Aura.jpg", "epub": "01_Coleccion_Negocios_y_Tecnologia/03_eBooks_EPUB/El_Libro_10_el-ecosistema-aura-tecnologia.epub"}, {"num": 11, "col": "salud", "col_name": "Salud & Nutrición", "badge": "LIBRO 1 DE 10 (SALUD)", "badge_color": "#10b981", "titulo": "La Dieta Cetogénica Práctica", "subtitulo": "Guía definitiva para entrar en cetosis y quemar grasa", "pags": 52, "pdf": "02_Coleccion_Salud_y_Nutricion/01_PDFs_Completos/01_La_Dieta_Cetogenica_Practica.pdf", "tapa": "02_Coleccion_Salud_y_Nutricion/02_Tapas_Oficiales_HD/01_Tapa_Salud_1_dieta-cetogenica-practica.jpg", "epub": "02_Coleccion_Salud_y_Nutricion/03_eBooks_EPUB/El_Libro_Salud_1_dieta-cetogenica-practica.epub"}, {"num": 12, "col": "salud", "col_name": "Salud & Nutrición", "badge": "LIBRO 2 DE 10 (SALUD)", "badge_color": "#10b981", "titulo": "El Poder del Ayuno Intermitente", "subtitulo": "Protocolos 16/8, autofagia celular y longevidad", "pags": 61, "pdf": "02_Coleccion_Salud_y_Nutricion/01_PDFs_Completos/02_El_Poder_del_Ayuno_Intermitente.pdf", "tapa": "02_Coleccion_Salud_y_Nutricion/02_Tapas_Oficiales_HD/02_Tapa_Salud_2_poder-ayuno-intermitente.jpg", "epub": "02_Coleccion_Salud_y_Nutricion/03_eBooks_EPUB/El_Libro_Salud_2_poder-ayuno-intermitente.epub"}, {"num": 13, "col": "salud", "col_name": "Salud & Nutrición", "badge": "LIBRO 3 DE 10 (SALUD)", "badge_color": "#10b981", "titulo": "Dieta Antiinflamatoria", "subtitulo": "Cómo sanar tu intestino y reducir dolores crónicos", "pags": 52, "pdf": "02_Coleccion_Salud_y_Nutricion/01_PDFs_Completos/03_Dieta_Antiinflamatoria.pdf", "tapa": "02_Coleccion_Salud_y_Nutricion/02_Tapas_Oficiales_HD/03_Tapa_Salud_3_dieta-antiinflamatoria.jpg", "epub": "02_Coleccion_Salud_y_Nutricion/03_eBooks_EPUB/El_Libro_Salud_3_dieta-antiinflamatoria.epub"}, {"num": 14, "col": "salud", "col_name": "Salud & Nutrición", "badge": "LIBRO 4 DE 10 (SALUD)", "badge_color": "#10b981", "titulo": "Nutrición Deportiva y Fuerza", "subtitulo": "Macros para hipertrofia, timing y masa muscular limpia", "pags": 52, "pdf": "02_Coleccion_Salud_y_Nutricion/01_PDFs_Completos/04_Nutricion_Deportiva_y_Fuerza.pdf", "tapa": "02_Coleccion_Salud_y_Nutricion/02_Tapas_Oficiales_HD/04_Tapa_Salud_4_nutricion-deportiva-fuerza.jpg", "epub": "02_Coleccion_Salud_y_Nutricion/03_eBooks_EPUB/El_Libro_Salud_4_nutricion-deportiva-fuerza.epub"}, {"num": 15, "col": "salud", "col_name": "Salud & Nutrición", "badge": "LIBRO 5 DE 10 (SALUD)", "badge_color": "#10b981", "titulo": "La Dieta Mediterránea Moderna", "subtitulo": "Salud cardiovascular, AOVE, omega-3 y longevidad", "pags": 52, "pdf": "02_Coleccion_Salud_y_Nutricion/01_PDFs_Completos/05_La_Dieta_Mediterranea_Moderna.pdf", "tapa": "02_Coleccion_Salud_y_Nutricion/02_Tapas_Oficiales_HD/05_Tapa_Salud_5_dieta-mediterranea-moderna.jpg", "epub": "02_Coleccion_Salud_y_Nutricion/03_eBooks_EPUB/El_Libro_Salud_5_dieta-mediterranea-moderna.epub"}, {"num": 16, "col": "salud", "col_name": "Salud & Nutrición", "badge": "LIBRO 6 DE 10 (SALUD)", "badge_color": "#10b981", "titulo": "Microbiota y Salud Intestinal", "subtitulo": "Alimentos fermentados, probióticos y eje intestino-cerebro", "pags": 52, "pdf": "02_Coleccion_Salud_y_Nutricion/01_PDFs_Completos/06_Microbiota_y_Salud_Intestinal.pdf", "tapa": "02_Coleccion_Salud_y_Nutricion/02_Tapas_Oficiales_HD/06_Tapa_Salud_6_microbiota-salud-intestinal.jpg", "epub": "02_Coleccion_Salud_y_Nutricion/03_eBooks_EPUB/El_Libro_Salud_6_microbiota-salud-intestinal.epub"}, {"num": 17, "col": "salud", "col_name": "Salud & Nutrición", "badge": "LIBRO 7 DE 10 (SALUD)", "badge_color": "#10b981", "titulo": "Alimentación Basada en Plantas", "subtitulo": "Transición Whole Food Plant-Based sin carencias", "pags": 52, "pdf": "02_Coleccion_Salud_y_Nutricion/01_PDFs_Completos/07_Alimentacion_Basada_en_Plantas.pdf", "tapa": "02_Coleccion_Salud_y_Nutricion/02_Tapas_Oficiales_HD/07_Tapa_Salud_7_alimentacion-basada-en-plantas.jpg", "epub": "02_Coleccion_Salud_y_Nutricion/03_eBooks_EPUB/El_Libro_Salud_7_alimentacion-basada-en-plantas.epub"}, {"num": 18, "col": "salud", "col_name": "Salud & Nutrición", "badge": "LIBRO 8 DE 10 (SALUD)", "badge_color": "#10b981", "titulo": "Control de Glucosa e Insulina", "subtitulo": "Aplanando picos de azúcar y revirtiendo resistencia", "pags": 52, "pdf": "02_Coleccion_Salud_y_Nutricion/01_PDFs_Completos/08_Control_de_Glucosa_e_Insulina.pdf", "tapa": "02_Coleccion_Salud_y_Nutricion/02_Tapas_Oficiales_HD/08_Tapa_Salud_8_control-glucosa-resistencia-insulina.jpg", "epub": "02_Coleccion_Salud_y_Nutricion/03_eBooks_EPUB/El_Libro_Salud_8_control-glucosa-resistencia-insulina.epub"}, {"num": 19, "col": "salud", "col_name": "Salud & Nutrición", "badge": "LIBRO 9 DE 10 (SALUD)", "badge_color": "#10b981", "titulo": "Comer sin Ansiedad (Mindful Eating)", "subtitulo": "Atención plena frente al plato y freno al hambre emocional", "pags": 52, "pdf": "02_Coleccion_Salud_y_Nutricion/01_PDFs_Completos/09_Comer_sin_Ansiedad.pdf", "tapa": "02_Coleccion_Salud_y_Nutricion/02_Tapas_Oficiales_HD/09_Tapa_Salud_9_comer-sin-ansiedad-mindful-eating.jpg", "epub": "02_Coleccion_Salud_y_Nutricion/03_eBooks_EPUB/El_Libro_Salud_9_comer-sin-ansiedad-mindful-eating.epub"}, {"num": 20, "col": "salud", "col_name": "Salud & Nutrición", "badge": "LIBRO 10 DE 10 (SALUD)", "badge_color": "#10b981", "titulo": "Longevidad y Biohacking Nutricional", "subtitulo": "Vías mTOR/AMPK, suplementación y crononutrición", "pags": 52, "pdf": "02_Coleccion_Salud_y_Nutricion/01_PDFs_Completos/10_Longevidad_y_Biohacking_Nutricional.pdf", "tapa": "02_Coleccion_Salud_y_Nutricion/02_Tapas_Oficiales_HD/10_Tapa_Salud_10_longevidad-biohacking-nutricional.jpg", "epub": "02_Coleccion_Salud_y_Nutricion/03_eBooks_EPUB/El_Libro_Salud_10_longevidad-biohacking-nutricional.epub"}];
+
+        function renderBooks(list) {
+            const grid = document.getElementById('booksGrid');
+            if (list.length === 0) {
+                grid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 40px; color: #94a3b8;">No se encontraron libros que coincidan con la búsqueda.</div>';
+                return;
+            }
+            grid.innerHTML = list.map(b => `
+                <article class="book-card">
+                    <div class="card-cover">
+                        <img src="${b.tapa}" alt="${b.titulo}" onerror="this.src='https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=600&q=80'">
+                        <span class="collection-tag" style="background: ${b.badge_color};">${b.col_name}</span>
+                    </div>
+                    <div class="card-body">
+                        <div>
+                            <div class="book-badge">${b.badge}</div>
+                            <h2 class="book-title">${b.titulo}</h2>
+                            <p class="book-sub">${b.subtitulo}</p>
+                        </div>
+                        <div>
+                            <div class="book-meta">
+                                <span><i class="bx bx-file"></i> ${b.pags} páginas</span>
+                                <span><i class="bx bx-user"></i> Omar Adamo</span>
+                            </div>
+                            <div class="card-actions">
+                                <a href="${b.pdf}" target="_blank" class="btn-act btn-pdf"><i class="bx bxs-file-pdf"></i> Abrir PDF</a>
+                                <a href="${b.epub}" download class="btn-act btn-epub"><i class="bx bx-download"></i> EPUB</a>
+                                <a href="https://mpago.la/2BqvYag" target="_blank" class="btn-act" style="background:#009ee3; color:#fff;" title="Cobrar con Mercado Pago $2.500"><i class="bx bx-credit-card"></i> Cobrar $2.500</a>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            `).join('');
+        }
+
+        let currentFilter = 'all';
+
+        function filterBooks(col) {
+            currentFilter = col;
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            event.target.classList.add('active');
+            applyFilters();
+        }
+
+        function searchBooks() {
+            applyFilters();
+        }
+
+        function applyFilters() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const filtered = books.filter(b => {
+                const matchCol = (currentFilter === 'all') || (b.col === currentFilter);
+                const matchSearch = b.titulo.toLowerCase().includes(query) || b.subtitulo.toLowerCase().includes(query);
+                return matchCol && matchSearch;
+            });
+            renderBooks(filtered);
+        }
+
+        // Render inicial
+        renderBooks(books);
+    </script>
+</body>
+</html>
