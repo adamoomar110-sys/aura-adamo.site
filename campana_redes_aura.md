@@ -31,7 +31,7 @@ Para maximizar la tasa de conversión cuando los usuarios visiten tu perfil:
 Crea 5 portadas destacadas con los iconos característicos de cada app (puedes usar los mismos estilos visuales que ya dejamos en la web):
 
 1. **🧠 RolPlay IA**: Capturas de pantalla del simulador interactuando con preguntas y respuestas, testimonios del feedback que brinda la IA.
-2. **🔧 Spinaz Garage**: Video corto recorriendo el checklist digital en un celular dentro de un taller o flota.
+2. **🔧 Gestión de Flota**: Video corto recorriendo el checklist digital en un celular dentro de un taller o flota.
 3. **🩺 Odonto Merlo**: Pantalla de la agenda digital, creación de un turno y visualización de la ficha odontológica.
 4. **🚚 Chofer Online**: Demostración de búsqueda de chofer con filtros de registro profesional y mapa.
 5. **🧼 L1deres**: Video de un box de lavado operando con el sistema de telemetría y cobro digital.
@@ -58,14 +58,14 @@ Los Reels son la herramienta número 1 de alcance orgánico para llegar a nuevos
 
 ---
 
-### Reel 2: Spinaz Garage (Software para Flotas y Talleres)
+### Reel 2: Gestión de Flota (Software para Flotas y Talleres)
 * **Objetivo:** Captar dueños de flotas de autos, furgonetas, remises, transportes y talleres mecánicos.
 * **Gancho Visual (0 a 3 seg):**
   * *Video:* Arrugar una planilla de papel con manchas de grasa o mostrar una carpeta desordenada.
   * *Texto en pantalla:* **"Si controlás tus autos en papel, estás perdiendo dinero."**
 * **Desarrollo (4 a 20 seg):**
-  * *Voz en off:* "¿Cuánto tardás en saber si al auto 5 le cambiaron las pastillas de freno o el aceite? Con **Spinaz Garage** digitalizamos todo el taller: checklists de ingreso en un clic desde el celular del mecánico, control de repuestos y reportes automáticos que te ahorran hasta un 40% en roturas imprevistas."
-  * *Pantalla:* Mostrar la interfaz limpia y ágil de [aura-adamo.site/spinaz/](https://aura-adamo.site/spinaz/).
+  * *Voz en off:* "¿Cuánto tardás en saber si al auto 5 le cambiaron las pastillas de freno o el aceite? Con **Gestión de Flota** digitalizamos todo el taller: checklists de ingreso en un clic desde el celular del mecánico, control de repuestos y reportes automáticos que te ahorran hasta un 40% en roturas imprevistas."
+  * *Pantalla:* Mostrar la interfaz limpia y ágil de [aura-adamo.site/flota/](https://aura-adamo.site/flota/).
 * **Llamado a la Acción (21 a 30 seg):**
   * *Voz en off:* "Modernizá tu taller hoy. Andá al link de nuestro perfil para ver la demo en vivo."
 * **Hashtags:** `#Flotas #MecánicaAutomotriz #TalleresMecanicos #GestionFlotas #SoftwareArgentino`
@@ -108,7 +108,7 @@ Los Reels son la herramienta número 1 de alcance orgánico para llegar a nuevos
 2. **Slide 2 (RolPlay.ai):**  
    *Problema:* La gente renuncia o falla por mala comunicación de los líderes.  
    *Solución:* Entrenamos habilidades blandas con Inteligencia Artificial.
-3. **Slide 3 (Spinaz Garage):**  
+3. **Slide 3 (Gestión de Flota):**  
    *Problema:* Gastos sorpresa en vehículos por falta de mantenimiento preventivo.  
    *Solución:* Checklists mecánicos digitales y seguimiento de flota por unidad.
 4. **Slide 4 (Odonto Merlo & Chofer Online):**  

@@ -285,14 +285,14 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
 
-        // C. Simulación Spinaz Garage (Checklist)
-        const spinazCheckboxes = document.querySelectorAll('.spinaz-chk');
-        const spinazScoreText = document.getElementById('spinaz-score-text');
-        const spinazScoreBadge = document.getElementById('spinaz-score-badge');
+        // C. Simulación Gestión de Flota (Checklist)
+        const flotaCheckboxes = document.querySelectorAll('.flota-chk');
+        const flotaScoreText = document.getElementById('flota-score-text');
+        const flotaScoreBadge = document.getElementById('flota-score-badge');
 
-        function updateSpinazScore() {
+        function updateFlotaScore() {
             let total = 0;
-            spinazCheckboxes.forEach(chk => {
+            flotaCheckboxes.forEach(chk => {
                 const card = chk.closest('.checklist-card');
                 const statusSpan = card ? card.querySelector('.chk-status') : null;
 
@@ -312,24 +312,24 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
 
-            if (spinazScoreText) spinazScoreText.innerText = `${total}%`;
+            if (flotaScoreText) flotaScoreText.innerText = `${total}%`;
 
-            if (spinazScoreBadge) {
+            if (flotaScoreBadge) {
                 if (total === 100) {
-                    spinazScoreBadge.className = 'score-badge badge-green';
-                    spinazScoreBadge.innerText = 'APTO PARA RUTA';
+                    flotaScoreBadge.className = 'score-badge badge-green';
+                    flotaScoreBadge.innerText = 'APTO PARA RUTA';
                 } else if (total >= 50) {
-                    spinazScoreBadge.className = 'score-badge badge-amber';
-                    spinazScoreBadge.innerText = 'PRECAUCIÓN EN TALLER';
+                    flotaScoreBadge.className = 'score-badge badge-amber';
+                    flotaScoreBadge.innerText = 'PRECAUCIÓN EN TALLER';
                 } else {
-                    spinazScoreBadge.className = 'score-badge badge-red';
-                    spinazScoreBadge.innerText = 'VEHÍCULO INMOVILIZADO';
+                    flotaScoreBadge.className = 'score-badge badge-red';
+                    flotaScoreBadge.innerText = 'VEHÍCULO INMOVILIZADO';
                 }
             }
         }
 
-        spinazCheckboxes.forEach(chk => {
-            chk.addEventListener('change', updateSpinazScore);
+        flotaCheckboxes.forEach(chk => {
+            chk.addEventListener('change', updateFlotaScore);
         });
 
         // D. Simulación L1deres AutoWash (LPR / Telemetría)

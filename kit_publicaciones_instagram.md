@@ -20,7 +20,7 @@ Desde simuladores cognitivos con IA para entrenamiento corporativo, hasta plataf
 
 Nuestras soluciones activas:
 🧠 RolPlay.ai → Gimnasio de liderazgo y objeciones con IA.
-🔧 Spinaz Garage → Control integral de talleres y flotas vehiculares.
+🔧 Gestión de Flota → Control integral de talleres y flotas vehiculares.
 🧼 L1deres AutoWash → Telemetría IoT y cobro digital en pista.
 🩺 Odonto Merlo → Gestión clínica y turnero 100% cloud.
 🚚 Chofer Online → Red logística y match de conductores profesionales.
@@ -58,8 +58,8 @@ Tu equipo puede practicar 50 veces una negociación difícil antes de hablar con
 
 ---
 
-## 🔧 Publicación 3: Spinaz Garage (Control de Flotas & Talleres)
-* **Imagen:** `assets/ig/post_spinaz_flotas.jpg`
+## 🔧 Publicación 3: Gestión de Flota (Control de Flotas & Talleres)
+* **Imagen:** `assets/ig/post_flotas_aura.jpg`
 * **Tipo de Post:** Feed Post
 * **Objetivo:** Pymes de transporte, flotas comerciales y talleres mecánicos.
 
@@ -67,7 +67,7 @@ Tu equipo puede practicar 50 veces una negociación difícil antes de hablar con
 ```text
 Si todavía controlás tus vehículos con planillas de papel, estás perdiendo tiempo y dinero cada semana 📑❌
 
-Con Spinaz Garage digitalizamos el 100% de la operación mecánica:
+Con Gestión de Flota digitalizamos el 100% de la operación mecánica:
 ✅ Checklist de ingreso y egreso en un clic desde el celular del chofer o mecánico.
 ✅ Historial clínico digital por patente: services, frenos, cubiertas y repuestos.
 ✅ Alertas preventivas que ahorran hasta un 40% en roturas imprevistas.
@@ -75,9 +75,9 @@ Con Spinaz Garage digitalizamos el 100% de la operación mecánica:
 Dejá la improvisación. Llevá tu taller o flota al siguiente nivel con software ágil y sin complicaciones.
 
 Probá la plataforma en vivo aquí:
-📲 aura-adamo.site/spinaz/
+📲 aura-adamo.site/flota/
 
-#SpinazGarage #GestionDeFlotas #MecanicaAutomotriz #TalleresMecanicos #Logistica #ControlVehicular #AuraTech #SoftwareArgentino
+#GestionDeFlota #GestionDeFlotas #MecanicaAutomotriz #TalleresMecanicos #Logistica #ControlVehicular #AuraTech #SoftwareArgentino
 ```
 
 ---
