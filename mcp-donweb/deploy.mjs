@@ -6,7 +6,7 @@
  * ⚠️  ESTE SCRIPT SOLO TOCA LA CARPETA: public_html/aura-adamo/
  *     - Landing Aura Adamo:  public_html/aura-adamo/
  *     - Odonto Merlo Demo:   public_html/aura-adamo/odonto/
- *     - Spinaz Garage Demo:  public_html/aura-adamo/spinaz/
+ *     - Gestión de Flota:    public_html/aura-adamo/flota/
  *
  *     NO modifica nada de public_html/ (raíz de l1deres.site)
  *
@@ -111,7 +111,7 @@ async function uploadDirectoryFiles(baseLocalDir, baseRemoteDir) {
 }
 
 async function deployLanding() {
-  console.log("🌐 [1/3] DEPLOY LANDING AURA ADAMO (public_html/aura-adamo/)");
+  console.log("🌐 [1/5] DEPLOY LANDING AURA ADAMO (public_html/aura-adamo/)");
   console.log("─".repeat(50));
   const client = await connectFTP();
   try {
@@ -129,48 +129,46 @@ async function deployLanding() {
 }
 
 async function deployOdonto() {
-  console.log("\n🦷 [2/3] DEPLOY ODONTO MERLO (public_html/aura-adamo/odonto/)");
+  console.log("\n🦷 [2/5] DEPLOY ODONTO MERLO (public_html/aura-adamo/odonto/)");
   console.log("─".repeat(50));
   const odontoDist = path.join(REPOS_ROOT, "odonto_merlo", "dist");
   if (!fs.existsSync(odontoDist)) {
-    console.log("  ⚠️ Carpeta dist de odonto_merlo no encontrada.");
+    console.log("  ⚠️ Carpeta dist de odonto_merlo no encontrada (omitiendo).");
     return;
   }
   await uploadDirectoryFiles(odontoDist, `${CONFIG.remoteRoot}/odonto`);
 }
 
-async function deploySpinaz() {
-  console.log("\n🚗 [3/3] DEPLOY SPINAZ GARAGE (public_html/aura-adamo/spinaz/)");
+async function deployFlota() {
+  console.log("\n🚗 [3/5] DEPLOY GESTIÓN DE FLOTA (public_html/aura-adamo/flota/)");
   console.log("─".repeat(50));
-  const spinazOut = path.join(REPOS_ROOT, "cheq-flota-de-autos", "web", "out");
-  const spinazRoot = path.join(REPOS_ROOT, "cheq-flota-de-autos");
+  const flotaOut = path.join(REPOS_ROOT, "cheq-flota-de-autos", "web", "out");
+  const flotaRoot = path.join(REPOS_ROOT, "cheq-flota-de-autos");
   
-  if (!fs.existsSync(spinazOut)) {
-    console.log("  ⚠️ Carpeta out de Spinaz Garage no encontrada.");
-    return;
+  if (fs.existsSync(flotaOut)) {
+    await uploadDirectoryFiles(flotaOut, `${CONFIG.remoteRoot}/flota`);
   }
 
-  // 1. Subir frontend estático Next.js (con chunks y assets completos)
-  await uploadDirectoryFiles(spinazOut, `${CONFIG.remoteRoot}/spinaz`);
-
-  // 2. Subir endpoints PHP backend
-  const phpFiles = fs.readdirSync(spinazRoot).filter(f => f.endsWith(".php"));
-  console.log(`\n  ⚡ Subiendo ${phpFiles.length} endpoints PHP backend...`);
-  const client = await connectFTP();
-  try {
-    await client.ensureDir(`${CONFIG.remoteRoot}/spinaz`);
-    for (const php of phpFiles) {
-      const localPhp = path.join(spinazRoot, php);
-      await client.uploadFrom(localPhp, php);
-      console.log(`  ✅ spinaz/${php}`);
+  // Subir endpoints PHP backend
+  const phpFiles = fs.readdirSync(flotaRoot).filter(f => f.endsWith(".php"));
+  if (phpFiles.length > 0) {
+    console.log(`\n  ⚡ Subiendo ${phpFiles.length} endpoints PHP backend...`);
+    const client = await connectFTP();
+    try {
+      await client.ensureDir(`${CONFIG.remoteRoot}/flota`);
+      for (const php of phpFiles) {
+        const localPhp = path.join(flotaRoot, php);
+        await client.uploadFrom(localPhp, php);
+        console.log(`  ✅ flota/${php}`);
+      }
+    } finally {
+      client.close();
     }
-  } finally {
-    client.close();
   }
 }
 
 async function deployApi() {
-  console.log("\n⚡ [1.5/3] DEPLOY BACKEND API AURA (public_html/aura-adamo/aura-api/)");
+  console.log("\n⚡ [4/5] DEPLOY BACKEND API AURA (public_html/aura-adamo/aura-api/)");
   console.log("─".repeat(50));
   const apiDir = path.join(ROOT, "aura-api");
   if (!fs.existsSync(apiDir)) return;
@@ -190,78 +188,19 @@ async function deployApi() {
   }
 }
 
-async function deployChofer() {
-  console.log("\n🚚 [4/4] DEPLOY CHOFER ONLINE (public_html/aura-adamo/chofer/)");
-  console.log("─".repeat(50));
-  const choferDist = path.join(REPOS_ROOT, "chofer_online", "dist");
-  if (!fs.existsSync(choferDist)) {
-    console.log("  ⚠️ Carpeta dist de chofer_online no encontrada.");
-    return;
-  }
-  await uploadDirectoryFiles(choferDist, `${CONFIG.remoteRoot}/chofer`);
-}
-
-async function deployRolplayApi() {
-  console.log("\n⚡ [5/6] DEPLOY ROLPLAY API (public_html/aura-adamo/rolplay-api/)");
-  console.log("─".repeat(50));
-  const apiDir = path.join(ROOT, "rolplay-api");
-  if (!fs.existsSync(apiDir)) return;
-  const client = await connectFTP();
-  try {
-    const remoteApi = `${CONFIG.remoteRoot}/rolplay-api`;
-    await client.ensureDir(remoteApi);
-    const files = fs.readdirSync(apiDir).filter(f => f.endsWith(".php"));
-    for (const file of files) {
-      const local = path.join(apiDir, file);
-      await client.uploadFrom(local, file);
-      const size = (fs.statSync(local).size / 1024).toFixed(1);
-      console.log(`  ✅ rolplay-api/${file} (${size} KB)`);
-    }
-  } finally {
-    client.close();
-  }
-}
-
-async function deployRolplayWeb() {
-  console.log("\n🧠 [6/6] DEPLOY ROLPLAY WEB (public_html/aura-adamo/rolplay/)");
-  console.log("─".repeat(50));
-  const rolplayDir = path.join(ROOT, "rolplay");
-  if (!fs.existsSync(rolplayDir)) return;
-  const client = await connectFTP();
-  try {
-    const remoteDir = `${CONFIG.remoteRoot}/rolplay`;
-    await client.ensureDir(remoteDir);
-    const files = fs.readdirSync(rolplayDir).filter(f => f.endsWith(".html") || f.endsWith(".css") || f.endsWith(".js"));
-    for (const file of files) {
-      const local = path.join(rolplayDir, file);
-      await client.uploadFrom(local, file);
-      const size = (fs.statSync(local).size / 1024).toFixed(1);
-      console.log(`  ✅ rolplay/${file} (${size} KB)`);
-    }
-  } finally {
-    client.close();
-  }
-}
-
 async function deploy() {
   try {
-    console.log("🚀 DEPLOY COMPLETO ECOSISTEMA AURA ADAMO → aura-adamo.site\n");
+    console.log("🚀 DEPLOY ECOSISTEMA AURA ADAMO → aura-adamo.site (DonWeb/Ferozo)\n");
     await deployLanding();
     await deployApi();
+    await deployFlota();
     await deployOdonto();
-    await deploySpinaz();
-    await deployChofer();
-    await deployRolplayApi();
-    await deployRolplayWeb();
-    console.log("\n🎉 DESPLIEGUE COMPLETADO CON ÉXITO");
+    console.log("\n🎉 DESPLIEGUE A DONWEB COMPLETADO CON ÉXITO");
     console.log("─".repeat(50));
     console.log("  🌐 Landing Principal:  https://aura-adamo.site");
+    console.log("  🚗 Gestión de Flota:   https://aura-adamo.site/flota/");
+    console.log("  📚 Catálogo Libros:    https://aura-adamo.site/libros.html");
     console.log("  ⚡ API Backend:        https://aura-adamo.site/api/status.php");
-    console.log("  🦷 Odonto Merlo:       https://aura-adamo.site/odonto/");
-    console.log("  🚗 Spinaz Garage:      https://aura-adamo.site/spinaz/");
-    console.log("  🚚 Chofer Online:      https://aura-adamo.site/chofer/");
-    console.log("  🧠 RolPlay.ai Web:     https://aura-adamo.site/rolplay/");
-    console.log("  ⚡ RolPlay.ai API:     https://aura-adamo.site/rolplay-api/status.php");
   } catch (err) {
     console.error("\n❌ ERROR:", err.message);
     process.exit(1);
@@ -269,4 +208,3 @@ async function deploy() {
 }
 
 deploy();
-

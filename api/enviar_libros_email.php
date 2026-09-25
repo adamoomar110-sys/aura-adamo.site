@@ -82,7 +82,7 @@ if ($pack === 'pack20') {
         <p style='font-size: 13px; color: #94a3b8;'>Acceso a la colección: <a href='https://aura-adamo.site/descarga-exitosa.html?pago=aprobado&tipo=pack_salud' style='color:#38bdf8;'>Abrir Portal</a></p>
     ";
 } else {
-    // Libro individual ($2.500)
+    // Libro individual ($10.900)
     $asunto = "Tu Libro Digital: {$tituloLibro} - Aura Ediciones";
     
     // Determinar archivo exacto si no vino

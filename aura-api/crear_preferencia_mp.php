@@ -26,22 +26,22 @@ $tipo = $input['tipo'] ?? 'pack20';
 $catalog = [
     'pack20' => [
         'title' => 'Mega Pack 20 Libros Aura (Negocios + Salud) - Omar Horacio Adamo',
-        'price' => 14900,
+        'price' => 109000,
         'description' => 'Colección completa de 20 libros en PDF + EPUB con entrega digital inmediata.'
     ],
     'pack_negocios' => [
         'title' => 'Pack 10 Libros Negocios, IA y Tecnología - Aura Ediciones',
-        'price' => 9900,
+        'price' => 59000,
         'description' => '10 libros completos de negocios, IA, e-commerce y finanzas.'
     ],
     'pack_salud' => [
         'title' => 'Pack 10 Libros Salud, Nutrición y Dietas - Aura Ediciones',
-        'price' => 9900,
+        'price' => 59000,
         'description' => '10 libros completos de nutrición y salud con referencias PubMed.'
     ],
     'individual' => [
         'title' => !empty($input['titulo']) ? $input['titulo'] . ' - Aura Ediciones' : 'Libro Digital Individual - Aura Ediciones',
-        'price' => 2500,
+        'price' => 10900,
         'description' => 'Libro digital oficial en PDF de alta resolución + EPUB.'
     ]
 ];

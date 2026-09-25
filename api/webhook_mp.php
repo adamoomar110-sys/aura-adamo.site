@@ -82,7 +82,7 @@ if ($httpCode === 200 && !empty($payment['status']) && $payment['status'] === 'a
                 <p style='font-size: 13px; color: #94a3b8;'><a href='https://aura-adamo.site/descarga-exitosa.html?pago=aprobado&tipo={$tipoPack10}' style='color:#38bdf8;'>Abrir portal web para ver la colección</a></p>
             ";
         } else {
-            // Libro Individual ($2.500)
+            // Libro Individual ($10.900)
             $asunto = "¡Tu Libro Digital Adquirido! - Aura Ediciones";
             $bloqueDescarga = "
                 <h3 style='color: #fff; margin-top: 0;'>Tu Libro Individual Adquirido:</h3>
