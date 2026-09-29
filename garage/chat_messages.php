@@ -101,7 +101,7 @@ if ($method === 'POST') {
     $id = $input['id'] ?? generateUuid();
     $channel = trim($input['channel'] ?? 'TALLER');
     $sender = trim($input['sender'] ?? 'ADMIN');
-    $message = trim($input['message'] ?? '');
+    $message = trim($input['message'] ?? $input['content'] ?? '');
 
     if (empty($message)) {
         sendResponse(['error' => 'El mensaje no puede estar vacío'], 400);
