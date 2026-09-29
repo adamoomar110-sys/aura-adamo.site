@@ -142,26 +142,6 @@ try {
     $pdo->exec($sql);
     $logs[] = "¡Tablas 'garage_*' creadas exitosamente!";
 
-    // Migración automática de registros existentes en spinaz_* a garage_*
-    $tablesToMigrate = [
-        'profiles', 'vehicles', 'applicants', 'payments', 'incidents',
-        'announcements', 'daily_reports', 'benefits', 'service_orders',
-        'chat_messages', 'settings'
-    ];
-    foreach ($tablesToMigrate as $tbl) {
-        try {
-            $checkOld = $pdo->query("SHOW TABLES LIKE 'spinaz_{$tbl}'")->rowCount();
-            if ($checkOld > 0) {
-                $countNew = (int)$pdo->query("SELECT COUNT(*) FROM `garage_{$tbl}`")->fetchColumn();
-                if ($countNew === 0) {
-                    $pdo->exec("INSERT IGNORE INTO `garage_{$tbl}` SELECT * FROM `spinaz_{$tbl}`");
-                    $logs[] = "Migrados datos previos de 'spinaz_{$tbl}' a 'garage_{$tbl}'";
-                }
-            }
-        } catch (Exception $ex) {
-            // Si hay diferencias mínimas de esquema, continuar
-        }
-    }
     
     // Migraciones automáticas de columnas existentes
     $alterQueries = [
