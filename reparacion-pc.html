@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reparación de PC & Soporte Técnico Oficial | Aura Tech Lab</title>
+    <meta name="description" content="Servicio técnico integral de computadoras y notebooks por Omar Horacio Adamo. Diagnóstico, reparación de hardware, cambio de pasta térmica, upgrade a discos SSD y optimización de Windows en Buenos Aires.">
+    <meta name="keywords" content="reparacion de pc, arreglo de computadoras, formateo notebook, cambio pasta termica, disco ssd nvme, pc gamer buenos aires, servicio tecnico aura adamo">
+
+    <!-- Open Graph para Instagram, WhatsApp & Facebook -->
+    <meta property="og:title" content="Aura Tech Lab | Reparación & Mantenimiento de PC y Notebooks">
+    <meta property="og:description" content="Tu computadora hasta 10 veces más rápida. Diagnóstico certero, upgrades a SSD, armado gamer y reparación de hardware con garantía oficial por Omar Horacio Adamo.">
+    <meta property="og:image" content="https://aura-adamo.site/assets/reparacion_pc.jpg">
+    <meta property="og:url" content="https://aura-adamo.site/reparacion-pc.html">
+    <meta property="og:type" content="website">
+
+    <!-- Google Fonts Premium: Outfit & Plus Jakarta Sans & Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Boxicons para Iconografía Moderna -->
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+
+    <!-- Estilos Principales -->
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        .page-header-glow {
+            padding: 130px 0 60px;
+            background: radial-gradient(circle at 50% 15%, rgba(0, 242, 254, 0.12) 0%, rgba(99, 102, 241, 0.05) 50%, transparent 80%);
+            text-align: center;
+        }
+        .symptom-card {
+            background: rgba(15, 23, 42, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 16px 20px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            user-select: none;
+        }
+        .symptom-card:hover {
+            border-color: rgba(0, 242, 254, 0.4);
+            background: rgba(15, 23, 42, 0.9);
+            transform: translateY(-2px);
+        }
+        .symptom-card.selected {
+            background: rgba(0, 242, 254, 0.15);
+            border-color: #00f2fe;
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.25);
+        }
+        .symptom-checkbox {
+            width: 20px;
+            height: 20px;
+            border-radius: 6px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+        .symptom-card.selected .symptom-checkbox {
+            background: #00f2fe;
+            border-color: #00f2fe;
+            color: #000;
+        }
+        .step-num {
+            width: 44px;
+            height: 44px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, #00f2fe, #6366f1);
+            color: #000;
+            font-weight: 900;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 16px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Orbes de Luz Dinámicos -->
+    <div class="aura-bg-container" aria-hidden="true">
+        <div class="aura-orb orb-1"></div>
+        <div class="aura-orb orb-2"></div>
+        <div class="aura-orb orb-3"></div>
+    </div>
+
+    <!-- Navbar Flotante Glassmorphism -->
+    <header class="header">
+        <nav class="navbar-container">
+            <a href="https://aura-adamo.site/" class="logo" aria-label="Ir a aura-adamo.site">
+                <span class="logo-aura">Aura</span><span class="logo-adamo">Adamo</span>
+                <span class="logo-dot"></span>
+            </a>
+
+            <div class="nav-menu" id="nav-menu">
+                <a href="https://aura-adamo.site/" class="nav-link"><i class="bx bx-home"></i> Inicio</a>
+                <a href="#servicios" class="nav-link active"><i class="bx bx-wrench"></i> Servicios Tech</a>
+                <a href="#diagnostico" class="nav-link"><i class="bx bx-check-shield"></i> Cotizador Rápido</a>
+                <a href="https://aura-adamo.site/garage/" class="nav-link nav-highlight"><i class="bx bx-car"></i> Aura Garage</a>
+                <a href="libros.html" class="nav-link"><i class="bx bx-book-open"></i> 60 Libros</a>
+                <a href="#contacto" class="nav-link btn-nav-contact">Contacto Directo</a>
+            </div>
+
+            <div class="nav-actions">
+                <a href="https://wa.me/5491178295317?text=Hola%20Omar,%20quiero%20consultar%20por%20la%20reparaci%C3%B3n%20de%20mi%20PC." target="_blank" rel="noopener noreferrer" class="btn btn-store-nav" style="background: #25d366; color: #000; border: none; font-weight: 900;">
+                    <i class="bx bxl-whatsapp" style="font-size: 1.2rem;"></i> WhatsApp
+                </a>
+                <a href="https://www.instagram.com/aura_adamo_omar/" target="_blank" rel="noopener noreferrer" class="btn-nav-ig" aria-label="Seguir en Instagram @aura_adamo_omar" title="Seguinos en Instagram @aura_adamo_omar">
+                    <i class="bx bxl-instagram"></i>
+                </a>
+                <button class="nav-toggle" id="nav-toggle" aria-label="Abrir menú de navegación">
+                    <i class="bx bx-menu" id="toggle-icon"></i>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Hero Header -->
+        <section class="page-header-glow">
+            <div class="container">
+                <span class="pc-badge-tech" style="margin-bottom: 14px;">
+                    <i class="bx bx-wrench"></i> AURA TECH LAB · SERVICIO TÉCNICO OFICIAL
+                </span>
+                <h1 style="font-size: 2.8rem; font-weight: 900; line-height: 1.15; margin-bottom: 16px; font-family: 'Outfit', sans-serif;">
+                    Reparación, Mantenimiento &amp; <span class="text-gradient">Armado de PC</span>
+                </h1>
+                <p style="max-width: 780px; margin: 0 auto 30px; font-size: 1.1rem; color: #94a3b8; line-height: 1.65;">
+                    Soluciones definitivas para computadoras de escritorio, notebooks y estaciones de trabajo. Atención directa por <strong>Omar Horacio Adamo</strong> con diagnóstico certero, repuestos testeados y garantía por escrito.
+                </p>
+
+                <!-- Push Callouts Directos -->
+                <div style="display: flex; justify-content: center; gap: 14px; flex-wrap: wrap;">
+                    <a href="https://wa.me/5491178295317?text=Hola%20Omar,%20te%20contacto%20desde%20aura-adamo.site/reparacion-pc.html%20para%20reparar%20mi%20equipo." target="_blank" rel="noopener noreferrer" class="btn-pc-wa" style="font-size: 1.05rem; padding: 15px 28px;">
+                        <i class="bx bxl-whatsapp" style="font-size: 1.4rem;"></i> WhatsApp: +54 9 11 7829-5317
+                    </a>
+                    <a href="tel:+5491178295317" class="btn-pc-tel" style="font-size: 1rem; padding: 15px 24px;">
+                        <i class="bx bx-phone-call"></i> Llamar al 11 7829-5317
+                    </a>
+                    <a href="https://www.instagram.com/aura_adamo_omar/" target="_blank" rel="noopener noreferrer" class="btn-pc-ig" style="font-size: 1rem; padding: 15px 24px;">
+                        <i class="bx bxl-instagram"></i> Instagram @aura_adamo_omar
+                    </a>
+                    <a href="mailto:adamoomar110@gmail.com?subject=Consulta%20Reparacion%20PC%20Aura" class="btn-pc-mail" style="font-size: 0.95rem; padding: 15px 22px;">
+                        <i class="bx bx-envelope"></i> adamoomar110@gmail.com
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Banner Principal Interactivo con Imagen -->
+        <section class="section-container" style="padding-top: 0;">
+            <div class="container">
+                <div class="pc-banner-card">
+                    <div>
+                        <div class="pc-badge-tech" style="background: rgba(37, 211, 102, 0.12); color: #25d366; border-color: rgba(37, 211, 102, 0.35);">
+                            <i class="bx bx-shield-quarter"></i> GARANTÍA OFICIAL AURA · ATENCIÓN EN BUENOS AIRES
+                        </div>
+                        <h2 style="font-size: 2.2rem; font-weight: 900; color: #fff; margin-bottom: 14px; font-family: 'Outfit', sans-serif;">
+                            Tu equipo rápido, sin cuelgues y protegido
+                        </h2>
+                        <p style="color: #94a3b8; font-size: 1rem; line-height: 1.65; margin-bottom: 22px;">
+                            ¿Tu notebook tarda 5 minutos en prender? ¿La PC levanta temperatura o hace ruido el ventilador? No gastes una fortuna en comprar una máquina nueva. Con una puesta a punto integral de hardware y software, tu computadora funcionará como el día que la compraste o incluso más veloz.
+                        </p>
+
+                        <div class="pc-highlights-pills" style="margin-bottom: 24px;">
+                            <span class="pc-pill"><i class="bx bx-check-circle"></i> Diagnóstico en 24h</span>
+                            <span class="pc-pill"><i class="bx bx-check-circle"></i> Discos SSD NVMe Kingston/WD</span>
+                            <span class="pc-pill"><i class="bx bx-check-circle"></i> Pastas Arctic MX-4 / Thermal Grizzly</span>
+                            <span class="pc-pill"><i class="bx bx-check-circle"></i> Windows 10/11 Optimizado</span>
+                            <span class="pc-pill"><i class="bx bx-check-circle"></i> Retiro y entrega a coordinar</span>
+                        </div>
+
+                        <div style="background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 16px; padding: 18px; margin-bottom: 24px;">
+                            <div style="display: flex; align-items: center; gap: 12px;">
+                                <i class="bx bx-badge-check" style="font-size: 2rem; color: #00f2fe;"></i>
+                                <div>
+                                    <h4 style="color: #fff; font-size: 0.95rem; font-weight: 800; margin-bottom: 2px;">Cero Pérdida de Datos Garantizada</h4>
+                                    <p style="color: #94a3b8; font-size: 0.82rem; margin: 0;">Respaldamos todas tus fotos, videos, documentos contables y programas antes de cualquier trabajo.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="pc-banner-actions">
+                            <a href="https://wa.me/5491178295317?text=Hola%20Omar,%20quiero%20pedir%20un%20presupuesto%20para%20mi%20computadora." target="_blank" rel="noopener noreferrer" class="btn-pc-wa">
+                                <i class="bx bxl-whatsapp" style="font-size: 1.25rem;"></i> Pedir Presupuesto por WhatsApp
+                            </a>
+                            <a href="#diagnostico" class="btn-pc-tel">
+                                <i class="bx bx-list-check"></i> Seleccionar Síntomas
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="pc-image-showcase">
+                        <img src="assets/reparacion_pc.jpg" alt="Laboratorio de Reparación y Hardware Aura" loading="eager">
+                        <div class="pc-badge-overlay-top">
+                            <i class="bx bx-wrench"></i> Aura Tech Lab 2026
+                        </div>
+                        <div class="pc-badge-overlay-bottom">
+                            <span class="pc-tech-name">Omar Horacio Adamo · Especialista</span>
+                            <span class="pc-tech-status">Laboratorio Abierto</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Cotizador Interactivo por Síntomas -->
+        <section class="section-container" id="diagnostico" style="background: rgba(15, 23, 42, 0.4); border-top: 1px solid rgba(255, 255, 255, 0.05); border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
+            <div class="container">
+                <div class="section-header" style="text-align: center; max-width: 800px; margin: 0 auto 36px;">
+                    <span class="section-badge" style="background: rgba(0, 242, 254, 0.12); color: #00f2fe; border: 1px solid rgba(0, 242, 254, 0.35);">
+                        <i class="bx bx-check-shield"></i> Diagnóstico Express
+                    </span>
+                    <h2 class="section-title" style="font-size: 2.2rem; margin: 12px 0 8px;">
+                        ¿Qué problema tiene tu <span class="text-gradient">computadora?</span>
+                    </h2>
+                    <p class="section-desc" style="font-size: 0.98rem; color: #94a3b8;">
+                        Selecciona uno o más síntomas para enviar tu consulta personalizada por WhatsApp o formulario directamente a Omar:
+                    </p>
+                </div>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; margin-bottom: 30px;" id="symptoms-container">
+                    <div class="symptom-card" onclick="toggleSymptom(this, 'La PC está muy lenta y tarda en arrancar')">
+                        <div class="symptom-checkbox"><i class="bx bx-check" style="display: none;"></i></div>
+                        <div>
+                            <strong style="color: #fff; font-size: 0.9rem; display: block;">Está muy lenta</strong>
+                            <span style="color: #94a3b8; font-size: 0.78rem;">Tarda en abrir programas y en arrancar</span>
+                        </div>
+                    </div>
+                    <div class="symptom-card" onclick="toggleSymptom(this, 'Levanta mucha temperatura y hace ruido a turbina')">
+                        <div class="symptom-checkbox"><i class="bx bx-check" style="display: none;"></i></div>
+                        <div>
+                            <strong style="color: #fff; font-size: 0.9rem; display: block;">Levanta temperatura</strong>
+                            <span style="color: #94a3b8; font-size: 0.78rem;">Ventilador al máximo o se apaga sola</span>
+                        </div>
+                    </div>
+                    <div class="symptom-card" onclick="toggleSymptom(this, 'Tiene virus, publicidad o archivos bloqueados')">
+                        <div class="symptom-checkbox"><i class="bx bx-check" style="display: none;"></i></div>
+                        <div>
+                            <strong style="color: #fff; font-size: 0.9rem; display: block;">Virus / Malware</strong>
+                            <span style="color: #94a3b8; font-size: 0.78rem;">Páginas sospechosas o lentitud extrema</span>
+                        </div>
+                    </div>
+                    <div class="symptom-card" onclick="toggleSymptom(this, 'Pantalla azul de la muerte (BSOD) o reinicios inesperados')">
+                        <div class="symptom-checkbox"><i class="bx bx-check" style="display: none;"></i></div>
+                        <div>
+                            <strong style="color: #fff; font-size: 0.9rem; display: block;">Pantallas Azules</strong>
+                            <span style="color: #94a3b8; font-size: 0.78rem;">Reinicio constante sin guardar trabajo</span>
+                        </div>
+                    </div>
+                    <div class="symptom-card" onclick="toggleSymptom(this, 'No enciende, no da video o no responde el botón')">
+                        <div class="symptom-checkbox"><i class="bx bx-check" style="display: none;"></i></div>
+                        <div>
+                            <strong style="color: #fff; font-size: 0.9rem; display: block;">No enciende</strong>
+                            <span style="color: #94a3b8; font-size: 0.78rem;">Luces apagadas o enciende pero pantalla negra</span>
+                        </div>
+                    </div>
+                    <div class="symptom-card" onclick="toggleSymptom(this, 'Quiero hacer upgrade a SSD o ampliar memoria RAM')">
+                        <div class="symptom-checkbox"><i class="bx bx-check" style="display: none;"></i></div>
+                        <div>
+                            <strong style="color: #fff; font-size: 0.9rem; display: block;">Upgrade a SSD / RAM</strong>
+                            <span style="color: #94a3b8; font-size: 0.78rem;">Acelerar la máquina al máximo</span>
+                        </div>
+                    </div>
+                    <div class="symptom-card" onclick="toggleSymptom(this, 'Quiero armar una PC Gamer o Estación de Trabajo')">
+                        <div class="symptom-checkbox"><i class="bx bx-check" style="display: none;"></i></div>
+                        <div>
+                            <strong style="color: #fff; font-size: 0.9rem; display: block;">Armado de PC Gamer</strong>
+                            <span style="color: #94a3b8; font-size: 0.78rem;">Gaming, render, arquitectura y streaming</span>
+                        </div>
+                    </div>
+                    <div class="symptom-card" onclick="toggleSymptom(this, 'Notebook con rotura física de pantalla, bisagra o teclado')">
+                        <div class="symptom-checkbox"><i class="bx bx-check" style="display: none;"></i></div>
+                        <div>
+                            <strong style="color: #fff; font-size: 0.9rem; display: block;">Problema de Notebook</strong>
+                            <span style="color: #94a3b8; font-size: 0.78rem;">Bisagras, teclado, pin de carga o display</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="text-align: center; background: rgba(0,0,0,0.5); border: 1px solid rgba(0, 242, 254, 0.25); border-radius: 20px; padding: 24px; max-width: 700px; margin: 0 auto;">
+                    <p style="color: #cbd5e1; font-size: 0.92rem; margin-bottom: 14px;" id="symptom-summary-text">
+                        Haz clic en los síntomas arriba para preparar tu mensaje de WhatsApp personalizado.
+                    </p>
+                    <a id="btn-wa-symptoms" href="https://wa.me/5491178295317?text=Hola%20Omar,%20te%20contacto%20desde%20aura-adamo.site%20para%20consultar%20por%20la%20reparaci%C3%B3n%20de%20mi%20PC." target="_blank" rel="noopener noreferrer" class="btn-pc-wa" style="font-size: 1rem; padding: 14px 28px;">
+                        <i class="bx bxl-whatsapp" style="font-size: 1.3rem;"></i> Enviar Síntomas por WhatsApp (+54 9 11 7829-5317)
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Grid Detallado de Servicios -->
+        <section class="section-container" id="servicios">
+            <div class="container">
+                <div class="section-header" style="text-align: center; max-width: 800px; margin: 0 auto 40px;">
+                    <span class="section-badge" style="background: rgba(99, 102, 241, 0.15); color: #818cf8; border: 1px solid rgba(99, 102, 241, 0.35);">
+                        <i class="bx bx-layer"></i> Catálogo Completo
+                    </span>
+                    <h2 class="section-title" style="font-size: 2.2rem; margin: 12px 0 8px;">
+                        Nuestras Especialidades en <span class="text-gradient">Hardware & Software</span>
+                    </h2>
+                </div>
+
+                <div class="pc-services-grid">
+                    <!-- Servicio 1 -->
+                    <div class="pc-card">
+                        <div>
+                            <div class="pc-card-header">
+                                <div class="pc-card-icon"><i class="bx bx-chip"></i></div>
+                                <div>
+                                    <span style="font-size: 0.72rem; color: #00f2fe; font-weight: 800; text-transform: uppercase;">01 · Electrónica & Hardware</span>
+                                    <h3 class="pc-card-title">Diagnóstico &amp; Reparación</h3>
+                                </div>
+                            </div>
+                            <p class="pc-card-desc">
+                                Detección precisa de fallas en motherboards, chips de video, pistas quemadas, fuentes y puertos USB/HDMI.
+                            </p>
+                            <ul class="pc-card-items">
+                                <li><i class="bx bx-check"></i> Instrumental de medición y diagnóstico digital</li>
+                                <li><i class="bx bx-check"></i> Reparación de fuentes ATX y placas madre</li>
+                                <li><i class="bx bx-check"></i> Cambio de teclado, bisagras y pantallas en notebooks</li>
+                            </ul>
+                        </div>
+                        <div class="pc-card-footer">
+                            <div class="pc-price-tag">
+                                Presupuesto
+                                <strong>Sin Cargo en Laboratorio</strong>
+                            </div>
+                            <a href="https://wa.me/5491178295317?text=Hola%20Omar,%20necesito%20diagnosticar%20mi%20computadora." target="_blank" class="btn-card-wa">
+                                <i class="bx bxl-whatsapp"></i> Consultar
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Servicio 2 -->
+                    <div class="pc-card highlight-card">
+                        <div>
+                            <div class="pc-card-header">
+                                <div class="pc-card-icon"><i class="bx bx-rocket"></i></div>
+                                <div>
+                                    <span style="font-size: 0.72rem; color: #818cf8; font-weight: 800; text-transform: uppercase;">02 · Velocidad Pura</span>
+                                    <h3 class="pc-card-title">Upgrade a Disco SSD NVMe</h3>
+                                </div>
+                            </div>
+                            <p class="pc-card-desc">
+                                El mejor salto de rendimiento que podés darle a tu máquina. Pasá de esperar 3 minutos a 8 segundos para arrancar.
+                            </p>
+                            <ul class="pc-card-items">
+                                <li><i class="bx bx-check"></i> Unidades Kingston, Western Digital y Crucial originales</li>
+                                <li><i class="bx bx-check"></i> Clonación espejo 100% fiel de tu disco anterior</li>
+                                <li><i class="bx bx-check"></i> Conservás todas tus fotos, programas y contraseñas</li>
+                            </ul>
+                        </div>
+                        <div class="pc-card-footer">
+                            <div class="pc-price-tag">
+                                Rendimiento
+                                <strong>Hasta 10x más rápido</strong>
+                            </div>
+                            <a href="https://wa.me/5491178295317?text=Hola%20Omar,%20quiero%20instalar%20un%20disco%20SSD%20en%20mi%20equipo." target="_blank" class="btn-card-wa">
+                                <i class="bx bxl-whatsapp"></i> Pedir Upgrade
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Servicio 3 -->
+                    <div class="pc-card">
+                        <div>
+                            <div class="pc-card-header">
+                                <div class="pc-card-icon"><i class="bx bx-wind"></i></div>
+                                <div>
+                                    <span style="font-size: 0.72rem; color: #34d399; font-weight: 800; text-transform: uppercase;">03 · Mantenimiento Preventivo</span>
+                                    <h3 class="pc-card-title">Limpieza &amp; Pasta Térmica</h3>
+                                </div>
+                            </div>
+                            <p class="pc-card-desc">
+                                Eliminación de polvo encapsulado y reemplazo de pasta térmica reseca por compuestos premium para evitar quemaduras de chip.
+                            </p>
+                            <ul class="pc-card-items">
+                                <li><i class="bx bx-check"></i> Pastas térmicas Arctic MX-4 / Thermal Grizzly</li>
+                                <li><i class="bx bx-check"></i> Lubricación y balanceo de coolers y ventiladores</li>
+                                <li><i class="bx bx-check"></i> Bajas comprobadas de 15°C a 25°C bajo carga</li>
+                            </ul>
+                        </div>
+                        <div class="pc-card-footer">
+                            <div class="pc-price-tag">
+                                Temperatura
+                                <strong>Silenciosa &amp; Fría</strong>
+                            </div>
+                            <a href="https://wa.me/5491178295317?text=Hola%20Omar,%20quiero%20hacerle%20limpieza%20y%20cambio%20de%20pasta%20a%20mi%20equipo." target="_blank" class="btn-card-wa">
+                                <i class="bx bxl-whatsapp"></i> Agendar
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Servicio 4 -->
+                    <div class="pc-card">
+                        <div>
+                            <div class="pc-card-header">
+                                <div class="pc-card-icon"><i class="bx bx-joystick"></i></div>
+                                <div>
+                                    <span style="font-size: 0.72rem; color: #a855f7; font-weight: 800; text-transform: uppercase;">04 · Armado a Medida</span>
+                                    <h3 class="pc-card-title">PC Gamer &amp; Workstations</h3>
+                                </div>
+                            </div>
+                            <p class="pc-card-desc">
+                                Configuración y armado de PCs equilibradas para gaming en 1080p, 1440p o 4K, streaming, renderizado y arquitectura.
+                            </p>
+                            <ul class="pc-card-items">
+                                <li><i class="bx bx-check"></i> Cero cuello de botella entre CPU y placa de video</li>
+                                <li><i class="bx bx-check"></i> Gestión estética y funcional de cables (Cable Management)</li>
+                                <li><i class="bx bx-check"></i> Pruebas de estrés y benchmarking de 24 horas</li>
+                            </ul>
+                        </div>
+                        <div class="pc-card-footer">
+                            <div class="pc-price-tag">
+                                Ensamble
+                                <strong>Asesoramiento Completo</strong>
+                            </div>
+                            <a href="https://wa.me/5491178295317?text=Hola%20Omar,%20quiero%20armar%20una%20PC%20Gamer/Workstation." target="_blank" class="btn-card-wa">
+                                <i class="bx bxl-whatsapp"></i> Cotizar
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Servicio 5 -->
+                    <div class="pc-card">
+                        <div>
+                            <div class="pc-card-header">
+                                <div class="pc-card-icon"><i class="bx bx-shield-quarter"></i></div>
+                                <div>
+                                    <span style="font-size: 0.72rem; color: #38bdf8; font-weight: 800; text-transform: uppercase;">05 · Software &amp; Datos</span>
+                                    <h3 class="pc-card-title">Windows 10/11 &amp; Limpieza</h3>
+                                </div>
+                            </div>
+                            <p class="pc-card-desc">
+                                Instalación de Windows original sin bloatware ni telemetría pesada. Eliminación de virus, troyanos y spyware.
+                            </p>
+                            <ul class="pc-card-items">
+                                <li><i class="bx bx-check"></i> Drivers oficiales del fabricante actualizados</li>
+                                <li><i class="bx bx-check"></i> Respaldo total de tus archivos personales</li>
+                                <li><i class="bx bx-check"></i> Suite de oficina (Office/LibreOffice) y utilitarios</li>
+                            </ul>
+                        </div>
+                        <div class="pc-card-footer">
+                            <div class="pc-price-tag">
+                                Seguridad
+                                <strong>100% Libre de Virus</strong>
+                            </div>
+                            <a href="https://wa.me/5491178295317?text=Hola%20Omar,%20necesito%20instalar%20Windows%20y%20limpiar%20virus." target="_blank" class="btn-card-wa">
+                                <i class="bx bxl-whatsapp"></i> Solicitar
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Servicio 6 -->
+                    <div class="pc-card">
+                        <div>
+                            <div class="pc-card-header">
+                                <div class="pc-card-icon"><i class="bx bx-support"></i></div>
+                                <div>
+                                    <span style="font-size: 0.72rem; color: #f59e0b; font-weight: 800; text-transform: uppercase;">06 · A Distancia o Domicilio</span>
+                                    <h3 class="pc-card-title">Soporte Remoto &amp; Retiro</h3>
+                                </div>
+                            </div>
+                            <p class="pc-card-desc">
+                                Te ayudamos a resolver problemas de configuración, correo, red e impresoras en el acto por conexión remota segura.
+                            </p>
+                            <ul class="pc-card-items">
+                                <li><i class="bx bx-check"></i> Asistencia en minutos mediante AnyDesk</li>
+                                <li><i class="bx bx-check"></i> Retiro y entrega a coordinar en tu zona</li>
+                                <li><i class="bx bx-check"></i> Asesoramiento paso a paso por videollamada o WhatsApp</li>
+                            </ul>
+                        </div>
+                        <div class="pc-card-footer">
+                            <div class="pc-price-tag">
+                                Respuesta
+                                <strong>Inmediata</strong>
+                            </div>
+                            <a href="https://wa.me/5491178295317?text=Hola%20Omar,%20necesito%20soporte%20remoto%20para%20mi%20PC." target="_blank" class="btn-card-wa">
+                                <i class="bx bxl-whatsapp"></i> Conectar
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Cómo Trabajamos (3 Pasos Simples) -->
+        <section class="section-container" style="padding-top: 0;">
+            <div class="container">
+                <div class="section-header" style="text-align: center; max-width: 800px; margin: 0 auto 40px;">
+                    <span class="section-badge" style="background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.35);">
+                        <i class="bx bx-check-circle"></i> Transparencia Total
+                    </span>
+                    <h2 class="section-title" style="font-size: 2.2rem; margin: 12px 0 8px;">
+                        ¿Cómo es el <span class="text-gradient">proceso de trabajo?</span>
+                    </h2>
+                </div>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px;">
+                    <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 20px; padding: 28px;">
+                        <div class="step-num">1</div>
+                        <h4 style="color: #fff; font-size: 1.2rem; font-weight: 800; margin-bottom: 8px;">Contacto &amp; Consulta</h4>
+                        <p style="color: #94a3b8; font-size: 0.9rem; line-height: 1.6;">
+                            Nos escribís por WhatsApp al <strong>+54 9 11 7829-5317</strong> o por Instagram <strong>@aura_adamo_omar</strong> contándonos qué le pasa a tu máquina. Te orientamos en el acto.
+                        </p>
+                    </div>
+
+                    <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 20px; padding: 28px;">
+                        <div class="step-num">2</div>
+                        <h4 style="color: #fff; font-size: 1.2rem; font-weight: 800; margin-bottom: 8px;">Diagnóstico &amp; Presupuesto</h4>
+                        <p style="color: #94a3b8; font-size: 0.9rem; line-height: 1.6;">
+                            Revisamos el equipo en laboratorio o por conexión remota. Te damos un presupuesto exacto antes de tocar nada: sin sorpresas ni sobrecostos.
+                        </p>
+                    </div>
+
+                    <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 20px; padding: 28px;">
+                        <div class="step-num">3</div>
+                        <h4 style="color: #fff; font-size: 1.2rem; font-weight: 800; margin-bottom: 8px;">Reparación &amp; Entrega</h4>
+                        <p style="color: #94a3b8; font-size: 0.9rem; line-height: 1.6;">
+                            Trabajamos con repuestos probados y te entregamos la máquina testeada bajo carga, rápida, limpia y con garantía por escrito de <strong>Aura</strong>.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Push Bar Global de Contacto -->
+        <section class="section-container" id="contacto" style="padding-top: 0;">
+            <div class="container">
+                <div class="pc-push-bar">
+                    <div class="pc-push-info">
+                        <h4>Hablá directamente con Omar Horacio Adamo</h4>
+                        <p>Atención directa, sin intermediarios ni bots automáticos. Escribinos ahora mismo y solucionemos el problema de tu computadora.</p>
+                    </div>
+                    <div class="pc-push-links">
+                        <a href="https://wa.me/5491178295317?text=Hola%20Omar,%20te%20contacto%20desde%20aura-adamo.site/reparacion-pc.html%20para%20coordinar%20un%20servicio%20técnico." target="_blank" rel="noopener noreferrer" class="btn-pc-wa">
+                            <i class="bx bxl-whatsapp" style="font-size: 1.3rem;"></i> WhatsApp Directo
+                        </a>
+                        <a href="tel:+5491178295317" class="btn-pc-tel">
+                            <i class="bx bx-phone-call"></i> 11 7829-5317
+                        </a>
+                        <a href="https://www.instagram.com/aura_adamo_omar/" target="_blank" rel="noopener noreferrer" class="btn-pc-ig">
+                            <i class="bx bxl-instagram"></i> @aura_adamo_omar
+                        </a>
+                        <a href="mailto:adamoomar110@gmail.com?subject=Consulta%20Reparacion%20de%20PC%20-%20Aura" class="btn-pc-mail">
+                            <i class="bx bx-envelope"></i> adamoomar110@gmail.com
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer Oficial Aura -->
+    <footer class="footer">
+        <div class="container footer-content">
+            <div class="footer-brand">
+                <a href="https://aura-adamo.site/" class="logo" style="text-decoration: none;">
+                    <span class="logo-aura">Aura</span><span class="logo-adamo">Adamo</span>
+                </a>
+                <p class="footer-tagline">Transformando ideas en ecosistemas digitales, hardware de vanguardia y soporte técnico informático.</p>
+            </div>
+
+            <div class="footer-links">
+                <a href="https://aura-adamo.site/">Inicio</a>
+                <a href="https://aura-adamo.site/reparacion-pc.html" style="color: #00f2fe; font-weight: 700;">Reparación PC</a>
+                <a href="https://aura-adamo.site/garage/" style="color: #eab308; font-weight: 700;">Aura Garage</a>
+                <a href="libros.html" style="color: #34d399; font-weight: 700;">Tienda Libros</a>
+                <a href="https://www.instagram.com/aura_adamo_omar/" target="_blank" rel="noopener noreferrer" class="footer-social-pill" title="Seguinos en Instagram @aura_adamo_omar"><i class="bx bxl-instagram"></i> @aura_adamo_omar</a>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div class="container footer-bottom-flex">
+                <p class="copyright">
+                    &copy; 2026 Aura. Todos los derechos reservados. Startup Aura por Omar Horacio Adamo.
+                </p>
+                <div class="visit-badge">
+                    <span class="badge-dot"></span>
+                    <span>Soporte Oficial:</span>
+                    <strong style="color: #00f2fe;">Buenos Aires · Argentina</strong>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating WhatsApp Action -->
+    <div class="floating-action-bar">
+        <a href="https://wa.me/5491178295317?text=Hola%20Omar,%20te%20contacto%20desde%20aura-adamo.site%20para%20consultar%20por%20reparación%20de%20PC." target="_blank" rel="noopener noreferrer" class="floating-btn btn-floating-wa" title="Escribinos por WhatsApp (+54 9 11 7829-5317)">
+            <i class="bx bxl-whatsapp"></i>
+            <span class="floating-tooltip">WhatsApp (+54 9 11 7829-5317)</span>
+        </a>
+        <a href="https://www.instagram.com/aura_adamo_omar/" target="_blank" rel="noopener noreferrer" class="floating-btn btn-floating-ig" title="Seguinos en Instagram @aura_adamo_omar">
+            <i class="bx bxl-instagram"></i>
+            <span class="floating-tooltip">@aura_adamo_omar</span>
+        </a>
+    </div>
+
+    <!-- Script para interactividad del cotizador -->
+    <script>
+        const selectedSymptoms = new Set();
+
+        function toggleSymptom(element, text) {
+            element.classList.toggle('selected');
+            const icon = element.querySelector('.bx-check');
+            
+            if (element.classList.contains('selected')) {
+                selectedSymptoms.add(text);
+                if (icon) icon.style.display = 'block';
+            } else {
+                selectedSymptoms.delete(text);
+                if (icon) icon.style.display = 'none';
+            }
+
+            updateSummary();
+        }
+
+        function updateSummary() {
+            const summaryText = document.getElementById('symptom-summary-text');
+            const btnWa = document.getElementById('btn-wa-symptoms');
+
+            if (selectedSymptoms.size === 0) {
+                summaryText.textContent = 'Haz clic en los síntomas arriba para preparar tu mensaje de WhatsApp personalizado.';
+                btnWa.href = 'https://wa.me/5491178295317?text=Hola%20Omar,%20te%20contacto%20desde%20aura-adamo.site%20para%20consultar%20por%20la%20reparaci%C3%B3n%20de%20mi%20PC.';
+            } else {
+                const count = selectedSymptoms.size;
+                summaryText.innerHTML = `<strong style="color: #00f2fe;">${count} síntoma(s) seleccionado(s):</strong> ` + Array.from(selectedSymptoms).join(' • ');
+                
+                const message = encodeURIComponent(
+                    `Hola Omar, te contacto desde aura-adamo.site para consultar por la reparación de mi computadora. Los síntomas que presenta son:\n\n- ` +
+                    Array.from(selectedSymptoms).join('\n- ') +
+                    `\n\n¿Podrías darme un presupuesto estimado? Muchas gracias!`
+                );
+                btnWa.href = `https://wa.me/5491178295317?text=${message}`;
+            }
+        }
+    </script>
+</body>
+</html>

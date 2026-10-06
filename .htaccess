@@ -56,6 +56,27 @@ Options -Indexes -MultiViews
     RewriteEngine On
     RewriteCond %{HTTP_USER_AGENT} (nikto|sqlmap|acunetix|nessus|nmap|masscan|zgrab|jorgee|morfeus|dirbuster|harvest|miner) [NC]
     RewriteRule .* - [F,L]
+
+    # ============================================================
+    # REDIRECCIONES INTELIGENTES - AURA GARAGE & RUTAS DIRECTAS
+    # Evita errores 404 al acceder a /login, /admin, /chofer, etc.
+    # ============================================================
+    RewriteRule ^aura-adamo/garage/(.*)$ /garage/$1 [R=301,L]
+    RewriteRule ^aura-adamo/garage/?$ /garage/ [R=301,L]
+    RewriteRule ^login/?$ /garage/login/ [R=301,L]
+    RewriteRule ^admin/?$ /garage/admin/flota/ [R=301,L]
+    RewriteRule ^admin/(.*)$ /garage/admin/$1 [R=301,L]
+    RewriteRule ^chofer/?$ /garage/chofer/ [R=301,L]
+    RewriteRule ^chofer/(.*)$ /garage/chofer/$1 [R=301,L]
+    RewriteRule ^taller/?$ /garage/taller/ [R=301,L]
+    RewriteRule ^taller/(.*)$ /garage/taller/$1 [R=301,L]
+    RewriteRule ^lubricentro/?$ /garage/lubricentro/ [R=301,L]
+    RewriteRule ^lubricentro/(.*)$ /garage/lubricentro/$1 [R=301,L]
+    RewriteRule ^lavadero/?$ /garage/lavadero/ [R=301,L]
+    RewriteRule ^lavadero/(.*)$ /garage/lavadero/$1 [R=301,L]
+    RewriteRule ^postular/?$ /garage/postular/ [R=301,L]
+    RewriteRule ^postular/(.*)$ /garage/postular/$1 [R=301,L]
+    RewriteRule ^reparacion-pc/?$ /reparacion-pc.html [L]
 </IfModule>
 
 # ============================================================

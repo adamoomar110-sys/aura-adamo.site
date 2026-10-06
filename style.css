@@ -3813,20 +3813,54 @@ html {
 }
 
 .bestseller-card {
-    background: rgba(0, 0, 0, 0.35);
+    background: rgba(13, 17, 28, 0.7);
     border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 14px;
+    border-radius: 16px;
     padding: 18px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    transition: var(--transition);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(10px);
 }
 
 .bestseller-card:hover {
-    border-color: rgba(0, 242, 254, 0.3);
-    transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    border-color: rgba(99, 102, 241, 0.45);
+    transform: translateY(-4px);
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.6), 0 0 25px rgba(99, 102, 241, 0.2);
+}
+
+.bestseller-thumb {
+    width: 100%;
+    aspect-ratio: 2/3;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 16px;
+    background: #000;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    position: relative;
+}
+
+.bestseller-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+}
+
+.bestseller-card:hover .bestseller-thumb img {
+    transform: scale(1.05);
+}
+
+.bestseller-info {
+    margin-bottom: 16px;
+}
+
+.bestseller-footer {
+    margin-top: auto;
 }
 
 .bestseller-badge-negocios {
