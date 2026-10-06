@@ -1,6 +1,6 @@
 <?php
 /**
- * RolPlay.ai - Motor de Simulación Autónomo v2.0
+ * RolPlay.ai - Motor de Simulación y Evaluación Pedagógica v3.0 Ultimate Cognitive Engine
  * Desarrollado para la suite Aura
  * Copyright (c) 2026 Aura. Todos los derechos reservados.
  */
@@ -15,22 +15,71 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit;
 }
 
-// Configuración opcional de clave de Groq (Gratis en console.groq.com)
-// Si está vacía o no responde, el motor pedagógico contextual autónomo toma el control de forma transparente.
-$GROQ_API_KEY = getenv('GROQ_API_KEY') ?: '';
-
 $rawInput = file_get_contents('php://input');
 $data = json_decode($rawInput, true);
 
-if (!$data || !isset($data['messages']) || empty($data['messages'])) {
+if (!$data) {
     echo json_encode([
         'status' => 'error',
-        'response' => 'No se recibieron mensajes para procesar.'
+        'response' => 'Solicitud inválida o cuerpo JSON vacío.'
     ], JSON_UNESCAPED_UNICODE);
     exit;
 }
 
-$messages = $data['messages'];
+$action = $data['action'] ?? 'chat';
+$clientApiKey = !empty($data['apiKey']) ? trim($data['apiKey']) : '';
+$envApiKey = getenv('GROQ_API_KEY') ?: '';
+$GROQ_API_KEY = !empty($clientApiKey) ? $clientApiKey : $envApiKey;
+
+// =========================================================================
+// 1. ENDPOINT DE EVALUACIÓN OFICIAL DE RECURSOS HUMANOS (RRHH)
+// =========================================================================
+if ($action === 'evaluate') {
+    $messages = $data['messages'] ?? [];
+    $area = $data['area'] ?? 'Recursos Humanos';
+    $scenario = $data['scenario'] ?? 'Evaluación General';
+    $userName = !empty($data['userName']) ? trim($data['userName']) : 'Colaborador';
+    $userCompany = !empty($data['userCompany']) ? trim($data['userCompany']) : 'Aura Talent';
+    $evalType = $data['evalType'] ?? 'general';
+    $targetRole = $data['targetRole'] ?? '';
+    $currentRole = $data['currentRole'] ?? '';
+
+    // Si Groq está configurado, intentar una evaluación asistida por IA
+    if (!empty($GROQ_API_KEY) && str_starts_with($GROQ_API_KEY, 'gsk_')) {
+        $aiEval = evaluateWithGroq($GROQ_API_KEY, $messages, $area, $scenario, $userName, $userCompany, $evalType, $targetRole);
+        if ($aiEval) {
+            echo json_encode([
+                'status' => 'success',
+                'engine' => 'groq-llama3.3-70b',
+                'evaluation' => $aiEval
+            ], JSON_UNESCAPED_UNICODE);
+            exit;
+        }
+    }
+
+    // Motor Autónomo de Evaluación Heurística & Pedagógica de Aura v3.0
+    $evaluation = evaluateAutonomousHR($messages, $area, $scenario, $userName, $userCompany, $evalType, $targetRole, $currentRole);
+
+    echo json_encode([
+        'status' => 'success',
+        'engine' => 'aura-cognitive-hr-v3.0',
+        'evaluation' => $evaluation
+    ], JSON_UNESCAPED_UNICODE);
+    exit;
+}
+
+// =========================================================================
+// 2. ENDPOINT DE DIÁLOGO INTERACTIVO (SIMULACIÓN DE ROL)
+// =========================================================================
+$messages = $data['messages'] ?? [];
+if (empty($messages)) {
+    echo json_encode([
+        'status' => 'error',
+        'response' => 'No se recibieron mensajes para procesar el diálogo.'
+    ], JSON_UNESCAPED_UNICODE);
+    exit;
+}
+
 $area = $data['area'] ?? 'Atención al Cliente';
 $scenario = $data['scenario'] ?? 'Simulación General';
 $difficulty = $data['difficulty'] ?? 'realista';
@@ -46,70 +95,502 @@ for ($i = count($messages) - 1; $i >= 0; $i--) {
     }
 }
 
-// 1. INTENTO CON GROQ SI LA CLAVE ESTÁ CONFIGURADA
+// 2.1 Intento con Groq si está configurado
 if (!empty($GROQ_API_KEY) && str_starts_with($GROQ_API_KEY, 'gsk_')) {
-    $groqResponse = callGroqApi($GROQ_API_KEY, $messages, $area, $scenario, $userName, $userCompany, $difficulty);
-    if ($groqResponse) {
+    $groqResult = callGroqApi($GROQ_API_KEY, $messages, $area, $scenario, $userName, $userCompany, $difficulty);
+    if ($groqResult) {
         echo json_encode([
             'status' => 'success',
-            'engine' => 'groq-cloud',
-            'response' => $groqResponse
+            'engine' => 'groq-llama3.3-70b',
+            'response' => $groqResult['response'],
+            'emotion' => $groqResult['emotion'] ?? 'En Conversación',
+            'tension' => $groqResult['tension'] ?? 50,
+            'tip' => $groqResult['tip'] ?? 'Continúa validando y estructurando soluciones concretas.'
         ], JSON_UNESCAPED_UNICODE);
         exit;
     }
 }
 
-// 2. MOTOR DE IA CONTEXTUAL AUTÓNOMO (100% GRATUITO Y AUTOCONFIGURADO)
-$response = generateContextualRoleplayResponse($lastUserMessage, $messages, $area, $scenario, $userName, $difficulty);
+// 2.2 Motor Cognitivo Autónomo Aura v3.0 (Tensión dinámica, citas en contexto y feedback pedagógico)
+$result = generateAuraCognitiveResponse($lastUserMessage, $messages, $area, $scenario, $userName, $difficulty);
 
 echo json_encode([
     'status' => 'success',
-    'engine' => 'aura-pedagogical-v2',
-    'response' => $response
+    'engine' => 'aura-cognitive-v3.0',
+    'response' => $result['response'],
+    'emotion' => $result['emotion'],
+    'tension' => $result['tension'],
+    'tip' => $result['tip'],
+    'skills_detected' => $result['skills']
 ], JSON_UNESCAPED_UNICODE);
 exit;
 
-/**
- * Llamada a la API de Groq (Llama 3.3 70B / 8B gratuito)
- */
-function callGroqApi($apiKey, $messages, $area, $scenario, $userName, $userCompany, $difficulty) {
-    $toneGuide = match ($difficulty) {
-        'exigente' => 'Estás muy exigente, a la defensiva, escéptico y desafiante. No cedes fácilmente y pides garantías concretas.',
-        'colaborativo' => 'Estás dispuesto a cooperar si te explican las cosas de forma clara, amable y profesional.',
-        default => 'Reacciona de manera realista y equilibrada, valorando la empatía y la claridad técnica.'
+// =========================================================================
+// 3. MOTOR COGNITIVO AURA V3.0 (AUTÓNOMO, MULTIDIMENSIONAL & ADAPTATIVO)
+// =========================================================================
+
+function generateAuraCognitiveResponse($userText, $history, $area, $scenario, $userName, $difficulty) {
+    $textLower = mb_strtolower($userText, 'UTF-8');
+    
+    // Contar cuántos turnos van
+    $userTurn = 0;
+    foreach ($history as $m) {
+        if ($m['role'] === 'user') $userTurn++;
+    }
+    if ($userTurn === 0) $userTurn = 1;
+
+    // Extracción de Habilidades del Usuario en este turno
+    $skills = [];
+    $hasEmpathy = preg_match('/(entiend|comprend|lament|disculp|perd[oó]n|veo tu molestia|tienes raz[oó]n|te escucho|s[eé] lo frustrante|tranquil|siento mucho)/u', $textLower);
+    if ($hasEmpathy) $skills[] = 'Empatía & Validación Emocional';
+
+    $hasSolution = preg_match('/(vamos a|te propongo|podemos|soluci[oó]n|reemplazo|devoluci[oó]n|bonificaci[oó]n|flete|despacho|revisar|cambio|proceso|procedimiento|plan|alternativa|acuerdo)/u', $textLower);
+    if ($hasSolution) $skills[] = 'Propuesta de Solución Concreta';
+
+    $hasTime = preg_match('/(minuto|hora|hoy|inmediat|ahora|antes de|mañana|a primera hora|plazo|fecha|tiempo)/u', $textLower);
+    if ($hasTime) $skills[] = 'Compromiso Temporal Preciso';
+
+    $hasQuestion = (str_contains($userText, '?') || str_contains($userText, '¿') || preg_match('/(c[oó]mo|cu[aá]ndo|cu[aá]l|qu[eé] te parece|te sirve|decime|cu[eé]ntame)/u', $textLower));
+    if ($hasQuestion) $skills[] = 'Pregunta Calibrada / Indagación';
+
+    $hasLeadership = preg_match('/(asumo|responsabilidad|equipo|coordinar|prioridad|est[aá]ndar|juntos|capacitaci[oó]n|delegar|confianza)/u', $textLower);
+    if ($hasLeadership) $skills[] = 'Liderazgo & Accountability';
+
+    $hasDefensive = preg_match('/(no es mi culpa|yo no fui|el sistema fall[oó]|es culpa de|usted no me dijo|no me corresponde|no tengo nada que ver|no es problema m[ií]o)/u', $textLower);
+    if ($hasDefensive) $skills[] = 'Alerta: Justificación / Tono Defensivo';
+
+    $isVeryShort = (mb_strlen(trim($userText)) < 22);
+    if ($isVeryShort) $skills[] = 'Respuesta Excesivamente Breve';
+
+    // Cálculo de Tensión Dinámica
+    $baseTension = match (true) {
+        str_contains($scenario, 'Furioso') || str_contains($scenario, 'Entrega Crítica') || str_contains($scenario, 'Error Operativo') => 95,
+        str_contains($scenario, 'Producto Defectuoso') || str_contains($scenario, 'Feedback Correctivo') || str_contains($scenario, 'Negociación Agresiva') => 88,
+        str_contains($scenario, 'Roce Interpersonal') || str_contains($scenario, 'De Par a Encargado') || str_contains($scenario, 'Cliente Escéptico') => 78,
+        str_contains($scenario, 'Retraso Menor') || str_contains($scenario, 'Delegación Táctica') || str_contains($scenario, 'Coaching') => 65,
+        default => 70
     };
 
-    $systemPrompt = "Eres un personaje en un simulador de rol interactivo de habilidades blandas llamado RolPlay.ai de la plataforma Aura. "
-        . "Área: {$area}. Escenario: {$scenario}. Tu interlocutor se llama {$userName} de la empresa {$userCompany}. "
-        . "Tono y actitud requerida: {$toneGuide} "
-        . "Instrucciones críticas: Responde en español, en un único párrafo conciso y directo (máximo 70 palabras). "
-        . "Mantén estrictamente el personaje y tu rol. Reacciona coherentemente a lo que {$userName} acaba de decir.";
+    if ($difficulty === 'exigente') $baseTension = min(100, $baseTension + 10);
+    if ($difficulty === 'colaborativo') $baseTension = max(30, $baseTension - 15);
 
-    $formattedMessages = [
-        ['role' => 'system', 'content' => $systemPrompt]
+    // Ajuste acumulado por turno y desempeño
+    $delta = 0;
+    $delta -= ($hasEmpathy ? 18 : 0);
+    $delta -= ($hasSolution ? 24 : 0);
+    $delta -= ($hasTime ? 12 : 0);
+    $delta -= ($hasQuestion ? 8 : 0);
+    $delta += ($hasDefensive ? 28 : 0);
+    $delta += ($isVeryShort ? 16 : 0);
+
+    // Con el paso de los turnos, si el usuario construye soluciones, la tensión decae
+    $turnBonus = ($userTurn - 1) * 10;
+    if (!$hasDefensive && ($hasSolution || $hasEmpathy)) {
+        $currentTension = max(12, min(100, $baseTension + $delta - $turnBonus));
+    } else {
+        $currentTension = max(25, min(100, $baseTension + $delta));
+    }
+
+    // Etiqueta de Emoción y Color
+    $emotion = match (true) {
+        $currentTension >= 85 => '🚨 Furia / Tensión Máxima (' . $currentTension . '%)',
+        $currentTension >= 65 => '⚠️ Escéptico / Desafiante (' . $currentTension . '%)',
+        $currentTension >= 45 => '🟡 Evaluando Propuesta (' . $currentTension . '%)',
+        $currentTension >= 25 => '🟢 Desescalando / Receptivo (' . $currentTension . '%)',
+        default => '✨ Satisfecho / Acuerdo Alcanzado (' . $currentTension . '%)'
+    };
+
+    // Tip Pedagógico en Tiempo Real
+    $tip = match (true) {
+        $hasDefensive => '⚠️ Cuidado: Justificarte o culpar al sistema escala la molestia. Aplica Extreme Ownership: asume el control del resultado.',
+        $isVeryShort => '💡 Consejo: Las respuestas telegráficas transmiten apatía. Agrega una frase de empatía y propone el siguiente paso.',
+        !$hasEmpathy && $userTurn <= 2 => '💡 Consejo: Antes de ir directo al trámite, valida verbalmente la frustración del interlocutor (Método H.E.A.T.).',
+        $hasEmpathy && !$hasSolution => '💡 Muy buena empatía: Ahora acompáñala con una acción resolutiva clara para no quedarte solo en palabras.',
+        $hasSolution && !$hasTime => '💡 Excelente propuesta: Añade un compromiso de tiempo preciso (ej: "en 20 minutos" o "antes de las 18 hs") para dar certeza.',
+        $currentTension <= 30 => '🎯 ¡Gran desescalada! El interlocutor está receptivo. Resume el acuerdo final y agradece cordialmente.',
+        default => 'Continúa combinando escucha atenta, tono pausado y alternativas viables.'
+    };
+
+    // Generación del Diálogo Específico por Escenario y Turno
+    $reply = generateScenarioDialogue($scenario, $userText, $textLower, $userTurn, $currentTension, $hasEmpathy, $hasSolution, $hasTime, $hasQuestion, $hasLeadership, $hasDefensive, $isVeryShort, $userName);
+
+    return [
+        'response' => $reply,
+        'emotion' => $emotion,
+        'tension' => $currentTension,
+        'tip' => $tip,
+        'skills' => $skills
     ];
+}
+
+function generateScenarioDialogue($sc, $raw, $txt, $turn, $tension, $emp, $sol, $time, $q, $lead, $def, $short, $name) {
+    // -------------------------------------------------------------
+    // 1. LAURA (Feedback Correctivo por Quejas Repetitivas)
+    // -------------------------------------------------------------
+    if (str_contains($sc, 'Feedback Correctivo')) {
+        if ($def) {
+            return "Mira {$name}, quejarte del sistema o de tus compañeros es exactamente la actitud que no podemos permitir. Cuando un cliente clave se queja dos veces en una semana, no hay excusa técnica que valga. Lo que estoy evaluando acá es si vas a tomar responsabilidad sobre tu turno o si tenemos que escalar esto a una sanción formal.";
+        }
+        if ($turn === 1) {
+            if ($emp && $sol) {
+                return "Valoro que no te pongas a la defensiva y admitas el impacto, {$name}. Me dices que vas a revisar el proceso, pero el cliente se sintió maltratado en el mostrador. ¿Cómo vas a asegurar que tu equipo mantenga la calma cuando la fila llega a la calle?";
+            }
+            return "Te escucho, {$name}. Pero el informe de la mañana detalla respuestas cortantes y desidia. Antes de que cerremos el acta, quiero saber: ¿qué provocó que perdieras la paciencia con esa cuenta?";
+        }
+        if ($turn === 2) {
+            if ($sol && $time) {
+                return "Me parece un plan concreto y con plazos claros. Me deja más tranquila ver que planteas ese seguimiento diario. Si me garantizas que de acá al viernes no hay un solo roce más, respaldaré tu gestión ante la gerencia.";
+            }
+            return "Eso suena razonable en la teoría, {$name}. Pero necesito medidas prácticas: ¿vas a supervisar personalmente el despacho de esa cuenta o vas a asignar a alguien de tu confianza?";
+        }
+        // Turno 3+
+        return "Quedamos en ese compromiso formal, {$name}. Voy a monitorear las métricas de atención de tu área durante los próximos 15 días. Confío en tu capacidad para revertir esta imagen y demostrar tu madurez profesional.";
+    }
+
+    // -------------------------------------------------------------
+    // 2. DAMIÁN / ROCE ENTRE PARES
+    // -------------------------------------------------------------
+    if (str_contains($sc, 'Roce Interpersonal') || str_contains($sc, 'Mediación')) {
+        if ($def) {
+            return "¡Siempre la misma historia, {$name}! Te escudás en que hiciste tu parte, pero cuando revienta el mediodía el que se queda transpirando en el depósito mientras vos te quedás en la máquina soy yo. ¡Así no se puede hacer equipo!";
+        }
+        if ($turn === 1) {
+            if ($emp) {
+                return "Bueno... la verdad me sorprende que me lo digas con esa tranquilidad, {$name}. El otro día me fui con una bronca bárbara porque sentí que me tiraste todo el fardo. Si querés que laburemos bien, tenemos que repartir las tareas más pesadas desde las 10 de la mañana.";
+            }
+            return "Decime concretamente qué querés que cambie, {$name}, porque yo vengo poniendo el pecho todos los días y siento que hagas lo que hagas nunca te alcanza.";
+        }
+        if ($turn === 2) {
+            if ($sol) {
+                return "Trato hecho. Si nos turnamos como decís y vos te encargás de la reposición los días pares, me parece más que justo. Te pido disculpas si levanté la voz el martes, la verdad estaba quemado.";
+            }
+            return "Está bien, pero que no quede solo en una charla de pasillo. ¿Cómo nos organizamos mañana para no volver a tropezar con lo mismo?";
+        }
+        return "Impecable, {$name}. Me quedo mucho más tranquilo sabiendo que podemos hablar las cosas de frente y sin mala leche. Cuenta conmigo para sacar el turno adelante.";
+    }
+
+    // -------------------------------------------------------------
+    // 3. CARLOS (Cliente B2B Furioso por Entrega Fallida)
+    // -------------------------------------------------------------
+    if (str_contains($sc, 'Furioso por Entrega') || str_contains($sc, 'Entrega Crítica')) {
+        if ($def) {
+            return "¡¿A mí qué demonios me importa si el camión se rompió o si el chofer no llegó?! ¡Ustedes firmaron un contrato de suministro con penalidades diarias! Si a las 15 hs no tengo los pallets en mi fábrica, doy orden a legales de rescindir el contrato y demandarlos por daños y perjuicios.";
+        }
+        if ($turn === 1) {
+            if ($emp && $sol) {
+                return "Las disculpas no pagan los sueldos de mi planta que está parada, {$name}. Me hablas de un flete de contingencia, pero necesito precisión quirúrgica: ¿a qué hora exacta tocan la puerta de mi depósito esos insumos?";
+            }
+            return "¡No me vengan con formalismos! Tengo a 40 operarios cruzados de brazos esperando los insumos que ustedes prometieron para ayer a la mañana. ¿Quién se hace cargo de las horas extras que tengo que pagar hoy?";
+        }
+        if ($turn === 2) {
+            if ($sol && $time) {
+                return "Bien. Si ese flete especial llega antes de las 14:30 con remito sellado y absorben el costo del flete express, podemos salvar el turno de la tarde. Mándame la patente del transporte y el celular del chofer ya mismo.";
+            }
+            return "Necesito garantías por escrito, {$name}. No me voy a quedar esperando una promesa telefónica. Si no me mandas la confirmación por correo oficial en 10 minutos, paro la línea definitivamente.";
+        }
+        return "Agradezco la seriedad para capear el temporal, {$name}. El flete ya ingresó a la planta. Demostraste que en los momentos críticos das la cara con soluciones reales. Mantengamos la línea abierta.";
+    }
+
+    // -------------------------------------------------------------
+    // 4. GONZALO (De Par a Encargado)
+    // -------------------------------------------------------------
+    if (str_contains($sc, 'De Par a Encargado') || str_contains($sc, 'Primera Conversación')) {
+        if ($def || $short) {
+            return "Pará un poco, {$name}. No te subas al caballo tan rápido. Hasta el viernes pasado nos quejábamos juntos de los turnos rotativos. No me vengas con tono de jefe militar porque vas a perder al equipo el primer día.";
+        }
+        if ($turn === 1) {
+            if ($emp && $lead) {
+                return "Mirá, te soy sincero {$name}: me chocó cuando avisaron que quedabas vos en el puesto, porque yo también me postulé y sentí que no me tuvieron en cuenta. Pero valoro que vengas a hablarme mano a mano y reconozcas mi experiencia en el sector. Decime qué esperás de mí en esta etapa.";
+            }
+            return "Hola {$name}... sí, todavía me tengo que acostumbrar a que ahora firmes vos las planillas. Espero que sigamos teniendo la misma confianza de siempre y no cambie el trato.";
+        }
+        if ($turn === 2) {
+            if ($lead && $sol) {
+                return "Me gusta la propuesta. Si me das autonomía para coordinar el sector de despacho y me tenés en cuenta para las decisiones operativas, tenés mi apoyo incondicional. El equipo te va a responder bien.";
+            }
+            return "Lo importante es que no te aisles en la oficina, {$name}. Cuando explota el salón necesitamos que estés cerca como siempre.";
+        }
+        return "Cuenta conmigo al 100%, {$name}. Vamos a demostrarle a la gerencia que este turno es el más eficiente de la empresa. ¡Muchos éxitos en la nueva función!";
+    }
+
+    // -------------------------------------------------------------
+    // 5. LUCAS (Delegación en Hora Pico)
+    // -------------------------------------------------------------
+    if (str_contains($sc, 'Delegación Táctica') || str_contains($sc, 'Gestión de Prioridades')) {
+        if ($turn === 1) {
+            if ($sol) {
+                return "¡Qué alivio, {$name}! El orden de prioridades me salvó la vida: me concentro en sacar las 4 comandas calientes y después apoyo en la reposición. ¿A quién le paso el teléfono mientras tanto?";
+            }
+            return "¡Jefe, de verdad no doy abasto! Tengo 6 pedidos pendientes en pantalla, el timbre de recepción sonando y el proveedor de lácteos en la puerta. ¿A qué le doy prioridad absoluta ya?";
+        }
+        return "¡Entendido al 100%! Asumo la estación caliente y en 20 minutos te doy el reporte del turno. Gracias por la claridad para bajar el pánico.";
+    }
+
+    // -------------------------------------------------------------
+    // 6. MARTA (Retraso Menor / Abuela preocupada)
+    // -------------------------------------------------------------
+    if (str_contains($sc, 'Retraso Menor') || str_contains($sc, 'Marta')) {
+        if ($short) {
+            return "Disculpe que insista, pero no comprendí bien... ¿tengo que esperar sentada junto a la puerta hoy o puede ser que llegue mañana? Es que me da miedo no escuchar el timbre.";
+        }
+        if ($turn === 1) {
+            if ($emp) {
+                return "¡Ay, qué amabilidad la suya, {$name}! Da gusto que lo atiendan con tanta paciencia a uno que ya está grande. Si usted me dice que el paquete no está perdido y que viene en camino, me quedo mucho más tranquila.";
+            }
+            return "Muchas gracias por atenderme, mi vida. Solo quiero saber si ese código raro significa que el regalo para mi nieta va a llegar antes del fin de semana.";
+        }
+        return "¡Muchísimas gracias por su calidez, {$name}! Ya me anoté su nombre y el número que me dio. Ojalá en todos lados atendieran con el cariño y el respeto que me brindó usted.";
+    }
+
+    // -------------------------------------------------------------
+    // 7. JORGE (Producto Defectuoso / Cafetera Rota)
+    // -------------------------------------------------------------
+    if (str_contains($sc, 'Producto Defectuoso') || str_contains($sc, 'Jorge')) {
+        if ($def) {
+            return "¡No me digan que tengo que hacer el reclamo en el correo! Yo le pagué a ustedes, no al transporte. Es el cumpleaños de mi esposa hoy y el regalo llegó hecho pedazos. No acepto evasivas.";
+        }
+        if ($turn === 1) {
+            if ($emp && $sol) {
+                return "Agradezco el tono y la disculpa, {$name}, pero las palabras no me resuelven la noche de hoy. Si me aseguran que me envían una unidad nueva por mensajería express o me gestionan el retiro hoy mismo, acepto el cambio.";
+            }
+            return "Pagué una fortuna por esa cafetera de primera línea y la caja venía rota. Díganme cómo lo van a compensar ya mismo.";
+        }
+        if ($turn === 2) {
+            if ($sol && $time) {
+                return "Eso sí es servicio postventa de calidad. Acepto el reemplazo inmediato con el voucher de compensación que propone. Mándeme el comprobante al WhatsApp.";
+            }
+            return "Quiero saber a qué hora me entregan el producto en condiciones. No puedo estar esperando todo el día en casa.";
+        }
+        return "Excelente gestión, {$name}. Reconozco cuando una empresa sabe resolver un error con rapidez y respeto. Tienen mi recomendación.";
+    }
+
+    // -------------------------------------------------------------
+    // 8. PAULA (Negociación Agresiva B2B)
+    // -------------------------------------------------------------
+    if (str_contains($sc, 'Negociación Agresiva') || str_contains($sc, 'Paula')) {
+        if ($turn === 1) {
+            if ($sol && !str_contains($txt, '20%') && !str_contains($txt, 'descuento inmediato')) {
+                return "Me gusta que no te achiques bajando el precio a la primera de cambio, {$name}. Demuestra que valoras tu servicio. Ahora bien: el competidor me ofrece soporte 24/7 sin cargo adicional. ¿Qué tienen ustedes que ellos no puedan darme?";
+            }
+            if (str_contains($txt, 'descuento') || str_contains($txt, '20%')) {
+                return "Sabía que tenían margen inflado. Si me descontaste el 20% tan rápido, significa que me estabas cobrando de más. Quiero un 5% adicional y cerramos el contrato de 12 meses.";
+            }
+            return "Tengo solo 3 minutos antes de subir a mi vuelo, {$name}. Tu competidor me pasa una propuesta 20% más barata por prestaciones idénticas. Convénceme de no firmar con ellos.";
+        }
+        return "Bien jugado, {$name}. Me convenció la propuesta de valor y el nivel de integración que ofrecen. Mándame el contrato redactado a mi casilla ejecutiva hoy antes de las 18 hs y lo firmo.";
+    }
+
+    // -------------------------------------------------------------
+    // 9. ROBERTO (Despido Disciplinario)
+    // -------------------------------------------------------------
+    if (str_contains($sc, 'Despido Disciplinario') || str_contains($sc, 'Roberto')) {
+        if ($emp && $sol) {
+            return "Agradezco que me lo digas mirándome a los ojos y con respeto, {$name}. Me duele la situación porque le di 4 años a esta empresa, pero entiendo que el ciclo se terminó. Por favor explícame cómo se liquidan mis días y las recomendaciones laborales.";
+        }
+        return "¿Por qué siempre la cuerda se corta por el lado más débil? Hubo fallas de todos los sectores y el único citado a Recursos Humanos soy yo.";
+    }
+
+    // -------------------------------------------------------------
+    // 10. ESCENARIO POR DEFECTO CON NARRATIVA CONTEXTUAL
+    // -------------------------------------------------------------
+    if ($def) {
+        return "{$name}, justificarse o echar culpas afuera no ayuda a resolver el problema que tenemos enfrente. Lo que necesito es que tomemos el control y definamos qué vamos a hacer ahora.";
+    }
+    if ($turn === 1) {
+        if ($emp && $sol) {
+            return "Valoro mucho la predisposición y la calma con la que me recibes, {$name}. Me parece bien lo que planteas en principio, pero me gustaría conocer los plazos exactos de ejecución.";
+        }
+        if ($emp) {
+            return "Agradezco que me escuches con tanta atención, {$name}. Ahora bien, más allá de la comprensión mutua, ¿cuál es el paso concreto que vamos a dar hoy?";
+        }
+        return "Entiendo tu punto inicial, {$name}. Sin embargo, antes de avanzar, quiero tener la seguridad de que estamos alineados en la prioridad del caso.";
+    }
+    if ($turn >= 3 && ($sol || $time)) {
+        return "Me parece un acuerdo sólido y bien estructurado, {$name}. Reconozco el profesionalismo para llevar la conversación a buen puerto. Procedamos con el plan.";
+    }
+    return "De acuerdo, {$name}. Me parece razonable tu enfoque. Asegurémonos de hacer el seguimiento correspondiente para que los resultados queden consolidados.";
+}
+
+// =========================================================================
+// 4. EVALUADOR AUTÓNOMO MULTIDIMENSIONAL DE RRHH V3.0
+// =========================================================================
+
+function evaluateAutonomousHR($messages, $area, $scenario, $userName, $userCompany, $evalType, $targetRole, $currentRole) {
+    $userMessages = [];
+    $totalChars = 0;
+    foreach ($messages as $m) {
+        if ($m['role'] === 'user') {
+            $userMessages[] = $m['content'];
+            $totalChars += mb_strlen($m['content']);
+        }
+    }
+
+    $turnCount = count($userMessages);
+    if ($turnCount === 0) $turnCount = 1;
+    $fullText = mb_strtolower(implode(' ', $userMessages), 'UTF-8');
+
+    // 1. Análisis de Citas Textuales Reales del Usuario
+    $sampleQuotes = [];
+    foreach ($userMessages as $um) {
+        if (mb_strlen($um) >= 25 && count($sampleQuotes) < 3) {
+            $sampleQuotes[] = '"' . mb_substr($um, 0, 75) . (mb_strlen($um) > 75 ? '...' : '') . '"';
+        }
+    }
+
+    // 2. Métricas de Impacto
+    $empathyHits = preg_match_all('/(entiend|comprend|lament|disculp|perd[oó]n|veo tu molestia|tienes raz[oó]n|te escucho|s[eé] lo frustrante|tranquil|siento)/u', $fullText);
+    $defensiveHits = preg_match_all('/(no es mi culpa|yo no fui|el sistema fall[oó]|es culpa de|usted no me dijo|no me corresponde|no tengo nada que ver)/u', $fullText);
+    $solutionHits = preg_match_all('/(vamos a|te propongo|podemos|soluci[oó]n|reemplazo|devoluci[oó]n|bonificaci[oó]n|flete|despacho|revisar|cambio|proceso|plan|alternativa)/u', $fullText);
+    $timeHits = preg_match_all('/(minuto|hora|hoy|inmediat|ahora|antes de|mañana|plazo|fecha)/u', $fullText);
+    $leadershipHits = preg_match_all('/(asumo|responsabilidad|equipo|coordinar|prioridad|est[aá]ndar|juntos|capacitaci[oó]n|delegar|confianza|procedimiento)/u', $fullText);
+    $questionHits = preg_match_all('/?|¿/u', $fullText);
+
+    // 3. Ponderación por Dimensión (0 a 100)
+    // Dimensión 1: Inteligencia Emocional & Control del Estrés
+    $dimEmotional = 72 + ($empathyHits * 7) - ($defensiveHits * 20);
+    $dimEmotional = max(30, min(99, $dimEmotional));
+
+    // Dimensión 2: Comunicación Asertiva & Escucha Activa
+    $dimAssertive = 70 + ($questionHits * 5) + ($turnCount >= 3 ? 10 : 0) - ($totalChars < ($turnCount * 25) ? 15 : 0);
+    $dimAssertive = max(35, min(98, $dimAssertive));
+
+    // Dimensión 3: Criterio Resolutivo & Sentido de Urgencia
+    $dimResolutive = 68 + ($solutionHits * 8) + ($timeHits * 6);
+    $dimResolutive = max(35, min(99, $dimResolutive));
+
+    // Dimensión 4: Liderazgo Táctico & Alineación Estratégica
+    $dimLeadership = 65 + ($leadershipHits * 8) + ($turnCount >= 4 ? 8 : 0) - ($defensiveHits * 12);
+    $dimLeadership = max(30, min(98, $dimLeadership));
+
+    // Global
+    if ($evalType === 'promotion') {
+        $scoreGlobal = round(($dimEmotional * 0.20) + ($dimAssertive * 0.25) + ($dimResolutive * 0.25) + ($dimLeadership * 0.30));
+    } elseif ($evalType === 'diagnostic') {
+        $scoreGlobal = round(($dimEmotional * 0.35) + ($dimAssertive * 0.30) + ($dimResolutive * 0.25) + ($dimLeadership * 0.10));
+    } else {
+        $scoreGlobal = round(($dimEmotional + $dimAssertive + $dimResolutive + $dimLeadership) / 4);
+    }
+
+    // Fortalezas
+    $strengths = [];
+    if ($empathyHits > 0) $strengths[] = "Excelente capacidad de desescalada: validó la emoción del interlocutor sin confrontar en " . $empathyHits . " ocasiones.";
+    if ($solutionHits > 0) $strengths[] = "Foco resolutivo sobresaliente: planteó alternativas y soluciones ejecutables en lugar de quedarse en el lamento.";
+    if ($timeHits > 0) $strengths[] = "Certeza operativa: brindó plazos y tiempos concretos, reduciendo la ansiedad del interlocutor.";
+    if ($leadershipHits > 0) $strengths[] = "Accountability y visión de equipo: asumió la responsabilidad en primera persona sin trasladar culpas.";
+    if (empty($strengths)) $strengths[] = "Mantuvo la compostura profesional a lo largo de toda la interacción evaluada.";
+
+    // Alertas
+    $alerts = [];
+    if ($defensiveHits > 0) $alerts[] = "Riesgo de actitud defensiva: se detectaron justificaciones o transferencias de culpa al sistema o a terceros.";
+    if ($solutionHits === 0) $alerts[] = "Falta de iniciativa de cierre: no se formularon propuestas de acción concretas con plazos definidos.";
+    if ($totalChars < ($turnCount * 25)) $alerts[] = "Estilo de respuesta telegráfico: se recomienda explayarse más para generar cercanía y contención.";
+    if (empty($alerts)) $alerts[] = "No se observaron brechas conductuales ni alertas de riesgo operativo durante la sesión.";
+
+    // Veredicto
+    $verdict = [];
+    if ($evalType === 'promotion') {
+        if ($scoreGlobal >= 85) {
+            $verdict['status'] = 'Apto para Promoción Inmediata (Sobresaliente)';
+            $verdict['color'] = 'green';
+            $verdict['summary'] = "El colaborador {$userName} demuestra madurez de criterio, liderazgo táctico y temple sereno para asumir el cargo de {$targetRole}.";
+            $verdict['recommendation'] = "Avanzar con la designación formal y asignar responsabilidades de coordinación a partir del próximo ciclo.";
+        } elseif ($scoreGlobal >= 70) {
+            $verdict['status'] = 'Apto con Plan de Acompañamiento Táctico';
+            $verdict['color'] = 'yellow';
+            $verdict['summary'] = "Muestra sólidas habilidades de base, pero requiere consolidar la asertividad y la delegación bajo presión de hora pico.";
+            $verdict['recommendation'] = "Promoción condicionada a 30 días de mentoría con un Supervisor Senior en gestión de conflictos.";
+        } else {
+            $verdict['status'] = 'Requiere Maduración en Rol Actual';
+            $verdict['color'] = 'red';
+            $verdict['summary'] = "Aún se observan dificultades para liderar sin caer en justificaciones o vacíos resolutivos ante objeciones complejas.";
+            $verdict['recommendation'] = "Mantener en funciones actuales y reevaluar en 90 días tras completar el programa de Liderazgo Táctico.";
+        }
+    } else {
+        if ($scoreGlobal >= 80) {
+            $verdict['status'] = 'Desempeño Profesional de Élite';
+            $verdict['color'] = 'green';
+            $verdict['summary'] = "Superó el escenario crítico de {$scenario} con apego riguroso a estándares de calidad y empatía activa.";
+            $verdict['recommendation'] = "Cerrar la observación favorablemente y registrar la sesión como caso de éxito formativo.";
+        } elseif ($scoreGlobal >= 65) {
+            $verdict['status'] = 'En Observación Favorable';
+            $verdict['color'] = 'yellow';
+            $verdict['summary'] = "Resolución adecuada del incidente, aunque con margen para mejorar la velocidad de respuesta y el compromiso de plazos.";
+            $verdict['recommendation'] = "Asignar práctica en el módulo de Desescalada Verbal de la Academia Aura.";
+        } else {
+            $verdict['status'] = 'Alerta Conductual / Intervención Requerida';
+            $verdict['color'] = 'red';
+            $verdict['summary'] = "Respuestas que no lograron contener la tensión del interlocutor, exponiendo a la empresa a pérdida de clientes o clima adverso.";
+            $verdict['recommendation'] = "Reunión de coaching individual 1 a 1 y seguimiento quincenal de desempeño.";
+        }
+    }
+
+    return [
+        'candidate' => $userName,
+        'company' => $userCompany,
+        'current_role' => $currentRole ?: 'Colaborador',
+        'target_role' => $targetRole ?: 'Puesto Actual',
+        'eval_type' => $evalType,
+        'scenario' => $scenario,
+        'date' => date('Y-m-d H:i:s'),
+        'total_turns' => $turnCount,
+        'quotes' => $sampleQuotes,
+        'scores' => [
+            'emotional_regulation' => $dimEmotional,
+            'assertive_communication' => $dimAssertive,
+            'problem_solving' => $dimResolutive,
+            'leadership_alignment' => $dimLeadership,
+            'global' => $scoreGlobal
+        ],
+        'verdict' => $verdict,
+        'strengths' => $strengths,
+        'alerts' => $alerts,
+        'action_plan' => [
+            'day30' => ($scoreGlobal >= 80) ? "Liderar una simulación de alta tensión semanal y mentorizar a pares." : "Completar la práctica de Protocolos H.E.A.T. en el Laboratorio de RolPlay.",
+            'day60' => ($scoreGlobal >= 80) ? "Auditar 5 casos de servicio al cliente y validar protocolos de contingencia." : "Reunión de seguimiento con jefatura de área para verificar erradicación de respuestas defensivas.",
+            'day90' => ($scoreGlobal >= 80) ? "Evaluación 360° para consolidación de nuevo rango profesional." : "Reevaluación formal en RolPlay.ai con caso de crisis nivel 8."
+        ]
+    ];
+}
+
+// =========================================================================
+// 5. LLM CLOUD CALLER (GROQ LLAMA 3.3 70B EN CASO DE ESTAR DISPONIBLE)
+// =========================================================================
+
+function callGroqApi($apiKey, $messages, $area, $scenario, $userName, $userCompany, $difficulty) {
+    $systemPrompt = "Eres un simulador de rol interactivo de élite en español llamado RolPlay.ai (desarrollado por Aura). "
+        . "Escenario: {$scenario} ({$area}). Tu interlocutor es {$userName} de la empresa {$userCompany}. Dificultad: {$difficulty}.\n"
+        . "INSTRUCCIONES CLAVE:\n"
+        . "1. Mantén estrictamente tu personaje en primera persona (cliente enojado, jefe exigente, compañero en conflicto, etc.).\n"
+        . "2. Reacciona de forma REALISTA y EMOCIONAL a lo que acaba de decir {$userName}: si muestra empatía genuina y soluciones con plazos, desescala gradualmente; si se justifica o culpa a otros, moléstale más.\n"
+        . "3. Responde en 1 o 2 oraciones concisas (máximo 45 palabras).\n"
+        . "4. Devuelve un JSON EXACTO con esta estructura:\n"
+        . "{\n"
+        . "  \"response\": \"(tu respuesta hablada como personaje)\",\n"
+        . "  \"emotion\": \"(etiqueta corta de tu emoción actual, ej: '🚨 Muy Furioso' o '🟡 Escéptico')\",\n"
+        . "  \"tension\": (número de 0 a 100 de tu nivel de tensión),\n"
+        . "  \"tip\": \"(un micro-consejo pedagógico para que {$userName} mejore en su próximo turno)\"\n"
+        . "}";
+
+    $formatted = [['role' => 'system', 'content' => $systemPrompt]];
     foreach ($messages as $m) {
         if (in_array($m['role'], ['user', 'assistant'])) {
-            $formattedMessages[] = [
-                'role' => $m['role'],
-                'content' => $m['content']
-            ];
+            $formatted[] = ['role' => $m['role'], 'content' => $m['content']];
         }
     }
 
     $ch = curl_init("https://api.groq.com/openai/v1/chat/completions");
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_POST, true);
-    curl_setopt($ch, CURLOPT_TIMEOUT, 8);
+    curl_setopt($ch, CURLOPT_TIMEOUT, 6);
     curl_setopt($ch, CURLOPT_HTTPHEADER, [
         "Content-Type: application/json",
         "Authorization: Bearer {$apiKey}"
     ]);
     curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode([
         'model' => 'llama-3.3-70b-versatile',
-        'messages' => $formattedMessages,
-        'max_tokens' => 200,
-        'temperature' => 0.7
+        'messages' => $formatted,
+        'response_format' => ['type' => 'json_object'],
+        'temperature' => 0.65
     ]));
 
     $res = curl_exec($ch);
@@ -119,247 +600,57 @@ function callGroqApi($apiKey, $messages, $area, $scenario, $userName, $userCompa
     if ($httpCode === 200 && $res) {
         $json = json_decode($res, true);
         if (!empty($json['choices'][0]['message']['content'])) {
-            return trim($json['choices'][0]['message']['content']);
+            return json_decode($json['choices'][0]['message']['content'], true);
         }
     }
     return null;
 }
 
-/**
- * Motor pedagógico de simulación psicológica y conversacional
- * Genera respuestas contextuales altamente humanas y coherentes con cada escenario.
- */
-function generateContextualRoleplayResponse($userText, $history, $area, $scenario, $userName, $difficulty) {
-    $textLower = mb_strtolower($userText, 'UTF-8');
-    $userTurnCount = 0;
-    foreach ($history as $m) {
-        if ($m['role'] === 'user') $userTurnCount++;
+function evaluateWithGroq($apiKey, $messages, $area, $scenario, $userName, $userCompany, $evalType, $targetRole) {
+    $transcript = "";
+    foreach ($messages as $m) {
+        $roleName = ($m['role'] === 'user') ? $userName : "Interlocutor";
+        $transcript .= "{$roleName}: {$m['content']}\n";
     }
 
-    // Análisis de rasgos comunicativos del usuario
-    $hasApology = preg_match('/(disculp|perdon|lament|sentim)/u', $textLower);
-    $hasEmpathy = preg_match('/(entiend|comprend|tranquil|te escucho|puedo ver|preocup)/u', $textLower);
-    $hasTimeCommitment = preg_match('/(minuto|hora|hoy|inmediat|ahora|plazo|tiempo|dia|mañana)/u', $textLower);
-    $hasSolution = preg_match('/(solucion|vamos a|podemos|haremos|reemplaz|devoluc|cambi|enviar|gestion|bonif|descuent)/u', $textLower);
-    $hasQuestion = (str_contains($userText, '?') || preg_match('/(como|cuando|cual|que opinas|te parece)/u', $textLower));
-    $isVeryShort = (mb_strlen(trim($userText)) < 25);
+    $prompt = "Evalúa esta conversación de simulación de rol en español para el profesional {$userName} ({$userCompany}) en el escenario '{$scenario}'. Tipo de prueba: {$evalType}. Puesto objetivo: {$targetRole}.\n\nTranscripción:\n{$transcript}\n\nDevuelve JSON con scores (emotional_regulation, assertive_communication, problem_solving, leadership_alignment, global de 0 a 100), verdict (status, color 'green'|'yellow'|'red', summary, recommendation), strengths (array de 3 strings), alerts (array de 2 strings) y action_plan (day30, day60, day90).";
 
-    // Personalidad por escenario
-    return match (true) {
-        // --- ATENCIÓN AL CLIENTE: Marta (Mayor, preocupada, amable) ---
-        str_contains($scenario, 'Retraso Menor') => handleMartaScenario($hasEmpathy, $hasSolution, $hasTimeCommitment, $isVeryShort, $userTurnCount, $userName),
+    $ch = curl_init("https://api.groq.com/openai/v1/chat/completions");
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_POST, true);
+    curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, [
+        "Content-Type: application/json",
+        "Authorization: Bearer {$apiKey}"
+    ]);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode([
+        'model' => 'llama-3.3-70b-versatile',
+        'messages' => [
+            ['role' => 'system', 'content' => 'Eres un analista de talento senior y psicólogo laboral. Devuelve solo JSON válido.'],
+            ['role' => 'user', 'content' => $prompt]
+        ],
+        'response_format' => ['type' => 'json_object'],
+        'temperature' => 0.3
+    ]));
 
-        // --- ATENCIÓN AL CLIENTE: Jorge (Cafetera rota, cumpleaños esposa) ---
-        str_contains($scenario, 'Producto Defectuoso') => handleJorgeScenario($hasApology, $hasEmpathy, $hasSolution, $hasTimeCommitment, $userTurnCount, $userName, $difficulty),
+    $res = curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    curl_close($ch);
 
-        // --- ATENCIÓN AL CLIENTE: Carlos (B2B furioso, producción parada) ---
-        str_contains($scenario, 'Entrega Crítica') => handleCarlosScenario($hasEmpathy, $hasSolution, $hasTimeCommitment, $userTurnCount, $userName, $difficulty),
-
-        // --- VENTAS B2B: Ana (Dueña tienda, poco tiempo) ---
-        str_contains($scenario, 'Primer Contacto') => handleAnaScenario($hasSolution, $hasTimeCommitment, $hasQuestion, $userTurnCount, $userName),
-
-        // --- VENTAS B2B: Luis (Director de Compras escéptico) ---
-        str_contains($scenario, 'Cliente Escéptico') => handleLuisScenario($hasSolution, $hasQuestion, $userTurnCount, $userName, $difficulty),
-
-        // --- VENTAS B2B: Paula (CEO agresiva, ultimátum) ---
-        str_contains($scenario, 'Negociación Agresiva') => handlePaulaScenario($hasSolution, $hasTimeCommitment, $userTurnCount, $userName, $difficulty),
-
-        // --- RECURSOS HUMANOS: Kevin (Junior nervioso) ---
-        str_contains($scenario, 'Candidato Junior') => handleKevinScenario($hasEmpathy, $hasQuestion, $userTurnCount, $userName),
-
-        // --- RECURSOS HUMANOS: Fernando (Evade preguntas) ---
-        str_contains($scenario, 'Entrevista Difícil') => handleFernandoScenario($hasQuestion, $userTurnCount, $userName),
-
-        // --- RECURSOS HUMANOS: Roberto (Despido defensivo) ---
-        str_contains($scenario, 'Despido') => handleRobertoScenario($hasEmpathy, $hasSolution, $userTurnCount, $userName),
-
-        // --- HOSTELERÍA: Sonia (Sin reserva en recepción) ---
-        str_contains($scenario, 'Check-in') => handleSoniaScenario($hasEmpathy, $hasSolution, $hasTimeCommitment, $userTurnCount, $userName),
-
-        // --- HOSTELERÍA: Lucía (Suite 5 estrellas con problemas) ---
-        str_contains($scenario, 'Huésped Molesto') => handleLuciaScenario($hasApology, $hasSolution, $userTurnCount, $userName),
-
-        // --- SOPORTE IT: Abel (Ratón desenchufado) ---
-        str_contains($scenario, 'Usuario') => handleAbelScenario($hasEmpathy, $hasSolution, $userTurnCount, $userName),
-
-        // --- CADENA DE MANDO (ENTRELAZADA: EMPLEADO, ENCARGADO, SUPERVISOR) ---
-        str_contains($scenario, 'Empleado') || str_contains($scenario, 'Traspaso Limpio') => handleCadenaEmpleadoScenario($hasEmpathy, $hasSolution, $hasTimeCommitment, $userTurnCount, $userName, $difficulty),
-
-        str_contains($scenario, 'Encargado') || str_contains($scenario, 'Intervención Táctica') => handleCadenaEncargadoScenario($hasEmpathy, $hasSolution, $hasTimeCommitment, $userTurnCount, $userName, $difficulty),
-
-        str_contains($scenario, 'Supervisor') || str_contains($scenario, 'Coaching 1 a 1') => handleCadenaSupervisorScenario($hasEmpathy, $hasSolution, $hasQuestion, $userTurnCount, $userName, $difficulty),
-
-        // --- GENÉRICO / DEFAULT ---
-        default => handleGenericRoleplay($hasEmpathy, $hasSolution, $userTurnCount, $userName, $difficulty)
-    };
+    if ($httpCode === 200 && $res) {
+        $json = json_decode($res, true);
+        if (!empty($json['choices'][0]['message']['content'])) {
+            $parsed = json_decode($json['choices'][0]['message']['content'], true);
+            if ($parsed && isset($parsed['scores'])) {
+                $parsed['candidate'] = $userName;
+                $parsed['company'] = $userCompany;
+                $parsed['eval_type'] = $evalType;
+                $parsed['scenario'] = $scenario;
+                $parsed['date'] = date('Y-m-d H:i:s');
+                $parsed['total_turns'] = count($messages);
+                return $parsed;
+            }
+        }
+    }
+    return null;
 }
-
-// -------------------------------------------------------------
-// Controladores de personajes individuales
-// -------------------------------------------------------------
-
-function handleMartaScenario($empathy, $solution, $time, $short, $turn, $name) {
-    if ($short) {
-        return "Disculpe, pero me dejó con la misma duda... ¿me podría explicar despacito qué significa ese número que me mandaron? De verdad me da miedo no recibir nada.";
-    }
-    if ($solution && $empathy) {
-        return "¡Ay, qué alivio me da escucharlo, {$name}! Su amabilidad me tranquiliza muchísimo. Si usted me dice que viene en camino y me ayuda a verificarlo, me quedo mucho más en paz. ¿Cuánto calcula que llegará?";
-    }
-    if ($empathy) {
-        return "Muchas gracias por comprenderme, querido {$name}. Una a mi edad ya se marea con tanta tecnología. Entonces, ¿el paquete no está perdido en ningún lado?";
-    }
-    return "Entiendo lo que me explica, pero sigo sin tener muy claro si tengo que esperar al cartero en casa hoy o si debo hacer clic en algún lado. ¿Usted me puede guiar paso a paso?";
-}
-
-function handleJorgeScenario($apology, $empathy, $solution, $time, $turn, $name, $diff) {
-    if ($solution && ($time || $apology)) {
-        return "Mire {$name}, le agradezco la rápida reacción y el tono respetuoso. Lo del cumpleaños de mi esposa me tenía muy angustiado. Si realmente me envían el reemplazo express como dice o me dan la solución hoy, acepto la propuesta. Manténgame al tanto del número de guía.";
-    }
-    if ($empathy && !$solution) {
-        return "Agradezco que entienda mi frustración, pero las palabras bonitas no van a hacer que mi esposa tenga su regalo esta noche. Necesito una acción concreta: ¿me cambian la cafetera hoy mismo o me devuelven el dinero?";
-    }
-    if ($diff === 'exigente') {
-        return "No me alcanza con un 'vamos a revisarlo'. Es un producto de primera línea que vino roto de fábrica. Exijo una solución urgente antes de las 18 hs o cancelo la compra y dejo constancia en defensa del consumidor.";
-    }
-    return "De acuerdo, {$name}, veo su buena voluntad. Pero dígame con exactitud: ¿cuándo llega el nuevo tanque o qué alternativa me ofrece para que no pase el día en blanco?";
-}
-
-function handleCarlosScenario($empathy, $solution, $time, $turn, $name, $diff) {
-    if ($turn >= 9) {
-        return "Perfecto, {$name}. Valoro mucho la celeridad y que hayan dado la cara con este nivel de compromiso profesional. Quedo a la espera de ese flete express a las 16 hs y de la confirmación por escrito. Si esto se cumple según lo acordado, mantendremos la cuenta con ustedes.";
-    }
-    if ($turn >= 7) {
-        return "De acuerdo, {$name}. Voy a avisar de inmediato al jefe de depósito de nuestra planta para que tengan listo el muelle de descarga rápida ni bien arribe el transporte. Manténgame al tanto del contacto del chofer.";
-    }
-    if ($turn >= 5) {
-        return "Me parece un gesto necesario y justo que Aura bonifique el flete de contingencia. Con esos insumos parciales podemos sostener el turno de hoy. ¿Cómo coordinamos el remanente prioritario de mañana?";
-    }
-    if ($turn >= 3 && ($solution || $time)) {
-        return "Bueno... al menos veo que se están haciendo cargo con seriedad. Si ese camión de contingencia llega como se compromete, podemos salvar el turno de la tarde. Envíeme ahora mismo la confirmación por escrito a mi correo corporativo.";
-    }
-    if ($solution) {
-        return "Eso suena razonable en los papeles, {$name}, pero cada hora que pasa me cuesta miles de dólares. Quiero garantías firmes: si hay alguna penalidad o retraso extra, ¿quién responde? Necesito ese compromiso ya.";
-    }
-    if ($empathy && !$solution) {
-        return "No me sirve que 'comprenda mi situación', {$name}. Mi planta está a punto de frenar 40 operarios. O me consiguen un transporte alternativo o mañana mismo rescindo el contrato con ustedes.";
-    }
-    return "¡Basta de rodeos! Dígame concretamente qué van a hacer para que mi mercadería llegue a destino antes de que perdamos la producción completa.";
-}
-
-function handleAnaScenario($solution, $time, $question, $turn, $name) {
-    if ($question || $solution) {
-        return "Me parece un planteo inteligente, {$name}. Justamente esa es una de las mayores dificultades que tengo con el inventario diario. Si tu solución se implementa sin interrumpir la atención de mi tienda, me interesa agendar una demo de 15 minutos la semana próxima. ¿Tienes disponibilidad el martes?";
-    }
-    return "Suena interesante, pero el día a día no me deja tiempo para experimentos. ¿En qué se diferencia concretamente tu propuesta de lo que ya ofrece el mercado?";
-}
-
-function handleLuisScenario($solution, $question, $turn, $name, $diff) {
-    if ($turn >= 2 && $solution) {
-        return "Interesante enfoque, {$name}. Veo que entendió que mi principal dolor de cabeza no es el costo de licencia, sino las horas que mi equipo perdería migrando datos. Si me demuestra ese ROI en un caso similar a nuestra industria, consideraría armar una prueba de concepto.";
-    }
-    if ($question) {
-        return "Le respondo claro: hoy gastamos unos 3.000 dólares mensuales en la solución actual. No es perfecta, pero no se cae. Para hacerme cambiar, tendría que darme un salto de eficiencia de al menos 30% con soporte garantizado.";
-    }
-    return "Mire {$name}, todos los proveedores me dicen lo mismo en la primera llamada. ¿Qué métricas reales puede respaldar para convencerme de que no voy a arriesgar mi cuello cambiando de proveedor?";
-}
-
-function handlePaulaScenario($solution, $time, $turn, $name, $diff) {
-    if ($solution && $turn >= 2) {
-        return "Mmm... veo que sabe defender su propuesta de valor sin regalar el trabajo pero dándome un beneficio estratégico tangible. Me gusta la gente que negocia con firmeza. Hagamos esto: prepáreme la adenda con ese acuerdo de nivel de servicio mejorado y lo firmo al regresar de mi viaje.";
-    }
-    return "Le quedan 2 minutos, {$name}. No me justifique sus costos, dígame por qué debería pagarles 20% más que a su competidor directo si el entregable parece el mismo.";
-}
-
-function handleKevinScenario($empathy, $question, $turn, $name) {
-    return "Muchas gracias por hacerme sentir cómodo, {$name}... de verdad estaba muy nervioso. Respecto a lo que me pregunta, en la universidad lideré el proyecto final del equipo y aunque tuvimos diferencias con los tiempos de entrega, logramos sacar la mejor calificación aprendiendo a organizarnos.";
-}
-
-function handleFernandoScenario($question, $turn, $name) {
-    if ($question) {
-        return "Es una pregunta muy directa, {$name}, y la valoro. En mi anterior posición hubo cambios en la dirección que no compartían mi visión ágil, por lo que acordamos una transición ordenada. Aprendí que la alineación cultural previa es fundamental para rendir al máximo.";
-    }
-    return "Como le decía, mi enfoque es siempre hacia los resultados futuros más que hacia el pasado. Pero dígame, en esta posición, ¿cuál sería el desafío prioritario para los primeros 90 días?";
-}
-
-function handleRobertoScenario($empathy, $solution, $turn, $name) {
-    if ($empathy) {
-        return "Le agradezco el tono humano, {$name}. He dejado muchos años en esta empresa y me duele sentir que la culpa recae solo sobre mí. Si la decisión está tomada, espero que la desvinculación sea justa y contemple todo el esfuerzo realizado.";
-    }
-    return "No estoy de acuerdo con la evaluación que hicieron. Si van a tomar esta medida, exijo que me den el detalle liquidado y las condiciones exactas antes de firmar cualquier documento.";
-}
-
-function handleSoniaScenario($empathy, $solution, $time, $turn, $name) {
-    if ($empathy || $solution) {
-        return "¡Ay, mil gracias {$name}! No sabe el alivio que me da. Si puede ofrecerme aunque sea una habitación provisional o un café mientras verifican la reserva, se lo voy a agradecer de corazón.";
-    }
-    return "Por favor, llevo más de 14 horas de viaje y apenas puedo tenerme en pie. Necesito que me confirmen una cama ahora mismo.";
-}
-
-function handleLuciaScenario($apology, $solution, $turn, $name) {
-    if ($apology && $solution) {
-        return "Valoro mucho su disculpa y la rapidez para cambiarme de habitación, {$name}. Un hotel de esta categoría debe responder así ante un imprevisto. Espero las nuevas llaves en recepción.";
-    }
-    return "No me alcanza con disculpas protocolares. Pagué una tarifa premium y merezco un servicio impecable. Espero que me trasladen de suite de inmediato.";
-}
-
-function handleAbelScenario($empathy, $solution, $turn, $name) {
-    if ($empathy || $solution) {
-        return "¡Tenías razón, {$name}! Estaba medio flojo el cable atrás de la caja esa... ¡Ya se mueve la flechita! Muchísimas gracias por la paciencia, sos un sol.";
-    }
-    return "Mirá, no entiendo mucho esto de los cables, hijo. ¿Me decís cuál tengo que tocar sin que se me borre la planilla?";
-}
-
-function handleGenericRoleplay($empathy, $solution, $turn, $name, $diff) {
-    if ($turn >= 3 && $solution) {
-        return "De acuerdo, {$name}, me parece que estamos llegando a un punto de entendimiento claro. Si formalizamos estos pasos, podemos dar por resuelto el asunto de manera satisfactoria.";
-    }
-    if ($empathy) {
-        return "Aprecio que me escuche con atención, {$name}. Sin embargo, todavía me queda la inquietud sobre cómo van a garantizar que se cumplan los tiempos previstos.";
-    }
-    return "Comprendo lo que me plantea, {$name}, pero necesito precisiones. ¿Qué medidas concretas vamos a tomar a partir de ahora para avanzar?";
-}
-
-// -------------------------------------------------------------
-// CONTROLADORES: CADENA DE MANDO ENTRELAZADA
-// (Empleado -> Encargado -> Supervisor)
-// -------------------------------------------------------------
-
-function handleCadenaEmpleadoScenario($empathy, $solution, $time, $turn, $name, $diff) {
-    if ($turn >= 2 && ($solution || $empathy)) {
-        return "Mire {$name}, valoro mucho que no se lave las manos y me responda con tanta educación. Si usted me dice que su encargado Esteban ya está al tanto y me va a atender para resolverlo en 2 minutos, espero aquí tranquilo.";
-    }
-    if ($solution && $empathy) {
-        return "Agradezco que me hable con calma, {$name}. Si usted tiene la facultad para cambiarme el producto ahora mismo sin hacerme dar vueltas, adelante, hágalo ya y dejamos el reclamo acá.";
-    }
-    if ($empathy) {
-        return "Entiendo que no haya sido su intención, {$name}, pero tengo prisa y necesito una respuesta rápida. ¿Puede resolverlo usted o me pasa con quien esté a cargo del turno?";
-    }
-    return "¡No me diga que 'usted solo sigue órdenes'! Si usted no tiene autorización para darme una solución, no me haga perder tiempo y llame de inmediato a su encargado.";
-}
-
-function handleCadenaEncargadoScenario($empathy, $solution, $time, $turn, $name, $diff) {
-    if ($turn >= 2 && $solution) {
-        return "Le agradezco, {$name}. Veo que como encargado tiene la predisposición y la autoridad para resolver las cosas como corresponde. Acepto el reemplazo con la bonificación y valoro que respalde a su equipo con altura.";
-    }
-    if ($solution && ($empathy || $time)) {
-        return "Buenas tardes {$name}. Su empleado me atendió con amabilidad pero me dijo que usted debía autorizar el reemplazo. Si me confirma esa solución ahora mismo, por mí el tema queda resuelto.";
-    }
-    if ($empathy) {
-        return "Aprecio el tono, {$name}, pero como responsable del local necesito que me dé una solución concreta antes de irme. ¿Qué medida van a tomar con mi orden?";
-    }
-    return "Mire {$name}, espero que usted como encargado me dé una respuesta profesional y no me ponga más excusas como las que me dieron recién.";
-}
-
-function handleCadenaSupervisorScenario($empathy, $solution, $question, $turn, $name, $diff) {
-    if ($turn >= 2 && ($question || $solution || $empathy)) {
-        return "La verdad, {$name}, te agradezco mucho esta charla. Venía sintiendo que estaba solo apagando incendios todos los días y que la culpa siempre caía sobre mí. Me parece excelente armar ese checklist de verificación en el pase de turno para que los chicos no se confundan de nuevo. Me da mucha tranquilidad saber que tengo tu respaldo.";
-    }
-    if ($question || $empathy) {
-        return "La verdad, {$name}, me sentí bastante desbordado. El cliente estaba furioso y siento que los chicos en el mostrador todavía no tienen la seguridad para contener esos reclamos. ¿Cómo crees que podríamos capacitarlos para que no me llamen por cualquier tontería?";
-    }
-    if ($solution) {
-        return "Tiene sentido lo que propones, {$name}. Si definimos un protocolo claro de hasta qué monto pueden resolver ellos directamente en mostrador, me liberarías muchísimo tiempo para controlar la operación general.";
-    }
-    return "Sé que el incidente de hoy fue delicado, {$name}, pero hice lo mejor que pude para salvar la cuenta del cliente. ¿Qué puntos consideras prioritarios que ajustemos con el equipo?";
-}
-

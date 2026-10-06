@@ -136,11 +136,66 @@ CREATE TABLE IF NOT EXISTS `garage_settings` (
   `setting_value` LONGTEXT NOT NULL,
   `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS `garage_site_config` (
+  `id` VARCHAR(64) PRIMARY KEY,
+  `module_name` VARCHAR(100) NOT NULL UNIQUE,
+  `is_enabled` TINYINT(1) DEFAULT 1,
+  `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS `garage_system_settings` (
+  `key` VARCHAR(100) PRIMARY KEY,
+  `value` LONGTEXT NOT NULL,
+  `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 ";
 
 try {
     $pdo->exec($sql);
     $logs[] = "¡Tablas 'garage_*' creadas exitosamente!";
+
+    // Inicializar módulos de configuración si está vacía
+    $checkMods = $pdo->query("SELECT COUNT(*) FROM `garage_site_config`")->fetchColumn();
+    if ($checkMods == 0) {
+        $defaultModules = [
+            ['id' => '1', 'module_name' => 'postulantes', 'is_enabled' => 1],
+            ['id' => '2', 'module_name' => 'avisos', 'is_enabled' => 1],
+            ['id' => '3', 'module_name' => 'taller', 'is_enabled' => 1],
+            ['id' => '4', 'module_name' => 'lubricentro', 'is_enabled' => 1],
+            ['id' => '5', 'module_name' => 'lavadero', 'is_enabled' => 1],
+            ['id' => '6', 'module_name' => 'informes', 'is_enabled' => 1],
+            ['id' => '7', 'module_name' => 'monitoreo', 'is_enabled' => 1],
+            ['id' => '8', 'module_name' => 'reportes', 'is_enabled' => 1],
+            ['id' => '9', 'module_name' => 'flota', 'is_enabled' => 1],
+            ['id' => '10', 'module_name' => 'usuarios', 'is_enabled' => 1],
+            ['id' => '11', 'module_name' => 'cobros', 'is_enabled' => 1],
+            ['id' => '12', 'module_name' => 'beneficios', 'is_enabled' => 1],
+            ['id' => '13', 'module_name' => 'configuracion', 'is_enabled' => 1]
+        ];
+        $stmtMods = $pdo->prepare("INSERT INTO `garage_site_config` (`id`, `module_name`, `is_enabled`) VALUES (:id, :module_name, :is_enabled)");
+        foreach ($defaultModules as $m) {
+            $stmtMods->execute($m);
+        }
+        $logs[] = "¡Módulos de site_config inicializados correctamente!";
+    }
+
+    // Inicializar system_settings si está vacía
+    $checkSys = $pdo->query("SELECT COUNT(*) FROM `garage_system_settings`")->fetchColumn();
+    if ($checkSys == 0) {
+        $defaultSettings = [
+            ['key' => 'brand_name', 'value' => 'Aura Garage'],
+            ['key' => 'brand_logo', 'value' => ''],
+            ['key' => 'primary_color', 'value' => '#EAB308'],
+            ['key' => 'contact_email', 'value' => 'adamoomar110@gmail.com'],
+            ['key' => 'currency_symbol', 'value' => '$']
+        ];
+        $stmtSys = $pdo->prepare("INSERT INTO `garage_system_settings` (`key`, `value`) VALUES (:k, :v)");
+        foreach ($defaultSettings as $s) {
+            $stmtSys->execute([':k' => $s['key'], ':v' => $s['value']]);
+        }
+        $logs[] = "¡System settings inicializados correctamente!";
+    }
 
     
     // Migraciones automáticas de columnas existentes

@@ -8,16 +8,32 @@ $action = $_GET['action'] ?? $_POST['action'] ?? 'login';
 
 if ($action === 'login') {
     $input = getJsonInput();
-    $email = trim($input['email'] ?? '');
+    $email = strtolower(trim($input['email'] ?? ''));
     $password = trim($input['password'] ?? '');
 
     if (empty($email) || empty($password)) {
         sendResponse(['error' => 'Por favor ingrese email y contraseña'], 400);
     }
 
-    $stmt = $pdo->prepare("SELECT * FROM `garage_profiles` WHERE `email` = :email LIMIT 1");
+    $stmt = $pdo->prepare("SELECT * FROM `garage_profiles` WHERE LOWER(`email`) = LOWER(:email) LIMIT 1");
     $stmt->execute([':email' => $email]);
     $user = $stmt->fetch();
+
+    // Auto-garantizar la cuenta de Omar como administrador si aún no existiese en la BD
+    if (!$user && ($email === 'adamoomar110@gmail.com' || $email === 'omar@programador.com')) {
+        try {
+            $adminId = ($email === 'adamoomar110@gmail.com') ? 'u-omar-aura' : 'u-omar';
+            $adminName = ($email === 'adamoomar110@gmail.com') ? 'Omar Horacio Adamo (Aura)' : 'Omar Horacio Adamo';
+            $hash = password_hash('123456', PASSWORD_BCRYPT);
+            $stmtCreate = $pdo->prepare("INSERT INTO `garage_profiles` (`id`, `email`, `password_hash`, `full_name`, `role`) VALUES (:id, :email, :pass, :name, 'admin')");
+            $stmtCreate->execute([':id' => $adminId, ':email' => $email, ':pass' => $hash, ':name' => $adminName]);
+            
+            $stmt->execute([':email' => $email]);
+            $user = $stmt->fetch();
+        } catch (Exception $e) {
+            // Ignorar error si ya existe
+        }
+    }
 
     // Fallback if password is matching standard 123456 or bcrypt hash
     $isMatch = false;
@@ -72,10 +88,21 @@ if ($action === 'profile') {
 
 if ($action === 'list') {
     $role = $_GET['role'] ?? '';
-    $sql = "SELECT `id`, `email`, `full_name`, `role`, `phone`, `dni`, `vehicle_id`, `metrics`, `created_at` FROM `garage_profiles`";
+    $id = $_GET['id'] ?? '';
+    $email = $_GET['email'] ?? '';
+
+    $sql = "SELECT `id`, `email`, `full_name`, `role`, `phone`, `dni`, `vehicle_id`, `metrics`, `created_at` FROM `garage_profiles` WHERE 1=1";
     $params = [];
+    if (!empty($id)) {
+        $sql .= " AND `id` = :id";
+        $params[':id'] = $id;
+    }
+    if (!empty($email)) {
+        $sql .= " AND LOWER(`email`) = LOWER(:email)";
+        $params[':email'] = $email;
+    }
     if (!empty($role)) {
-        $sql .= " WHERE `role` = :r";
+        $sql .= " AND `role` = :r";
         $params[':r'] = $role;
     }
     $sql .= " ORDER BY `full_name` ASC";
