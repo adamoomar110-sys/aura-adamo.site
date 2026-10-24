@@ -188,19 +188,28 @@ async function deployApi() {
   }
 }
 
+async function deployColsul() {
+  console.log("\n🏥 [5/5] DEPLOY COLSUL POLICONSULTORIO (public_html/aura-adamo/colsul/)");
+  console.log("─".repeat(50));
+  const colsulDist = path.join(REPOS_ROOT, "colsul", "dist");
+  if (!fs.existsSync(colsulDist)) {
+    console.log("  ⚠️ Carpeta dist de colsul no encontrada (omitiendo).");
+    return;
+  }
+  await uploadDirectoryFiles(colsulDist, `${CONFIG.remoteRoot}/colsul`);
+}
+
 async function deploy() {
   try {
     console.log("🚀 DEPLOY ECOSISTEMA AURA ADAMO → aura-adamo.site (DonWeb/Ferozo)\n");
     await deployLanding();
-    await deployApi();
-    await deployFlota();
-    await deployOdonto();
+    await deployColsul();
     console.log("\n🎉 DESPLIEGUE A DONWEB COMPLETADO CON ÉXITO");
     console.log("─".repeat(50));
-    console.log("  🌐 Landing Principal:  https://aura-adamo.site");
-    console.log("  🚗 Gestión de Flota:   https://aura-adamo.site/flota/");
-    console.log("  📚 Catálogo Libros:    https://aura-adamo.site/libros.html");
-    console.log("  ⚡ API Backend:        https://aura-adamo.site/api/status.php");
+    console.log("  🌐 Landing Principal:         https://aura-adamo.site");
+    console.log("  🏥 Colsul Policonsultorio:   https://aura-adamo.site/colsul/");
+    console.log("  🚗 Gestión de Flota:          https://aura-adamo.site/flota/");
+    console.log("  📚 Catálogo Libros:           https://aura-adamo.site/libros.html");
   } catch (err) {
     console.error("\n❌ ERROR:", err.message);
     process.exit(1);

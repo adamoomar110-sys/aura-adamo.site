@@ -76,6 +76,8 @@ Options -Indexes -MultiViews
     RewriteRule ^lavadero/(.*)$ /garage/lavadero/$1 [R=301,L]
     RewriteRule ^postular/?$ /garage/postular/ [R=301,L]
     RewriteRule ^postular/(.*)$ /garage/postular/$1 [R=301,L]
+    RewriteRule ^consul/?$ /colsul/ [R=301,L]
+    RewriteRule ^consul/(.*)$ /colsul/$1 [R=301,L]
     RewriteRule ^reparacion-pc/?$ /reparacion-pc.html [L]
 </IfModule>
 
